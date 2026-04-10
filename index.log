@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.10.26)  10 APR 2026 00:26
+This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.10.26)  10 APR 2026 00:29
  restricted system commands enabled.
 **index.tex
 (./index.tex
@@ -1694,6 +1694,6 @@ tribute_list, 6 if_stack, 1 write, 139 pdf_literal, 5 pdf_dest, 20 pdf_colorstac
 k nodes
    avail lists: 1:1,2:1229,3:589,4:903,5:298,6:38,7:3875,8:51,9:369,10:9,11:199
  59247 multiletter control sequences out of 65536+600000
- 100 fonts using 30020791 bytes
+ 100 fonts using 30020679 bytes
  111i,9n,122p,10618b,1094s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!

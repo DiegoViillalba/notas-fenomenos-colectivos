@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "fenomenos-colectivos"
@@ -15,11 +16,8 @@ book:
     - part: "Ondas"
       chapters:
         - chapters/oscilador_fourier.qmd
-    # - summary.qmd
-    # - references.qmd
 
 bibliography: referencias.bib
-
 
 format:
   html:
