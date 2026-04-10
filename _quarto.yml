@@ -9,7 +9,6 @@ book:
   language: es
   chapters:
     - index.qmd
-    - intro.qmd
     - part: "Fluidos"
       chapters:
         - chapters/fluidos/hidrostatica.qmd

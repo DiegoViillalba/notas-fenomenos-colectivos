@@ -1,5 +1,8 @@
-# Preface {.unnumbered}
+# Introducción {.unnumbered}
 
-This is a Quarto book.
+Estas notas comprenden lso contenidos de los examenes de la materia Fenómenos Colectivos, dictada en la Facultad de Ciencias de la UNAM en el semestre 2026-2.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+El curso fue impartido por el Dr. Ulisses Jesús Gutiérrez Hernández	y el Ayudante Diego Antonio Villalba González
+
+ El temario se divide en tres partes: Fluidos, Ondas y Fenómenos Colectivos. En esta primera parte se abordan los conceptos básicos de la hidrostática, incluyendo la presión, el principio de Pascal, el principio de Arquímedes y la ecuación de Bernoulli. En la segunda parte se estudian las ondas, incluyendo el oscilador armónico simple, la superposición de ondas y la transformada de Fourier.
+

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.10.26)  10 APR 2026 00:29
+This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.10.26)  10 APR 2026 08:10
  restricted system commands enabled.
 **index.tex
 (./index.tex
@@ -1494,6 +1494,13 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 26
 ] [3
 
 ]
+part I.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 291.
+[4
+
+]
 chapter 1.
 
 Class scrreprt Warning: \float@addtolists detected!
@@ -1510,31 +1517,20 @@ Class scrreprt Warning: \float@addtolists detected!
 (scrreprt)              a package that still implements the
 (scrreprt)              deprecated \float@addtolist interface.
 
-[4
-
-]
-part I.
-Package scrkbase Info: You've told me to use the font selection of the element
-(scrkbase)             `partprefix' that is an alias of element `partnumber'
-(scrkbase)              on input line 291.
-[5
-
-]
-chapter 2.
 
 Underfull \hbox (badness 10000) in paragraph at lines 297--298
 
  []
 
-[6
+[5
 
 ]
-chapter 3.
+chapter 2.
 
 warning  (file index_files/mediabag/chapters/fluidos/../../images/fluidos/cilind
 er.pdf) (pdf inclusion): PDF inclusion: found PDF version '1.7', but at most ver
 sion '1.5' allowed
-<index_files/mediabag/chapters/fluidos/../../images/fluidos/cilinder.pdf, id=46
+<index_files/mediabag/chapters/fluidos/../../images/fluidos/cilinder.pdf, id=39
 , 209.07033pt x 201.72137pt>
 File: index_files/mediabag/chapters/fluidos/../../images/fluidos/cilinder.pdf G
 raphic file (type pdf)
@@ -1542,62 +1538,62 @@ raphic file (type pdf)
 Package luatex.def Info: index_files/mediabag/chapters/fluidos/../../images/flu
 idos/cilinder.pdf  used on input line 368.
 (luatex.def)             Requested size: 209.06981pt x 201.72087pt.
-[7
+[6
 
-] [8<./index_files/mediabag/chapters/fluidos/../../images/fluidos/cilinder.pdf>] [9] [10] [11] [12]
-chapter 4.
-<chapters/fluidos/../../images/fluidos/tubo_u.png, id=164, 638.385pt x 604.2575
+] [7<./index_files/mediabag/chapters/fluidos/../../images/fluidos/cilinder.pdf>] [8] [9] [10] [11]
+chapter 3.
+<chapters/fluidos/../../images/fluidos/tubo_u.png, id=157, 638.385pt x 604.2575
 pt>
 File: chapters/fluidos/../../images/fluidos/tubo_u.png Graphic file (type png)
 <use chapters/fluidos/../../images/fluidos/tubo_u.png>
 Package luatex.def Info: chapters/fluidos/../../images/fluidos/tubo_u.png  used
  on input line 657.
 (luatex.def)             Requested size: 638.38342pt x 604.25603pt.
-[13
+[12
 
-] [14<./chapters/fluidos/../../images/fluidos/tubo_u.png>] [15] [16] [17]
+] [13<./chapters/fluidos/../../images/fluidos/tubo_u.png>] [14] [15] [16]
+chapter 4.
+[17
+
+] [18]
 chapter 5.
-[18
+[19
 
-] [19]
+] [20] [21] [22]
 chapter 6.
-[20
+[23
 
-] [21] [22] [23]
+] [24]
 chapter 7.
-[24
+[25
 
-] [25]
+] [26]
 chapter 8.
-[26
-
-] [27]
-chapter 9.
-[28
+[27
 
 ]
 part II.
 Package scrkbase Info: You've told me to use the font selection of the element
 (scrkbase)             `partprefix' that is an alias of element `partnumber'
 (scrkbase)              on input line 1253.
-[29
+[28
 
 ]
-chapter 10.
+chapter 9.
 
 Underfull \hbox (badness 10000) in paragraph at lines 1260--1261
 
  []
 
+[29
+
+]
+chapter 10.
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1338.
 [30
 
 ]
-chapter 11.
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1338.
-[31
-
-]
 Underfull \vbox (badness 10000) detected at line 1362
  []
 
@@ -1605,12 +1601,12 @@ Underfull \vbox (badness 10000) detected at line 1362
 Underfull \vbox (badness 10000) detected at line 1362
  []
 
-[32]
+[31]
 
 Package longtable Warning: Column widths have changed
-(longtable)                in table 11.1 on input line 1412.
+(longtable)                in table 10.1 on input line 1412.
 
-[33] [34] [35
+[32] [33] [34
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
@@ -1620,9 +1616,9 @@ Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
-] [36]
-chapter 12.
-[37
+] [35]
+chapter 11.
+[36
 
 ]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
@@ -1651,20 +1647,20 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `superscript' on input line 1680.
 
-[38
+[37
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
-] [39
+] [38
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ○ (U+25CB) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
-] [40]
-chapter 13.
-[41
+] [39]
+chapter 12.
+[40
 
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⬤ (U+2B24) in font [lmroman10-regular]:+tlig;!
@@ -1685,7 +1681,7 @@ l.1841 la suma \(\sum 1/n^4\)}
                             
 
 Here is how much of LuaTeX's memory you used:
- 40807 strings out of 478531
+ 40803 strings out of 478531
  100000,1648299 words of node,token memory allocated
  10234 words of node memory still in use:
    84 hlist, 3 vlist, 2 rule, 50 disc, 9 local_par, 1 dir, 15 math, 231 glue, 27
@@ -1693,7 +1689,7 @@ Here is how much of LuaTeX's memory you used:
 tribute_list, 6 if_stack, 1 write, 139 pdf_literal, 5 pdf_dest, 20 pdf_colorstac
 k nodes
    avail lists: 1:1,2:1229,3:589,4:903,5:298,6:38,7:3875,8:51,9:369,10:9,11:199
- 59247 multiletter control sequences out of 65536+600000
- 100 fonts using 30020679 bytes
+ 59245 multiletter control sequences out of 65536+600000
+ 100 fonts using 30020567 bytes
  111i,9n,122p,10618b,1094s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!
