@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "fenomenos-colectivos"
+  author: "Diego Villalba"
+  date: today
+  language: es
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: "Fluidos"
+      chapters:
+        - chapters/fluidos/hidrostatica.qmd
+    - part: "Ondas"
+      chapters:
+        - chapters/oscilador_fourier.qmd
+    # - summary.qmd
+    # - references.qmd
+
+bibliography: referencias.bib
+
+
+format:
+  html:
+    css: visionbook.css
+    anchor-sections: true
+    fontsize: "16px"
+    linestretch: 1.6
+    mainfont: "Palatino"
+    monofont: "Fira Mono"
+    smooth-scroll: true
+    toc-depth: 3
+  pdf:
+    documentclass: scrreprt

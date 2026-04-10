@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Hidrostática y fluidos – fenomenos-colectivos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/oscilador_fourier.html" rel="next">
+<link href="../../intro.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b71510b85f4573c376530f2e673496b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../visionbook.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/fluidos/hidrostatica.html">Fluidos</a></li><li class="breadcrumb-item"><a href="../../chapters/fluidos/hidrostatica.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hidrostática y fluidos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">fenomenos-colectivos</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fluidos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/fluidos/hidrostatica.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hidrostática y fluidos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Ondas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/oscilador_fourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Oscilador armónico y series de Fourier</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#problema-1.-flotación-de-un-cilindro-en-dos-fluidos" id="toc-problema-1.-flotación-de-un-cilindro-en-dos-fluidos" class="nav-link active" data-scroll-target="#problema-1.-flotación-de-un-cilindro-en-dos-fluidos"><span class="header-section-number">3</span> Problema 1. Flotación de un cilindro en dos fluidos</a>
+  <ul class="collapse">
+  <li><a href="#enunciado" id="toc-enunciado" class="nav-link" data-scroll-target="#enunciado">Enunciado</a></li>
+  <li><a href="#esquema-físico-del-problema" id="toc-esquema-físico-del-problema" class="nav-link" data-scroll-target="#esquema-físico-del-problema">Esquema físico del problema</a></li>
+  <li><a href="#idea-física" id="toc-idea-física" class="nav-link" data-scroll-target="#idea-física">Idea física</a></li>
+  <li><a href="#datos-y-conversión-de-unidades" id="toc-datos-y-conversión-de-unidades" class="nav-link" data-scroll-target="#datos-y-conversión-de-unidades">Datos y conversión de unidades</a></li>
+  <li><a href="#presión-manométrica-en-la-cara-superior" id="toc-presión-manométrica-en-la-cara-superior" class="nav-link" data-scroll-target="#presión-manométrica-en-la-cara-superior">Presión manométrica en la cara superior</a></li>
+  <li><a href="#presión-manométrica-en-la-cara-inferior" id="toc-presión-manométrica-en-la-cara-inferior" class="nav-link" data-scroll-target="#presión-manométrica-en-la-cara-inferior">Presión manométrica en la cara inferior</a></li>
+  <li><a href="#masa-y-densidad-del-cilindro" id="toc-masa-y-densidad-del-cilindro" class="nav-link" data-scroll-target="#masa-y-densidad-del-cilindro">Masa y densidad del cilindro</a>
+  <ul class="collapse">
+  <li><a href="#empuje-total" id="toc-empuje-total" class="nav-link" data-scroll-target="#empuje-total">Empuje total</a></li>
+  <li><a href="#condición-de-equilibrio" id="toc-condición-de-equilibrio" class="nav-link" data-scroll-target="#condición-de-equilibrio">Condición de equilibrio</a></li>
+  <li><a href="#densidad-del-cilindro" id="toc-densidad-del-cilindro" class="nav-link" data-scroll-target="#densidad-del-cilindro">Densidad del cilindro</a></li>
+  </ul></li>
+  <li><a href="#resultados-finales" id="toc-resultados-finales" class="nav-link" data-scroll-target="#resultados-finales">Resultados finales</a></li>
+  </ul></li>
+  <li><a href="#problema-2.-tubo-en-u-con-agua-y-mercurio" id="toc-problema-2.-tubo-en-u-con-agua-y-mercurio" class="nav-link" data-scroll-target="#problema-2.-tubo-en-u-con-agua-y-mercurio"><span class="header-section-number">4</span> Problema 2. Tubo en U con agua y mercurio</a>
+  <ul class="collapse">
+  <li><a href="#enunciado-1" id="toc-enunciado-1" class="nav-link" data-scroll-target="#enunciado-1">Enunciado</a></li>
+  <li><a href="#esquema-físico-del-problema-1" id="toc-esquema-físico-del-problema-1" class="nav-link" data-scroll-target="#esquema-físico-del-problema-1">Esquema físico del problema</a></li>
+  <li><a href="#idea-física-1" id="toc-idea-física-1" class="nav-link" data-scroll-target="#idea-física-1">Idea física</a></li>
+  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos">Datos</a></li>
+  <li><a href="#relación-de-equilibrio-hidrostático" id="toc-relación-de-equilibrio-hidrostático" class="nav-link" data-scroll-target="#relación-de-equilibrio-hidrostático">Relación de equilibrio hidrostático</a></li>
+  <li><a href="#sustitución-numérica" id="toc-sustitución-numérica" class="nav-link" data-scroll-target="#sustitución-numérica">Sustitución numérica</a></li>
+  <li><a href="#resultado" id="toc-resultado" class="nav-link" data-scroll-target="#resultado">Resultado</a></li>
+  <li><a href="#interpretación-física" id="toc-interpretación-física" class="nav-link" data-scroll-target="#interpretación-física">Interpretación física</a></li>
+  <li><a href="#comentario-didáctico" id="toc-comentario-didáctico" class="nav-link" data-scroll-target="#comentario-didáctico">Comentario didáctico</a></li>
+  </ul></li>
+  <li><a href="#problema-3.-sustentación-de-un-ala-por-diferencia-de-velocidades" id="toc-problema-3.-sustentación-de-un-ala-por-diferencia-de-velocidades" class="nav-link" data-scroll-target="#problema-3.-sustentación-de-un-ala-por-diferencia-de-velocidades"><span class="header-section-number">5</span> Problema 3. Sustentación de un ala por diferencia de velocidades</a>
+  <ul class="collapse">
+  <li><a href="#enunciado-2" id="toc-enunciado-2" class="nav-link" data-scroll-target="#enunciado-2"><span class="header-section-number">5.1</span> Enunciado</a></li>
+  <li><a href="#idea-física-2" id="toc-idea-física-2" class="nav-link" data-scroll-target="#idea-física-2"><span class="header-section-number">5.2</span> Idea física</a></li>
+  <li><a href="#desarrollo" id="toc-desarrollo" class="nav-link" data-scroll-target="#desarrollo"><span class="header-section-number">5.3</span> Desarrollo</a>
+  <ul class="collapse">
+  <li><a href="#paso-1.-diferencia-de-presión" id="toc-paso-1.-diferencia-de-presión" class="nav-link" data-scroll-target="#paso-1.-diferencia-de-presión"><span class="header-section-number">5.3.1</span> Paso 1. Diferencia de presión</a></li>
+  <li><a href="#paso-2.-fuerza-neta" id="toc-paso-2.-fuerza-neta" class="nav-link" data-scroll-target="#paso-2.-fuerza-neta"><span class="header-section-number">5.3.2</span> Paso 2. Fuerza neta</a></li>
+  </ul></li>
+  <li><a href="#resultado-1" id="toc-resultado-1" class="nav-link" data-scroll-target="#resultado-1"><span class="header-section-number">5.4</span> Resultado</a></li>
+  </ul></li>
+  <li><a href="#problema-4.-umbral-de-cavitación-en-un-venturi" id="toc-problema-4.-umbral-de-cavitación-en-un-venturi" class="nav-link" data-scroll-target="#problema-4.-umbral-de-cavitación-en-un-venturi"><span class="header-section-number">6</span> Problema 4. Umbral de cavitación en un Venturi</a>
+  <ul class="collapse">
+  <li><a href="#enunciado-3" id="toc-enunciado-3" class="nav-link" data-scroll-target="#enunciado-3"><span class="header-section-number">6.1</span> Enunciado</a></li>
+  <li><a href="#idea-física-3" id="toc-idea-física-3" class="nav-link" data-scroll-target="#idea-física-3"><span class="header-section-number">6.2</span> Idea física</a></li>
+  <li><a href="#desarrollo-1" id="toc-desarrollo-1" class="nav-link" data-scroll-target="#desarrollo-1"><span class="header-section-number">6.3</span> Desarrollo</a>
+  <ul class="collapse">
+  <li><a href="#paso-1.-relación-entre-velocidades-por-continuidad" id="toc-paso-1.-relación-entre-velocidades-por-continuidad" class="nav-link" data-scroll-target="#paso-1.-relación-entre-velocidades-por-continuidad"><span class="header-section-number">6.3.1</span> Paso 1. Relación entre velocidades por continuidad</a></li>
+  <li><a href="#paso-2.-bernoulli-entre-las-dos-secciones" id="toc-paso-2.-bernoulli-entre-las-dos-secciones" class="nav-link" data-scroll-target="#paso-2.-bernoulli-entre-las-dos-secciones"><span class="header-section-number">6.3.2</span> Paso 2. Bernoulli entre las dos secciones</a></li>
+  <li><a href="#paso-3.-usar-la-condición-de-cavitación" id="toc-paso-3.-usar-la-condición-de-cavitación" class="nav-link" data-scroll-target="#paso-3.-usar-la-condición-de-cavitación"><span class="header-section-number">6.3.3</span> Paso 3. Usar la condición de cavitación</a></li>
+  </ul></li>
+  <li><a href="#resultado-2" id="toc-resultado-2" class="nav-link" data-scroll-target="#resultado-2"><span class="header-section-number">6.4</span> Resultado</a></li>
+  </ul></li>
+  <li><a href="#problema-5.-descarga-por-un-orificio-y-trayectoria-del-chorro" id="toc-problema-5.-descarga-por-un-orificio-y-trayectoria-del-chorro" class="nav-link" data-scroll-target="#problema-5.-descarga-por-un-orificio-y-trayectoria-del-chorro"><span class="header-section-number">7</span> Problema 5. Descarga por un orificio y trayectoria del chorro</a>
+  <ul class="collapse">
+  <li><a href="#enunciado-4" id="toc-enunciado-4" class="nav-link" data-scroll-target="#enunciado-4"><span class="header-section-number">7.1</span> Enunciado</a></li>
+  <li><a href="#desarrollo-2" id="toc-desarrollo-2" class="nav-link" data-scroll-target="#desarrollo-2"><span class="header-section-number">7.2</span> Desarrollo</a></li>
+  <li><a href="#resultado-3" id="toc-resultado-3" class="nav-link" data-scroll-target="#resultado-3"><span class="header-section-number">7.3</span> Resultado</a></li>
+  </ul></li>
+  <li><a href="#problema-6.-tiempo-de-vaciado-de-un-tanque-cilíndrico" id="toc-problema-6.-tiempo-de-vaciado-de-un-tanque-cilíndrico" class="nav-link" data-scroll-target="#problema-6.-tiempo-de-vaciado-de-un-tanque-cilíndrico"><span class="header-section-number">8</span> Problema 6. Tiempo de vaciado de un tanque cilíndrico</a>
+  <ul class="collapse">
+  <li><a href="#enunciado-5" id="toc-enunciado-5" class="nav-link" data-scroll-target="#enunciado-5"><span class="header-section-number">8.1</span> Enunciado</a></li>
+  <li><a href="#desarrollo-3" id="toc-desarrollo-3" class="nav-link" data-scroll-target="#desarrollo-3"><span class="header-section-number">8.2</span> Desarrollo</a></li>
+  <li><a href="#resultado-4" id="toc-resultado-4" class="nav-link" data-scroll-target="#resultado-4"><span class="header-section-number">8.3</span> Resultado</a></li>
+  </ul></li>
+  <li><a href="#resumen-final-de-respuestas" id="toc-resumen-final-de-respuestas" class="nav-link" data-scroll-target="#resumen-final-de-respuestas"><span class="header-section-number">9</span> Resumen final de respuestas</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/fluidos/hidrostatica.html">Fluidos</a></li><li class="breadcrumb-item"><a href="../../chapters/fluidos/hidrostatica.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hidrostática y fluidos</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hidrostática y fluidos</span></h1>
+<p class="subtitle lead">Problemas similares del examen parcial</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>El presente material propone <strong>seis problemas nuevos</strong>, cada uno <strong>análogo</strong> a uno de los ejercicios del examen proporcionado por el usuario. La idea es conservar el mismo tipo de razonamiento físico, pero con datos distintos, de manera que el documento sirva como guía de estudio y práctica adicional.</p>
+<p>En todos los casos, las soluciones se desarrollan de manera <strong>detallada, paso a paso y didáctica</strong>, enfatizando:</p>
+<ul>
+<li>la identificación de los principios físicos relevantes;</li>
+<li>la traducción del enunciado a ecuaciones;</li>
+<li>el manejo cuidadoso de unidades; y</li>
+<li>la interpretación física del resultado.</li>
+</ul>
+<p>Cuando sea conveniente, se usarán los valores aproximados:</p>
+<p><span class="math display">\[
+g = 9.81\ \text{m/s}^2,
+\qquad
+\rho_{\text{agua}} = 1000\ \text{kg/m}^3,
+\qquad
+\rho_{\text{Hg}} = 13600\ \text{kg/m}^3.
+\]</span></p>
+<section id="problema-1.-flotación-de-un-cilindro-en-dos-fluidos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Problema 1. Flotación de un cilindro en dos fluidos</h1>
+<section id="enunciado" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="enunciado">Enunciado</h2>
+<p>Un bloque cilíndrico de corcho, de <strong>12 cm de diámetro</strong> y <strong>18 cm de altura</strong>, flota verticalmente en la interfaz entre <strong>aceite</strong> y <strong>agua</strong>. La cara inferior del cilindro se encuentra <strong>3.0 cm por debajo de la interfaz</strong>. La densidad del aceite es</p>
+<p><span class="math display">\[
+\rho_{\text{aceite}}=900\ \text{kg/m}^3.
+\]</span></p>
+<p>Se pide determinar:</p>
+<ol type="a">
+<li><p>la presión manométrica en la cara superior del cilindro;</p></li>
+<li><p>la presión manométrica en la cara inferior;</p></li>
+<li><p>la masa y la densidad del cilindro.</p></li>
+</ol>
+</section>
+<section id="esquema-físico-del-problema" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="esquema-físico-del-problema">Esquema físico del problema</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/fluidos/cilinder.svg" class="img-fluid figure-img"></p>
+<figcaption>Esquema del cilindro flotando en la interfaz entre aceite y agua, con las dimensiones y profundidades indicadas.</figcaption>
+</figure>
+</div>
+</section>
+<section id="idea-física" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="idea-física">Idea física</h2>
+<p>Este problema combina dos conceptos fundamentales de la hidrostática:</p>
+<ol type="1">
+<li><p><strong>Presión hidrostática.</strong><br>
+En un fluido en reposo, la presión aumenta con la profundidad según <span class="math display">\[
+p=\rho g h.
+\]</span></p></li>
+<li><p><strong>Principio de Arquímedes.</strong><br>
+Un cuerpo total o parcialmente sumergido experimenta un empuje vertical hacia arriba igual al peso del fluido desalojado.</p></li>
+</ol>
+<p>En este caso, el cilindro desaloja <strong>dos fluidos distintos</strong>, de modo que el empuje total será la suma de los empujes ejercidos por el aceite y por el agua.</p>
+</section>
+<section id="datos-y-conversión-de-unidades" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="datos-y-conversión-de-unidades">Datos y conversión de unidades</h2>
+<p>Diámetro del cilindro: <span class="math display">\[
+D=12\ \text{cm}=0.12\ \text{m}
+\]</span></p>
+<p>Radio: <span class="math display">\[
+r=\frac{D}{2}=0.06\ \text{m}
+\]</span></p>
+<p>Altura total: <span class="math display">\[
+H=18\ \text{cm}=0.18\ \text{m}
+\]</span></p>
+<p>Profundidad de la cara inferior bajo la interfaz: <span class="math display">\[
+h_{\text{agua}}=3.0\ \text{cm}=0.03\ \text{m}
+\]</span></p>
+<p>Como la parte inferior está 3 cm dentro del agua, la longitud del cilindro sumergida en aceite es <span class="math display">\[
+h_{\text{aceite}}=H-h_{\text{agua}}=0.18-0.03=0.15\ \text{m}.
+\]</span></p>
+<p>El área transversal del cilindro es <span class="math display">\[
+A=\pi r^2=\pi(0.06)^2=0.01131\ \text{m}^2.
+\]</span></p>
+<p>Tomaremos además <span class="math display">\[
+\rho_{\text{agua}}=1000\ \text{kg/m}^3,
+\qquad
+g=9.81\ \text{m/s}^2.
+\]</span></p>
+</section>
+<section id="presión-manométrica-en-la-cara-superior" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="presión-manométrica-en-la-cara-superior">Presión manométrica en la cara superior</h2>
+<p>La cara superior del cilindro coincide con la superficie libre del aceite. En una superficie libre expuesta a la atmósfera, la presión absoluta es la atmosférica; por tanto, la <strong>presión manométrica</strong> es cero.</p>
+<p>Así,</p>
+<p><span class="math display">\[
+\boxed{p_{\text{sup}}=0\ \text{Pa}}.
+\]</span></p>
+</section>
+<section id="presión-manométrica-en-la-cara-inferior" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="presión-manométrica-en-la-cara-inferior">Presión manométrica en la cara inferior</h2>
+<p>La cara inferior está por debajo de una columna de fluido formada por:</p>
+<ul>
+<li><span class="math inline">\(0.15\ \text{m}\)</span> de aceite,</li>
+<li><span class="math inline">\(0.03\ \text{m}\)</span> de agua.</li>
+</ul>
+<p>La presión manométrica se obtiene sumando ambos aportes:</p>
+<p><span class="math display">\[
+p_{\text{inf}}
+=
+\rho_{\text{aceite}}gh_{\text{aceite}}
++
+\rho_{\text{agua}}gh_{\text{agua}}.
+\]</span></p>
+<p>Sustituyendo,</p>
+<p><span class="math display">\[
+p_{\text{inf}}
+=
+(900)(9.81)(0.15)
++
+(1000)(9.81)(0.03).
+\]</span></p>
+<p>Calculamos cada término:</p>
+<p><span class="math display">\[
+(900)(9.81)(0.15)=1324.35\ \text{Pa},
+\]</span></p>
+<p><span class="math display">\[
+(1000)(9.81)(0.03)=294.3\ \text{Pa}.
+\]</span></p>
+<p>Por tanto,</p>
+<p><span class="math display">\[
+p_{\text{inf}}=1324.35+294.3=1618.65\ \text{Pa}.
+\]</span></p>
+<p>En consecuencia,</p>
+<p><span class="math display">\[
+\boxed{p_{\text{inf}}\approx 1.62\times10^3\ \text{Pa}}.
+\]</span></p>
+</section>
+<section id="masa-y-densidad-del-cilindro" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="masa-y-densidad-del-cilindro">Masa y densidad del cilindro</h2>
+<section id="empuje-total" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="empuje-total">Empuje total</h3>
+<p>El volumen del cilindro sumergido en aceite es</p>
+<p><span class="math display">\[
+V_{\text{aceite}}=Ah_{\text{aceite}}
+=
+(0.01131)(0.15)
+=
+1.6965\times10^{-3}\ \text{m}^3.
+\]</span></p>
+<p>El volumen sumergido en agua es</p>
+<p><span class="math display">\[
+V_{\text{agua}}=Ah_{\text{agua}}
+=
+(0.01131)(0.03)
+=
+3.393\times10^{-4}\ \text{m}^3.
+\]</span></p>
+<p>Entonces el empuje total vale</p>
+<p><span class="math display">\[
+E
+=
+\rho_{\text{aceite}}gV_{\text{aceite}}
++
+\rho_{\text{agua}}gV_{\text{agua}}.
+\]</span></p>
+<p>Sustituyendo,</p>
+<p><span class="math display">\[
+E
+=
+(900)(9.81)(1.6965\times10^{-3})
++
+(1000)(9.81)(3.393\times10^{-4}).
+\]</span></p>
+<p>Numéricamente,</p>
+<p><span class="math display">\[
+E\approx 14.98+3.33=18.31\ \text{N}.
+\]</span></p>
+</section>
+<section id="condición-de-equilibrio" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="condición-de-equilibrio">Condición de equilibrio</h3>
+<p>Como el cilindro flota en equilibrio,</p>
+<p><span class="math display">\[
+E=mg.
+\]</span></p>
+<p>Por tanto,</p>
+<p><span class="math display">\[
+m=\frac{E}{g}=\frac{18.31}{9.81}=1.87\ \text{kg}.
+\]</span></p>
+<p>Así, la masa del cilindro es</p>
+<p><span class="math display">\[
+\boxed{m\approx 1.87\ \text{kg}}.
+\]</span></p>
+</section>
+<section id="densidad-del-cilindro" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="densidad-del-cilindro">Densidad del cilindro</h3>
+<p>El volumen total del cilindro es</p>
+<p><span class="math display">\[
+V=AH=(0.01131)(0.18)=2.0358\times10^{-3}\ \text{m}^3.
+\]</span></p>
+<p>La densidad del cilindro resulta</p>
+<p><span class="math display">\[
+\rho_c=\frac{m}{V}
+=
+\frac{1.87}{2.0358\times10^{-3}}
+\approx 918.6\ \text{kg/m}^3.
+\]</span></p>
+<p>Por lo tanto,</p>
+<p><span class="math display">\[
+\boxed{\rho_c\approx 9.19\times10^2\ \text{kg/m}^3}.
+\]</span></p>
+</section>
+</section>
+<section id="resultados-finales" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="resultados-finales">Resultados finales</h2>
+<p>Se obtiene finalmente:</p>
+<p><span class="math display">\[
+\boxed{p_{\text{sup}}=0\ \text{Pa}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{p_{\text{inf}}\approx 1.62\times10^3\ \text{Pa}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{m\approx 1.87\ \text{kg}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\rho_c\approx 9.19\times10^2\ \text{kg/m}^3}
+\]</span></p>
+</section>
+</section>
+<section id="problema-2.-tubo-en-u-con-agua-y-mercurio" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Problema 2. Tubo en U con agua y mercurio</h1>
+<section id="enunciado-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="enunciado-1">Enunciado</h2>
+<p>Un tubo en U contiene mercurio. En uno de sus brazos se vierten <strong>20 cm de agua</strong>. Se desea determinar <strong>cuánto se eleva el mercurio en el brazo opuesto</strong> con respecto a su nivel inicial. Suponga que ambos brazos tienen la misma sección transversal.</p>
+</section>
+<section id="esquema-físico-del-problema-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="esquema-físico-del-problema-1">Esquema físico del problema</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../images/fluidos/tubo_u.png" class="img-fluid figure-img"></p>
+<figcaption>Esquema del tubo en U con mercurio y agua, indicando las alturas y niveles correspondientes.</figcaption>
+</figure>
+</div>
+</section>
+<section id="idea-física-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="idea-física-1">Idea física</h2>
+<p>La idea central es comparar presiones a una <strong>misma altura dentro del mercurio</strong>.</p>
+<p>Cuando se vierte agua en el brazo izquierdo, su peso adicional empuja hacia abajo al mercurio en ese lado. Como el tubo tiene la misma sección transversal en ambos brazos, el nivel del mercurio:</p>
+<ul>
+<li><strong>desciende</strong> una cantidad <span class="math inline">\(x\)</span> en el brazo izquierdo;</li>
+<li><strong>asciende</strong> una cantidad <span class="math inline">\(x\)</span> en el brazo derecho.</li>
+</ul>
+<p>Por ello, la diferencia total de niveles de mercurio entre ambos lados es</p>
+<p><span class="math display">\[
+2x.
+\]</span></p>
+<p>El equilibrio hidrostático se obtiene al igualar:</p>
+<ul>
+<li>la presión producida por la columna de agua;</li>
+<li>la presión producida por la diferencia de niveles del mercurio.</li>
+</ul>
+</section>
+<section id="datos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="datos">Datos</h2>
+<p>Altura de la columna de agua: <span class="math display">\[
+h=20\ \text{cm}=0.20\ \text{m}
+\]</span></p>
+<p>Densidad del agua: <span class="math display">\[
+\rho_{\text{agua}}=1000\ \text{kg/m}^3
+\]</span></p>
+<p>Densidad del mercurio: <span class="math display">\[
+\rho_{\text{Hg}}=13600\ \text{kg/m}^3
+\]</span></p>
+</section>
+<section id="relación-de-equilibrio-hidrostático" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="relación-de-equilibrio-hidrostático">Relación de equilibrio hidrostático</h2>
+<p>La presión ejercida por la columna de agua debe equilibrarse con la presión correspondiente a la diferencia de alturas del mercurio. Así,</p>
+<p><span class="math display">\[
+\rho_{\text{agua}}gh=\rho_{\text{Hg}}g(2x).
+\]</span></p>
+<p>El factor <span class="math inline">\(g\)</span> aparece en ambos lados, por lo que se cancela:</p>
+<p><span class="math display">\[
+\rho_{\text{agua}}h=\rho_{\text{Hg}}(2x).
+\]</span></p>
+<p>Despejando <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+x=\frac{\rho_{\text{agua}}h}{2\rho_{\text{Hg}}}.
+\]</span></p>
+</section>
+<section id="sustitución-numérica" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="sustitución-numérica">Sustitución numérica</h2>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+x=\frac{(1000)(0.20)}{2(13600)}.
+\]</span></p>
+<p>Entonces,</p>
+<p><span class="math display">\[
+x=\frac{200}{27200}=7.35\times10^{-3}\ \text{m}.
+\]</span></p>
+<p>Convertimos a centímetros:</p>
+<p><span class="math display">\[
+x=7.35\times10^{-3}\ \text{m}=0.735\ \text{cm}.
+\]</span></p>
+</section>
+<section id="resultado" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="resultado">Resultado</h2>
+<p>La elevación del mercurio en el brazo opuesto es</p>
+<p><span class="math display">\[
+\boxed{x\approx 0.74\ \text{cm}}.
+\]</span></p>
+</section>
+<section id="interpretación-física" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="interpretación-física">Interpretación física</h2>
+<p>El valor obtenido es pequeño, lo cual tiene sentido físico. El mercurio es mucho más denso que el agua, así que una columna relativamente grande de agua se compensa con una variación pequeña en el nivel del mercurio.</p>
+<p>Dicho de otro modo: como el mercurio pesa mucho más por unidad de volumen, no necesita desplazarse demasiado para producir la diferencia de presión necesaria.</p>
+</section>
+<section id="comentario-didáctico" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="comentario-didáctico">Comentario didáctico</h2>
+<p>En este problema aparecen dos ideas importantes:</p>
+<ol type="1">
+<li><strong>La presión a una misma altura, dentro de un mismo fluido continuo, debe ser la misma</strong> cuando el sistema está en equilibrio.</li>
+<li><strong>La conservación de volumen</strong> en tubos con igual sección implica que, si en un lado el nivel baja <span class="math inline">\(x\)</span>, en el otro sube también <span class="math inline">\(x\)</span>.</li>
+</ol>
+<p>Por eso la diferencia total entre niveles no es <span class="math inline">\(x\)</span>, sino</p>
+<p><span class="math display">\[
+2x.
+\]</span></p>
+<p>Ese detalle suele ser el punto más importante del ejercicio.</p>
+</section>
+</section>
+<section id="problema-3.-sustentación-de-un-ala-por-diferencia-de-velocidades" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Problema 3. Sustentación de un ala por diferencia de velocidades</h1>
+<section id="enunciado-2" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="enunciado-2"><span class="header-section-number">5.1</span> Enunciado</h2>
+<p>El aire fluye horizontalmente alrededor de las alas de una avioneta. La rapidez del aire es de <strong>82 m/s</strong> por la parte superior del ala y de <strong>68 m/s</strong> por la parte inferior. El área total efectiva de las alas es de <strong>18.5 m²</strong>. Considere una densidad del aire igual a</p>
+<p><span class="math display">\[
+\rho = 1.18\ \text{kg/m}^3.
+\]</span></p>
+<p>Determine la fuerza vertical neta ejercida por el aire sobre la avioneta.</p>
+</section>
+<section id="idea-física-2" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="idea-física-2"><span class="header-section-number">5.2</span> Idea física</h2>
+<p>Este problema usa la ecuación de Bernoulli. Si la rapidez es mayor en la parte superior, entonces la presión arriba es menor. La diferencia de presión entre la cara inferior y la superior produce una fuerza neta hacia arriba.</p>
+</section>
+<section id="desarrollo" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="desarrollo"><span class="header-section-number">5.3</span> Desarrollo</h2>
+<section id="paso-1.-diferencia-de-presión" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="paso-1.-diferencia-de-presión"><span class="header-section-number">5.3.1</span> Paso 1. Diferencia de presión</h3>
+<p>Aplicamos Bernoulli entre la parte superior e inferior, suponiendo la misma altura:</p>
+<p><span class="math display">\[
+p_{sup}+\frac12\rho v_{sup}^2 = p_{inf}+\frac12\rho v_{inf}^2.
+\]</span></p>
+<p>Despejamos la diferencia de presión:</p>
+<p><span class="math display">\[
+p_{inf}-p_{sup} = \frac12\rho\left(v_{sup}^2-v_{inf}^2\right).
+\]</span></p>
+<p>Sustituyendo valores:</p>
+<p><span class="math display">\[
+\Delta p = \frac12(1.18)\left(82^2-68^2\right).
+\]</span></p>
+<p>Calculamos los cuadrados:</p>
+<p><span class="math display">\[
+82^2=6724,
+\qquad
+68^2=4624.
+\]</span></p>
+<p>Entonces:</p>
+<p><span class="math display">\[
+\Delta p = 0.59(6724-4624)=0.59(2100)=1239\ \text{Pa}.
+\]</span></p>
+</section>
+<section id="paso-2.-fuerza-neta" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="paso-2.-fuerza-neta"><span class="header-section-number">5.3.2</span> Paso 2. Fuerza neta</h3>
+<p>La fuerza de sustentación idealizada vale</p>
+<p><span class="math display">\[
+F = \Delta p\,A.
+\]</span></p>
+<p>Sustituyendo:</p>
+<p><span class="math display">\[
+F=(1239)(18.5)=22921.5\ \text{N}.
+\]</span></p>
+</section>
+</section>
+<section id="resultado-1" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="resultado-1"><span class="header-section-number">5.4</span> Resultado</h2>
+<p><span class="math display">\[
+\boxed{F\approx 2.29\times10^4\ \text{N}}
+\]</span></p>
+<p>La fuerza es <strong>hacia arriba</strong>.</p>
+</section>
+</section>
+<section id="problema-4.-umbral-de-cavitación-en-un-venturi" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Problema 4. Umbral de cavitación en un Venturi</h1>
+<section id="enunciado-3" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="enunciado-3"><span class="header-section-number">6.1</span> Enunciado</h2>
+<p>En un tubo de Venturi circula agua a <strong>20 °C</strong>. Los radios de las secciones son</p>
+<p><span class="math display">\[
+r_1=10\ \text{cm}, \qquad r_2=2.0\ \text{cm}.
+\]</span></p>
+<p>Se sabe que el número de cavitación crítico para que comiencen a formarse burbujas es</p>
+<p><span class="math display">\[
+Ca=0.40.
+\]</span></p>
+<p>Determine la rapidez del fluido en la sección ancha para que empiece la cavitación en la sección angosta, suponiendo que la presión en la sección ancha es atmosférica:</p>
+<p><span class="math display">\[
+p_1 = 1.013\times10^5\ \text{Pa}.
+\]</span></p>
+<p>Para el agua a <span class="math inline">\(20^\circ\)</span>C, tome:</p>
+<p><span class="math display">\[
+\rho=998\ \text{kg/m}^3,
+\qquad
+p_v = 2.34\times10^3\ \text{Pa}.
+\]</span></p>
+</section>
+<section id="idea-física-3" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="idea-física-3"><span class="header-section-number">6.2</span> Idea física</h2>
+<p>La cavitación empieza cuando la presión local se acerca a la presión de vapor. El número de cavitación dado es</p>
+<p><span class="math display">\[
+Ca = \frac{p-p_v}{\tfrac12\rho v^2}.
+\]</span></p>
+<p>La región crítica será la sección angosta, donde la velocidad es mayor y la presión es menor.</p>
+</section>
+<section id="desarrollo-1" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="desarrollo-1"><span class="header-section-number">6.3</span> Desarrollo</h2>
+<section id="paso-1.-relación-entre-velocidades-por-continuidad" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="paso-1.-relación-entre-velocidades-por-continuidad"><span class="header-section-number">6.3.1</span> Paso 1. Relación entre velocidades por continuidad</h3>
+<p>Por continuidad:</p>
+<p><span class="math display">\[
+A_1v_1=A_2v_2.
+\]</span></p>
+<p>Como <span class="math inline">\(A\propto r^2\)</span>,</p>
+<p><span class="math display">\[
+v_2 = \frac{A_1}{A_2}v_1 = \frac{r_1^2}{r_2^2}v_1.
+\]</span></p>
+<p>Sustituyendo:</p>
+<p><span class="math display">\[
+v_2 = \frac{(10)^2}{(2)^2}v_1 = 25v_1.
+\]</span></p>
+</section>
+<section id="paso-2.-bernoulli-entre-las-dos-secciones" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="paso-2.-bernoulli-entre-las-dos-secciones"><span class="header-section-number">6.3.2</span> Paso 2. Bernoulli entre las dos secciones</h3>
+<p>Suponiendo igual altura:</p>
+<p><span class="math display">\[
+p_1 + \frac12\rho v_1^2 = p_2 + \frac12\rho v_2^2.
+\]</span></p>
+<p>Despejamos <span class="math inline">\(p_2\)</span>:</p>
+<p><span class="math display">\[
+p_2 = p_1 + \frac12\rho\left(v_1^2-v_2^2\right).
+\]</span></p>
+<p>Como <span class="math inline">\(v_2=25v_1\)</span>,</p>
+<p><span class="math display">\[
+p_2 = p_1 - \frac12\rho(624)v_1^2.
+\]</span></p>
+</section>
+<section id="paso-3.-usar-la-condición-de-cavitación" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="paso-3.-usar-la-condición-de-cavitación"><span class="header-section-number">6.3.3</span> Paso 3. Usar la condición de cavitación</h3>
+<p>En la garganta,</p>
+<p><span class="math display">\[
+Ca = \frac{p_2-p_v}{\tfrac12\rho v_2^2} = 0.40.
+\]</span></p>
+<p>Entonces,</p>
+<p><span class="math display">\[
+p_2 - p_v = 0.40\left(\frac12\rho v_2^2\right).
+\]</span></p>
+<p>Sustituimos <span class="math inline">\(v_2=25v_1\)</span>:</p>
+<p><span class="math display">\[
+p_2 - p_v = 0.40\left(\frac12\rho (625v_1^2)\right)=125\rho v_1^2.
+\]</span></p>
+<p>Pero también</p>
+<p><span class="math display">\[
+p_2 = p_1 - 312\rho v_1^2.
+\]</span></p>
+<p>Entonces,</p>
+<p><span class="math display">\[
+p_1 - 312\rho v_1^2 - p_v = 125\rho v_1^2.
+\]</span></p>
+<p>Agrupando:</p>
+<p><span class="math display">\[
+p_1 - p_v = 437\rho v_1^2.
+\]</span></p>
+<p>Despejando <span class="math inline">\(v_1\)</span>:</p>
+<p><span class="math display">\[
+v_1^2 = \frac{p_1-p_v}{437\rho}.
+\]</span></p>
+<p>Sustituyendo:</p>
+<p><span class="math display">\[
+v_1^2 = \frac{1.013\times10^5 - 2.34\times10^3}{437(998)} \approx 0.2269.
+\]</span></p>
+<p><span class="math display">\[
+v_1 \approx 0.476\ \text{m/s}.
+\]</span></p>
+</section>
+</section>
+<section id="resultado-2" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="resultado-2"><span class="header-section-number">6.4</span> Resultado</h2>
+<p><span class="math display">\[
+\boxed{v_1\approx 0.48\ \text{m/s}},
+\qquad
+\boxed{v_2\approx 11.9\ \text{m/s}}.
+\]</span></p>
+</section>
+</section>
+<section id="problema-5.-descarga-por-un-orificio-y-trayectoria-del-chorro" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Problema 5. Descarga por un orificio y trayectoria del chorro</h1>
+<section id="enunciado-4" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="enunciado-4"><span class="header-section-number">7.1</span> Enunciado</h2>
+<p>Un tanque abierto contiene agua. En una pared lateral hay un orificio circular de <strong>2.0 cm de diámetro</strong>, localizado <strong>4.0 m por debajo</strong> del nivel del agua.</p>
+<p>Se pide:</p>
+<ol type="a">
+<li><p>el volumen de agua que sale por minuto;</p></li>
+<li><p>si el chorro sale inicialmente horizontal y el orificio está a <strong>1.20 m</strong> sobre el piso, determinar el alcance horizontal hasta tocar el piso;</p></li>
+<li><p>decidir si el flujo al salir es laminar o turbulento, usando el número de Reynolds. Tome para el agua:</p></li>
+</ol>
+<p><span class="math display">\[
+\mu = 1.0\times10^{-3}\ \text{Pa·s}.
+\]</span></p>
+</section>
+<section id="desarrollo-2" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="desarrollo-2"><span class="header-section-number">7.2</span> Desarrollo</h2>
+<p>Por Torricelli,</p>
+<p><span class="math display">\[
+v = \sqrt{2gh}=\sqrt{2(9.81)(4.0)}=8.86\ \text{m/s}.
+\]</span></p>
+<p>El área del orificio es</p>
+<p><span class="math display">\[
+A=\pi(0.010)^2=3.1416\times10^{-4}\ \text{m}^2.
+\]</span></p>
+<p>Entonces el gasto es</p>
+<p><span class="math display">\[
+Q=Av=(3.1416\times10^{-4})(8.86)=2.783\times10^{-3}\ \text{m}^3/\text{s}.
+\]</span></p>
+<p>Por minuto:</p>
+<p><span class="math display">\[
+Q_{min}=60Q=0.167\ \text{m}^3/\text{min}=167\ \text{L/min}.
+\]</span></p>
+<p>Para la trayectoria horizontal, el tiempo de caída desde <span class="math inline">\(1.20\ \text{m}\)</span> es</p>
+<p><span class="math display">\[
+t=\sqrt{\frac{2(1.20)}{9.81}}=0.4946\ \text{s}.
+\]</span></p>
+<p>Por tanto,</p>
+<p><span class="math display">\[
+x=vt=(8.86)(0.4946)=4.38\ \text{m}.
+\]</span></p>
+<p>El número de Reynolds es</p>
+<p><span class="math display">\[
+Re=\frac{\rho vd}{\mu}=\frac{(1000)(8.86)(0.020)}{10^{-3}}=177200.
+\]</span></p>
+<p>Por ello, el flujo es turbulento.</p>
+</section>
+<section id="resultado-3" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="resultado-3"><span class="header-section-number">7.3</span> Resultado</h2>
+<p><span class="math display">\[
+\boxed{Q\approx 0.167\ \text{m}^3/\text{min}=167\ \text{L/min}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{x\approx 4.38\ \text{m}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\text{flujo turbulento}}
+\]</span></p>
+</section>
+</section>
+<section id="problema-6.-tiempo-de-vaciado-de-un-tanque-cilíndrico" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Problema 6. Tiempo de vaciado de un tanque cilíndrico</h1>
+<section id="enunciado-5" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="enunciado-5"><span class="header-section-number">8.1</span> Enunciado</h2>
+<p>Un tanque cilíndrico grande, abierto al aire, contiene aceite de densidad</p>
+<p><span class="math display">\[
+\rho = 840\ \text{kg/m}^3.
+\]</span></p>
+<p>El tanque tiene <strong>radio <span class="math inline">\(R=0.60\ \text{m}\)</span></strong> y contiene líquido hasta una altura inicial</p>
+<p><span class="math display">\[
+H=1.80\ \text{m}.
+\]</span></p>
+<p>En el fondo se abre un pequeño orificio de radio</p>
+<p><span class="math display">\[
+r=0.012\ \text{m},
+\]</span></p>
+<p>con <span class="math inline">\(r\ll R\)</span>.</p>
+<p>Se pide:</p>
+<ol type="a">
+<li><p>calcular el tiempo de vaciado ignorando viscosidad;</p></li>
+<li><p>explicar qué ocurriría si se considerara la viscosidad.</p></li>
+</ol>
+</section>
+<section id="desarrollo-3" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="desarrollo-3"><span class="header-section-number">8.2</span> Desarrollo</h2>
+<p>Las áreas son</p>
+<p><span class="math display">\[
+A=\pi(0.60)^2=1.131\ \text{m}^2,
+\qquad
+a=\pi(0.012)^2=4.524\times10^{-4}\ \text{m}^2.
+\]</span></p>
+<p>Con Torricelli, el vaciado satisface</p>
+<p><span class="math display">\[
+A\frac{dh}{dt}=-a\sqrt{2gh}.
+\]</span></p>
+<p>Separando e integrando, se obtiene</p>
+<p><span class="math display">\[
+T = \frac{2A\sqrt{H}}{a\sqrt{2g}}.
+\]</span></p>
+<p>Sustituyendo:</p>
+<p><span class="math display">\[
+T = \frac{2(1.131)\sqrt{1.80}}{(4.524\times10^{-4})\sqrt{19.62}} \approx 1514\ \text{s}.
+\]</span></p>
+<p>En minutos:</p>
+<p><span class="math display">\[
+T\approx 25.2\ \text{min}.
+\]</span></p>
+<p>Si se toma en cuenta la viscosidad, la rapidez de salida disminuye y el tiempo real de vaciado aumenta.</p>
+</section>
+<section id="resultado-4" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="resultado-4"><span class="header-section-number">8.3</span> Resultado</h2>
+<p><span class="math display">\[
+\boxed{T\approx 1.51\times10^3\ \text{s}\approx 25.2\ \text{min}}
+\]</span></p>
+<p><span class="math display">\[
+\boxed{\text{con viscosidad, el tanque tardaría más en vaciarse}}
+\]</span></p>
+</section>
+</section>
+<section id="resumen-final-de-respuestas" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Resumen final de respuestas</h1>
+<ol type="1">
+<li><span class="math inline">\(p_{sup}=0\ \text{Pa}\)</span>, <span class="math inline">\(p_{inf}\approx 1.62\times10^3\ \text{Pa}\)</span>, <span class="math inline">\(m\approx 1.87\ \text{kg}\)</span>, <span class="math inline">\(\rho_c\approx 9.19\times10^2\ \text{kg/m}^3\)</span>.</li>
+<li>Elevación del mercurio: <span class="math inline">\(0.74\ \text{cm}\)</span>.</li>
+<li>Fuerza de sustentación: <span class="math inline">\(2.29\times10^4\ \text{N}\)</span> hacia arriba.</li>
+<li>Cavitación: <span class="math inline">\(v_1\approx 0.48\ \text{m/s}\)</span> y <span class="math inline">\(v_2\approx 11.9\ \text{m/s}\)</span>.</li>
+<li>Caudal: <span class="math inline">\(167\ \text{L/min}\)</span>, alcance: <span class="math inline">\(4.38\ \text{m}\)</span>, flujo turbulento.</li>
+<li>Tiempo ideal de vaciado: <span class="math inline">\(25.2\ \text{min}\)</span>.</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/oscilador_fourier.html" class="pagination-link" aria-label="Oscilador armónico y series de Fourier">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Oscilador armónico y series de Fourier</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

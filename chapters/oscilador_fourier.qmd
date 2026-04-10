@@ -1,0 +1,1573 @@
+---
+title: "Oscilador armónico y series de Fourier"
+subtitle: "Introducción a fluidos, ondas y termodinámica"
+author: "Diego Villalba"
+date: today
+lang: es
+number-sections: false
+---
+
+# Oscilador armónico simple {#sec-oscilador}
+
+El **oscilador armónico simple** (OAS) describe el movimiento de cualquier sistema que,
+al desplazarse de su posición de equilibrio, experimenta una fuerza restauradora
+proporcional al desplazamiento [@Halliday2014, cap. 15]:
+
+$$
+F = -kx
+$$
+
+donde $k$ es la constante de resorte (N/m) y $x$ es el desplazamiento respecto al equilibrio.
+Aplicando la segunda ley de Newton se obtiene la **ecuación diferencial del OAS**:
+
+$$
+m\ddot{x} + kx = 0
+\quad \Longrightarrow \quad
+\ddot{x} + \omega_0^2\, x = 0
+$$
+
+con la **frecuencia angular natural**
+
+$$
+\boxed{\omega_0 = \sqrt{\frac{k}{m}}}
+$$
+
+
+Para entender el OAS más allá de las fórmulas, es útil visualizarlo como una **proyección del movimiento circular**. Imagina una partícula girando en un círculo de radio $A$ con velocidad angular constante $\omega_0$. La sombra de esa partícula proyectada sobre el diámetro del círculo realiza exactamente un movimiento armónico simple.
+
+```{python}
+
+#| code-fold: true
+import numpy as np
+import plotly.graph_objects as go
+
+# Parámetros del sistema
+A = 1.0          # Amplitud (Radio del círculo)
+omega_0 = 1.0    # Frecuencia angular
+phi = np.pi/4    # Fase inicial (45 grados)
+t_max = 10
+fps = 30
+t_steps = np.linspace(0, t_max, t_max * fps)
+
+# Datos del círculo de referencia
+theta_circle = np.linspace(0, 2*np.pi, 100)
+x_circle = A * np.cos(theta_circle)
+y_circle = A * np.sin(theta_circle)
+
+# Crear la figura
+fig = go.Figure()
+
+# 1. Dibujar el círculo estático
+fig.add_trace(go.Scatter(x=x_circle, y=y_circle, mode='lines', 
+                         line=dict(color='lightgray', dash='dash'),
+                         name='Trayectoria Circular'))
+
+# 2. Línea de proyección (diámetro horizontal)
+fig.add_trace(go.Scatter(x=[-A, A], y=[0, 0], mode='lines', 
+                         line=dict(color='black', width=1),
+                         showlegend=False))
+
+# 3. Punto en movimiento circular (La Partícula)
+fig.add_trace(go.Scatter(x=[A*np.cos(phi)], y=[A*np.sin(phi)], 
+                         mode='markers+lines', name='Partícula (MCU)',
+                         marker=dict(color='blue', size=10)))
+
+# 4. Sombra/Proyección (El OAS)
+fig.add_trace(go.Scatter(x=[A*np.cos(phi)], y=[0], 
+                         mode='markers', name='Sombra (OAS)',
+                         marker=dict(color='red', size=12, symbol='square')))
+
+# Configuración de la animación
+frames = []
+for t in t_steps:
+    current_angle = omega_0 * t + phi
+    curr_x = A * np.cos(current_angle)
+    curr_y = A * np.sin(current_angle)
+    
+    frames.append(go.Frame(data=[
+        go.Scatter(x=[curr_x], y=[curr_y]), # Punto azul
+        go.Scatter(x=[curr_x], y=[0])       # Punto rojo (proyección)
+    ], traces=[2, 3]))
+
+fig.frames = frames
+
+# Diseño y Controles
+fig.update_layout(
+    title="OAS como proyección del Movimiento Circular",
+    xaxis=dict(range=[-1.5, 1.5], autorange=False, zeroline=False),
+    yaxis=dict(range=[-1.5, 1.5], autorange=False, zeroline=False),
+    template="plotly_white",
+    updatemenus=[dict(type="buttons", buttons=[dict(label="Reproducir", method="animate", 
+                                                    args=[None, {"frame": {"duration": 33, "redraw": False}}])])]
+)
+
+fig.show()
+```
+
+* **¿Por qué $\omega_0$ depende de $k$ y $m$?**: Intuitivamente, una $k$ grande significa un resorte "duro" que recupera su forma con fuerza, acelerando la masa rápidamente (mayor frecuencia). Una $m$ grande aporta más inercia, haciendo que el sistema sea más "pesado" para cambiar de dirección (menor frecuencia).
+* **La Fase ($\varphi$)**: Representa el "estado" del cronómetro al iniciar el estudio. Nos indica en qué punto del ciclo de oscilación empezamos a contar el tiempo.
+
+### Solución general
+
+La solución general es una combinación de seno y coseno [@Giancoli2008, cap. 14]:
+
+$$
+x(t) = A\cos(\omega_0 t + \varphi)
+$$
+
+donde $A$ es la **amplitud** (determinada por condiciones iniciales) y $\varphi$ es la
+**fase inicial**. Las relaciones clave son:
+
+| Cantidad | Expresión | Unidades |
+| :--- | :--- | :--- |
+| **Frecuencia angular** | $\omega_0 = \sqrt{k/m}$ | rad/s |
+| **Periodo** | $T = 2\pi/\omega_0$ | s |
+| **Frecuencia** | $f = 1/T$ | Hz |
+| **Velocidad máxima** | $v_\text{máx} = A\omega_0$ | m/s |
+| **Aceleración máxima** | $a_\text{máx} = A\omega_0^2$ | m/s² |
+
+### Energía del oscilador
+
+La energía mecánica total se **conserva** a lo largo del movimiento [@Halliday2014, sec. 15-4]:
+
+$$
+E = \underbrace{\frac{1}{2}mv^2}_{E_\text{cinética}} +
+    \underbrace{\frac{1}{2}kx^2}_{E_\text{potencial}} =
+    \frac{1}{2}kA^2 = \text{constante}
+$$
+
+En la posición de equilibrio ($x=0$) toda la energía es cinética; en los extremos
+($x = \pm A$) toda es potencial.
+
+
+
+## Conexión con Series de Fourier {#sec-fourier-link}
+
+En la práctica, los sistemas físicos reales suelen estar sujetos a fuerzas externas periódicas que no son puramente sinusoidales. Aquí es donde las **Series de Fourier** permiten expandir el análisis del OAS.
+
+Cualquier fuerza periódica $F(t)$ (como una onda cuadrada o una vibración mecánica compleja) puede descomponerse en una suma de armónicos simples:
+
+$$F(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(n\omega t) + b_n \sin(n\omega t)]$$
+
+### ¿Por qué es fundamental para el estudio del oscilador?
+
+1.  **Principio de Superposición**: Gracias a que la ecuación del OAS es lineal, la respuesta total del sistema es simplemente la suma de las respuestas individuales a cada armónico de la fuerza externa.
+2.  **Resonancia Selectiva**: Un oscilador con frecuencia natural $\omega_0$ "filtrará" la fuerza externa. Si uno de los componentes de la serie de Fourier de la fuerza ($n\omega$) está cerca de $\omega_0$, ese término dominará el movimiento, provocando grandes amplitudes.
+
+> **Ejemplo visual**: En el caso de una **onda cuadrada** (ver Ejercicio 2 de la tarea), aunque la fuerza parece constante a trozos, el oscilador "siente" los armónicos impares ($1, 3, 5 \dots$). Si la frecuencia natural del oscilador coincide con el tercer armónico, veremos una oscilación dominante a esa frecuencia.
+
+
+
+## Ejercicios — Bloque 1: Oscilador armónico
+
+### Ejercicio 1 · Identificar parámetros {.unnumbered}
+
+> **Nivel:** ⬤○○ básico
+
+Un resorte tiene constante $k = 50\,\text{N/m}$. Se cuelga una masa de $m = 200\,\text{g}$
+y se le da un desplazamiento inicial de $x_0 = 5\,\text{cm}$ soltándola desde el reposo.
+
+a) Calcula la frecuencia angular $\omega_0$.
+b) Calcula el periodo $T$ y la frecuencia $f$.
+c) Escribe la ecuación de movimiento $x(t)$.
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+Recuerda convertir unidades antes de sustituir: $m = 0.200\,\text{kg}$, $x_0 = 0.05\,\text{m}$.
+Como la velocidad inicial es cero, $\varphi = 0$ y la amplitud es $A = x_0$.
+:::
+
+
+
+### Ejercicio 2 · Energía en el oscilador {.unnumbered}
+
+> **Nivel:** ⬤○○ básico
+
+Usando los resultados del Ejercicio 1:
+
+a) Calcula la energía mecánica total $E$.
+b) Calcula la velocidad máxima $v_\text{máx}$.
+c) ¿En qué posición $x^*$ la energía cinética es igual a la energía potencial?
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+Para el inciso (c) plantea $\frac{1}{2}mv^2 = \frac{1}{2}kx^2$ y recuerda que
+$v^2 = \omega_0^2(A^2 - x^2)$ (se obtiene de la conservación de energía).
+:::
+
+
+
+### Ejercicio 3 · Lectura e interpretación de gráfica {.unnumbered}
+
+> **Nivel:** ⬤⬤○ intermedio
+
+La posición de un oscilador está dada por:
+
+$$
+x(t) = 3\cos\!\left(\frac{2\pi}{0.8}\,t\right)\,\text{cm}
+$$
+
+a) Identifica la amplitud, el periodo y la frecuencia.
+b) Evalúa $x(0.2\,\text{s})$ y $x(0.4\,\text{s})$.
+c) Bosqueja la gráfica $x$ vs $t$ para dos periodos completos. Indica claramente los valores en los ejes.
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+Compara con la forma general $x(t) = A\cos(\omega t + \varphi)$. Aquí
+$\omega = 2\pi/T$, así que $T$ se puede leer directamente del denominador.
+:::
+
+
+
+# Series de Fourier {#sec-fourier}
+
+## Motivación física
+
+Muchas señales en física — sonido, luz, señales eléctricas, fuerzas periódicas —
+no son sinusoidales puras, pero **sí son periódicas**. Jean-Baptiste Joseph Fourier
+demostró que toda función periódica "razonablemente bien portada" puede escribirse
+como suma (posiblemente infinita) de senos y cosenos [@Kreyszig2011, cap. 11].
+
+> *"Toda función periódica es una superposición de osciladores armónicos."*
+
+## Definición de la serie
+
+Sea $f(x)$ una función de periodo $2\pi$. Su **desarrollo en serie de Fourier** es
+[@Arfken2013, sec. 14.1]:
+
+$$
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}\bigl[a_n\cos(nx) + b_n\sin(nx)\bigr]
+$$
+
+Los coeficientes se obtienen por **ortogonalidad** de senos y cosenos:
+
+$$
+a_0 = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\,dx
+$$
+
+$$
+a_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos(nx)\,dx, \qquad n = 1,2,3,\ldots
+$$
+
+$$
+b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx, \qquad n = 1,2,3,\ldots
+$$
+
+## Simetrías que simplifican el cálculo
+
+Antes de integrar, vale la pena inspeccionar la simetría de $f(x)$:
+
+| Simetría | Condición | Consecuencia |
+||||
+| Función **par** | $f(-x) = f(x)$ | Todos los $b_n = 0$ |
+| Función **impar** | $f(-x) = -f(x)$ | $a_0 = 0$ y todos los $a_n = 0$ |
+
+Esto puede reducir el trabajo a la mitad (o más).
+
+## Convergencia: teorema de Dirichlet
+
+Si $f(x)$ es periódica, acotada y tiene un número finito de discontinuidades y extremos
+en un periodo, la serie de Fourier converge [@Kreyszig2011, sec. 11.1]:
+
+- A $f(x)$ en los puntos de continuidad.
+- Al **promedio** $\tfrac{1}{2}[f(x^+) + f(x^-)]$ en los puntos de discontinuidad.
+
+
+
+## Ejercicios — Bloque 2: Series de Fourier
+
+### Ejercicio 4 · Reconocer componentes de Fourier {.unnumbered}
+
+> **Nivel:** ⬤○○ básico
+
+Considera la función periódica de periodo $2\pi$ definida en $-\pi \le x < \pi$:
+
+$$
+f(x) = 3\sin(x) + \sin(3x)
+$$
+
+a) ¿Esta función ya está expresada como serie de Fourier? Justifica tu respuesta.
+b) Identifica los coeficientes $b_1$, $b_3$, y los demás $a_n$, $b_n$.
+c) ¿Es $f(x)$ par, impar, o ninguna? ¿Cómo se relaciona con los coeficientes que encontraste?
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+Una serie de Fourier es una suma de senos y cosenos con coeficientes constantes.
+Si la función ya tiene esa forma, los coeficientes se leen directamente.
+Recuerda que $f(-x) = -f(x)$ caracteriza a una función impar.
+:::
+
+
+
+### Ejercicio 5 · Serie de Fourier de $f(x) = x^2$ {.unnumbered}
+
+> **Nivel:** ⬤⬤○ intermedio
+
+Encuentra la serie de Fourier de la función periódica de periodo $2\pi$ definida por:
+
+$$
+f(x) = x^2, \qquad -\pi \le x \le \pi
+$$
+
+a) Argumenta por simetría: ¿habrá términos $b_n$? ¿Por qué?
+b) Calcula $a_0$ directamente.
+c) Calcula $a_n$ para $n \ge 1$. (Necesitarás integrar por partes dos veces.)
+d) Escribe la serie completa.
+e) Evaluando en $x = \pi$, deduce el valor de la suma:
+$$
+\sum_{n=1}^{\infty} \frac{1}{n^2}
+$$
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+$x^2$ es función par → todos los $b_n = 0$.
+
+Para $a_n$, la integral de tablas útil es:
+$$
+\int x^2 \cos(nx)\,dx = \frac{2x\cos(nx)}{n^2} + \left(\frac{x^2}{n} - \frac{2}{n^3}\right)\sin(nx) + C
+$$
+
+Al evaluar en $x = \pi$ recuerda que $\cos(n\pi) = (-1)^n$ y la serie converge a $f(\pi) = \pi^2$.
+:::
+
+
+
+### Ejercicio 6 · Onda cuadrada {.unnumbered}
+
+> **Nivel:** ⬤⬤⬤ avanzado
+
+Se tiene la onda cuadrada de periodo $2\pi$:
+
+$$
+f(x) = \begin{cases} +1 & \text{si } 0 < x < \pi \\ -1 & \text{si } -\pi < x < 0 \end{cases}
+$$
+
+a) Antes de calcular: ¿es $f(x)$ par o impar? ¿Habrá términos $a_n$?
+b) Calcula los coeficientes $b_n$.
+c) Escribe la serie completa.
+d) Evalúa el valor que predice la serie en $x = 0$ (punto de discontinuidad). ¿Es consistente con el teorema de Dirichlet?
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+La onda cuadrada es función impar → $a_0 = 0$ y $a_n = 0$ para todo $n$.
+
+Al calcular $b_n$ notarás que los términos con $n$ par se anulan.
+El resultado esperado es:
+$$
+f(x) = \frac{4}{\pi}\left[\sin(x) + \frac{\sin(3x)}{3} + \frac{\sin(5x)}{5} + \cdots\right]
+$$
+:::
+
+
+
+# Conexión: oscilador forzado y análisis de Fourier {#sec-conexion}
+
+## ¿Por qué importa Fourier en un oscilador?
+
+Cuando un oscilador armónico recibe una **fuerza periódica** $F(t)$, la ecuación de
+movimiento se vuelve:
+
+$$
+m\ddot{x} + kx = F(t)
+$$
+
+Si $F(t)$ no es sinusoidal (por ejemplo, una onda cuadrada), el truco es
+**descomponerla en serie de Fourier** [@Halliday2014, sec. 15-7]:
+
+$$
+F(t) = \sum_{n} F_n \sin(n\omega t)
+$$
+
+Por la **linealidad** de la ecuación diferencial, podemos resolver por separado para
+cada componente $F_n$ y sumar las respuestas. Esto convierte un problema difícil en
+muchos problemas fáciles.
+
+### Resonancia
+
+Cuando la frecuencia de algún armónico de la fuerza coincide con $\omega_0$, el sistema
+entra en **resonancia**: la amplitud crece drásticamente [@Giancoli2008, sec. 14-7].
+Este fenómeno explica desde la ruptura de puentes hasta el diseño de instrumentos musicales.
+
+
+
+## Ejercicios — Bloque 3: Conexión
+
+### Ejercicio 7 · Oscilador forzado con onda cuadrada {.unnumbered}
+
+> **Nivel:** ⬤⬤○ intermedio — conceptual
+
+Un oscilador tiene frecuencia natural $\omega_0 = 3\,\text{rad/s}$. Se le aplica la
+fuerza periódica del Ejercicio 6 con frecuencia fundamental $\omega = 1\,\text{rad/s}$.
+
+a) Usando la serie de Fourier de la onda cuadrada, lista las frecuencias presentes en la fuerza.
+b) ¿Alguna frecuencia está cerca de $\omega_0 = 3\,\text{rad/s}$? ¿Qué fenómeno esperarías?
+c) Si en cambio $\omega_0 = 1\,\text{rad/s}$, ¿qué pasaría con el primer armónico? Describe cualitativamente.
+d) Argumenta en tus propias palabras: ¿por qué es útil el análisis de Fourier para este tipo de problemas?
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+Los armónicos de la onda cuadrada son $\omega, 3\omega, 5\omega, \ldots$
+Compara cada uno con $\omega_0$. Cuando $n\omega \approx \omega_0$ hay resonancia.
+:::
+
+
+
+### Ejercicio 8 · Identidad de Parseval y la suma $\sum 1/n^4$ {.unnumbered}
+
+> **Nivel:** ⬤⬤⬤ avanzado
+
+La **identidad de Parseval** establece que la "energía" de una señal se distribuye entre
+sus armónicos [@Arfken2013, sec. 14.5]:
+
+$$
+\frac{1}{\pi}\int_{-\pi}^{\pi} [f(x)]^2\,dx =
+\frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)
+$$
+
+Usando los resultados del Ejercicio 5 ($f(x) = x^2$):
+
+a) Calcula el lado izquierdo: evalúa $\dfrac{1}{\pi}\displaystyle\int_{-\pi}^{\pi} x^4\,dx$.
+b) Sustituye los coeficientes $a_0$ y $a_n$ que obtuviste en el Ejercicio 5.
+c) Despeja y obtén el valor de la suma:
+$$
+\sum_{n=1}^{\infty} \frac{1}{n^4}
+$$
+d) Compara la estrategia usada aquí (Parseval) con la del Ejercicio 5 (evaluar en un punto). ¿Cuál es más directa para obtener $\sum 1/n^2$? ¿Y para $\sum 1/n^4$?
+
+::: {.callout-tip collapse="true"}
+## Pista
+
+El lado izquierdo es $\dfrac{1}{\pi}\cdot\dfrac{2\pi^5}{5} = \dfrac{2\pi^4}{5}$.
+
+Después de sustituir $a_n = \dfrac{4(-1)^n}{n^2}$, la suma del lado derecho
+quedará expresada en términos de $\sum 1/n^4$.
+:::
+
+
+
+
+# Ejemplos resueltos — Oscilador armónico {#sec-osc-resueltos}
+
+Los siguientes ejemplos cubren el oscilador armónico desde sus parámetros básicos hasta la resonancia, con visualizaciones interactivas para facilitar la comprensión física de las ecuaciones.
+
+## Ejemplo 1 · Movimiento libre: posición, velocidad y aceleración {#sec-osc-1}
+
+### Planteamiento
+
+Un resorte horizontal de constante $k = 8\,\text{N/m}$ tiene una masa de $m = 0.5\,\text{kg}$ unida a su extremo. Se desplaza la masa $A = 10\,\text{cm}$ de la posición de equilibrio y se suelta desde el reposo.
+
+### Paso 1 — Frecuencia angular y periodo
+
+La frecuencia natural depende intrínsecamente de la rigidez ($k$) y la inercia ($m$) del sistema:
+
+$$
+\omega_0 = \sqrt{\frac{k}{m}} = \sqrt{\frac{8}{0.5}} = \sqrt{16} = 4\,\text{rad/s}
+$$
+
+$$
+T = \frac{2\pi}{\omega_0} = \frac{2\pi}{4} = \frac{\pi}{2} \approx 1.571\,\text{s}, \qquad
+f = \frac{1}{T} \approx 0.637\,\text{Hz}
+$$
+
+### Paso 2 — Condiciones iniciales y ecuación de movimiento
+
+La solución general para la ecuación diferencial $\ddot{x} + \omega_0^2 x = 0$ es de la forma:
+$$x(t) = A\cos(\omega_0 t + \varphi)$$
+
+Para determinar la amplitud ($A$) y la fase inicial ($\varphi$), aplicamos las condiciones impuestas por el problema:
+
+1.  **Condición de Velocidad (Reposo):** Sabemos que $\dot{x}(0) = 0$. La función velocidad es $v(t) = -A\omega_0\sin(\omega_0 t + \varphi)$. Evaluando en $t=0$:
+    $$0 = -A\omega_0\sin(0 + \varphi) \implies \sin(\varphi) = 0 \implies \mathbf{\varphi = 0}$$
+    Esto nos indica que la solución es un **coseno puro**, ya que el sistema inicia su movimiento en un punto de retorno donde la velocidad es nula.
+
+2.  **Condición de Posición (Desplazamiento):**
+    Sabemos que $x(0) = 0.1\,\text{m}$. Usando nuestra $\varphi = 0$:
+    $$0.1 = A\cos(4 \cdot 0 + 0) \implies 0.1 = A(1) \implies \mathbf{A = 0.1\,\text{m}}$$
+
+**Ecuación final de movimiento:**
+$$x(t) = 0.1\cos(4t)\,\text{m}$$
+
+Derivando sucesivamente obtenemos la cinemática completa:
+
+$$
+v(t) = \dot{x}(t) = -A\omega_0\sin(\omega_0 t) = -0.4\sin(4t)\,\text{m/s}
+$$
+
+$$
+a(t) = \ddot{x}(t) = -A\omega_0^2\cos(\omega_0 t) = -1.6\cos(4t)\,\text{m/s}^2
+$$
+
+### Paso 3 — Análisis de desfase y máximos
+
+Es fundamental notar que las funciones trigonométricas imponen una relación geométrica entre las variables:
+
+* **Velocidad:** Está desfasada $\pi/2$ (90°) respecto a la posición. Es máxima cuando $x=0$.
+* **Aceleración:** Está en oposición de fase ($\pi$ o 180°) respecto a la posición. Cuando el desplazamiento es máximo positivo, la aceleración es máxima negativa.
+
+$$
+v_\text{máx} = A\omega_0 = 0.1 \times 4 = 0.4\,\text{m/s}
+$$
+
+$$
+a_\text{máx} = A\omega_0^2 = 0.1 \times 16 = 1.6\,\text{m/s}^2
+$$
+
+[Image of displacement velocity and acceleration in simple harmonic motion]
+
+### Visualización
+
+```{python}
+#| label: fig-osc-1
+#| fig-cap: "Posición, velocidad y aceleración del oscilador libre. Nota el desfase entre las curvas."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+A      = 0.1      
+omega0 = 4.0      
+T      = 2*np.pi/omega0
+t      = np.linspace(0, 3*T, 600)
+
+x = A * np.cos(omega0 * t)
+v = -A * omega0 * np.sin(omega0 * t)
+a = -A * omega0**2 * np.cos(omega0 * t)
+
+fig = make_subplots(
+    rows=3, cols=1, shared_xaxes=True,
+    subplot_titles=["Posición x(t)", "Velocidad v(t)", "Aceleración a(t)"],
+    vertical_spacing=0.08
+)
+
+fig.add_trace(go.Scatter(x=t, y=x, mode="lines", name="x(t)", line=dict(color="#7F77DD", width=2.2)), row=1, col=1)
+fig.add_trace(go.Scatter(x=t, y=v, mode="lines", name="v(t)", line=dict(color="#1D9E75", width=2.2)), row=2, col=1)
+fig.add_trace(go.Scatter(x=t, y=a, mode="lines", name="a(t)", line=dict(color="#D85A30", width=2.2)), row=3, col=1)
+
+for r in [1, 2, 3]:
+    fig.add_hline(y=0, line=dict(color="#B4B2A9", width=1, dash="dot"), row=r, col=1)
+
+fig.update_layout(template="simple_white", height=560, showlegend=False)
+fig.show()
+```
+
+
+
+## Ejemplo 2 · Energía: distribución entre cinética y potencial {#sec-osc-2}
+
+### Planteamiento
+
+Para el sistema anterior ($k = 8\,\text{N/m}$, $m = 0.5\,\text{kg}$, $A = 0.1\,\text{m}$), analiza cómo se transforma la energía a medida que la masa oscila.
+
+### Paso 1 — Energía total del sistema
+
+La energía mecánica total $E$ es constante en un oscilador ideal y depende únicamente de la rigidez del resorte y de qué tanto lo estiramos inicialmente [@Halliday2014, sec. 15-4]:
+
+$$
+E = \frac{1}{2}kA^2 = \frac{1}{2}(8)(0.1)^2 = 0.04\,\text{J} = 40\,\text{mJ}
+$$
+
+Este valor representa el "presupuesto" total de energía que se repartirá entre movimiento (cinética) y deformación (potencial).
+
+### Paso 2 — Energías en función del tiempo
+
+Sustituyendo las ecuaciones de movimiento $x(t)$ y $v(t)$ que encontramos en el Ejemplo 1, obtenemos la evolución temporal de la energía:
+
+1. **Energía Potencial ($E_p$):** Asociada a la posición. Es máxima en los extremos.
+   $$E_p(t) = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega_0 t) = E\cos^2(4t)$$
+
+2. **Energía Cinética ($E_k$):** Asociada a la velocidad. Es máxima en el equilibrio.
+   $$E_k(t) = \frac{1}{2}mv^2 = \frac{1}{2}m(-A\omega_0\sin(\omega_0 t))^2 = E\sin^2(4t)$$
+
+> **Nota para el alumno:** Observa que las energías dependen de $\sin^2$ y $\cos^2$. Esto implica que la energía siempre es positiva y que fluctúa al **doble de la frecuencia** que la posición (completando dos ciclos de energía por cada ciclo de oscilación).
+
+### Paso 3 — Verificación de la Conservación
+
+La suma de ambas energías en cualquier instante debe ser igual a la energía total inicial [@Halliday2014, sec. 15-4]:
+
+$$
+E_p + E_k = E\cos^2(\omega_0 t) + E\sin^2(\omega_0 t) = E\bigl[\cos^2(\omega_0 t) + \sin^2(\omega_0 t)\bigr] = E \quad \checkmark
+$$
+
+### Paso 4 — Punto de equilibrio energético ($x^*$)
+
+¿En qué posición el sistema tiene exactamente la misma cantidad de energía cinética que potencial? 
+Para encontrarlo, igualamos $E_p = E/2$:
+
+$$
+\frac{1}{2}kx^2 = \frac{1}{2} \left( \frac{1}{2}kA^2 \right) \implies x^2 = \frac{A^2}{2}
+$$
+
+$$
+x^* = \pm\frac{A}{\sqrt{2}} \approx \pm 0.707 A = \pm 7.07\,\text{cm}
+$$
+
+En estos puntos, el sistema ha transformado exactamente la mitad de su energía potencial inicial en energía cinética.
+
+### Visualización
+
+```{python}
+#| label: fig-osc-2
+#| fig-cap: "Energía cinética y potencial a lo largo del tiempo (arriba) y en función de la posición (abajo). La suma es siempre constante."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+A      = 0.1
+k      = 8.0
+m      = 0.5
+omega0 = np.sqrt(k/m)
+E      = 0.5 * k * A**2
+T      = 2*np.pi/omega0
+t      = np.linspace(0, 2*T, 600)
+
+x  = A * np.cos(omega0 * t)
+Ep = 0.5 * k * x**2
+Ek = E - Ep
+
+x_axis = np.linspace(-A, A, 400)
+Ep_x   = 0.5 * k * x_axis**2
+Ek_x   = E - Ep_x
+
+fig = make_subplots(
+    rows=1, cols=2,
+    subplot_titles=["Energía vs tiempo", "Energía vs posición"],
+    horizontal_spacing=0.12
+)
+
+# Panel izquierdo: vs tiempo
+fig.add_trace(go.Scatter(x=t, y=Ek*1000, mode="lines", name="E cinética",
+    line=dict(color="#1D9E75", width=2.2)), row=1, col=1)
+fig.add_trace(go.Scatter(x=t, y=Ep*1000, mode="lines", name="E potencial",
+    line=dict(color="#D85A30", width=2.2)), row=1, col=1)
+fig.add_trace(go.Scatter(x=t, y=[E*1000]*len(t), mode="lines", name="E total",
+    line=dict(color="#2C2C2A", width=1.5, dash="dash")), row=1, col=1)
+
+# Panel derecho: vs posición
+fig.add_trace(go.Scatter(x=x_axis*100, y=Ek_x*1000, mode="lines",
+    name="E cinética", showlegend=False,
+    line=dict(color="#1D9E75", width=2.2)), row=1, col=2)
+fig.add_trace(go.Scatter(x=x_axis*100, y=Ep_x*1000, mode="lines",
+    name="E potencial", showlegend=False,
+    line=dict(color="#D85A30", width=2.2)), row=1, col=2)
+
+# Marcar x* (igual reparto)
+x_star = A / np.sqrt(2)
+for sign in [1, -1]:
+    fig.add_vline(x=sign*x_star*100,
+        line=dict(color="#888780", width=1, dash="dot"), row=1, col=2)
+
+fig.add_annotation(x=x_star*100, y=E*500, text="x*", showarrow=False,
+    font=dict(size=12, color="#5F5E5A"), row=1, col=2)
+
+fig.update_xaxes(title_text="t (s)", row=1, col=1)
+fig.update_xaxes(title_text="x (cm)", row=1, col=2)
+fig.update_yaxes(title_text="Energía (mJ)", row=1, col=1)
+fig.update_yaxes(title_text="Energía (mJ)", row=1, col=2)
+
+fig.update_layout(
+    title="Distribución de energía — E total = 40 mJ",
+    template="simple_white",
+    legend=dict(orientation="h", y=-0.2)
+)
+fig.show()
+```
+
+
+
+## Ejemplo 3 · Efecto de la masa y la amplitud sobre el movimiento {#sec-osc-3}
+
+### Planteamiento
+
+Se analizan tres osciladores que comparten el mismo resorte ($k = 8\,\text{N/m}$) para observar cómo los cambios en la masa y la configuración inicial afectan el ritmo del movimiento.
+
+| Sistema | Masa ($m$) | Amplitud ($A$) | Frecuencia ($\omega_0$) | Periodo ($T$) |
+| :--- | :---: | :---: | :---: | :---: |
+| **1 (Referencia)** | 0.5 kg | 10 cm | 4.00 rad/s | 1.571 s |
+| **2 (Inercia x4)** | 2.0 kg | 10 cm | 2.00 rad/s | 3.142 s |
+| **3 (Amplitud x2)**| 0.5 kg | 20 cm | 4.00 rad/s | 1.571 s |
+
+### Análisis Comparativo Detallado
+
+Para entender estos resultados, debemos analizar la física detrás de cada cambio:
+
+#### A. El efecto de la masa (Sistema 1 vs. Sistema 2)
+Al cuadruplicar la masa manteniendo el mismo resorte, el periodo **se duplica**.
+
+* **Explicación física:** La masa representa la inercia, es decir, la resistencia al cambio de movimiento. Una masa mayor es más difícil de acelerar y frenar por el mismo resorte, lo que resulta en una oscilación más lenta.
+* **Relación matemática:** Como $T = 2\pi\sqrt{m/k}$, si la masa aumenta por un factor de 4, el periodo aumenta por un factor de $\sqrt{4} = 2$.
+
+
+
+#### B. El efecto de la amplitud (Sistema 1 vs. Sistema 3)
+Al duplicar la amplitud sin cambiar la masa, el periodo y la frecuencia **permanecen idénticos**.
+
+* **Explicación física:** Esta es la propiedad de **isocronismo**. Aunque la masa en el Sistema 3 debe recorrer una distancia mayor (20 cm vs 10 cm), la fuerza restauradora ($F = -kx$) también es proporcionalmente mayor en los extremos. Esta mayor fuerza compensa exactamente la mayor distancia, logrando que el tiempo total del ciclo no cambie [@Halliday2014, sec. 15-2].
+* **Consecuencia en la velocidad:** Para recorrer el doble de distancia en el mismo tiempo, el Sistema 3 debe moverse mucho más rápido. Su velocidad máxima es el doble que la del Sistema 1 ($v_{\text{máx}} = A\omega_0$).
+
+
+
+### Conclusiones para el examen
+
+1.  **Independencia:** El periodo del OAS es independiente de la amplitud. Esta es una característica distintiva del movimiento armónico simple.
+2.  **Inercia:** El periodo crece con la raíz cuadrada de la masa ($T \propto \sqrt{m}$).
+3.  **Rigidez:** Si usáramos un resorte más duro (mayor $k$), el periodo disminuiría ($T \propto 1/\sqrt{k}$).
+
+### Visualización
+
+```{python}
+#| label: fig-osc-3
+#| fig-cap: "Comparación de tres osciladores. Sistema 1 y 3 tienen el mismo periodo (misma masa), pero distinta amplitud. Sistema 2 tiene mayor masa y por eso oscila más lento."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+k = 8.0
+sistemas = [
+    dict(m=0.5,  A=0.10, label="m=0.5 kg, A=10 cm", color="#7F77DD"),
+    dict(m=2.0,  A=0.10, label="m=2.0 kg, A=10 cm", color="#D85A30"),
+    dict(m=0.5,  A=0.20, label="m=0.5 kg, A=20 cm", color="#1D9E75"),
+]
+
+T_max = max(2*np.pi/np.sqrt(k/s["m"]) for s in sistemas)
+t     = np.linspace(0, 2.5*T_max, 800)
+
+fig = go.Figure()
+
+for s in sistemas:
+    omega = np.sqrt(k / s["m"])
+    x     = s["A"] * np.cos(omega * t)
+    fig.add_trace(go.Scatter(
+        x=t, y=x*100,
+        mode="lines", name=s["label"],
+        line=dict(color=s["color"], width=2.2)
+    ))
+
+fig.add_hline(y=0, line=dict(color="#B4B2A9", width=1, dash="dot"))
+
+fig.update_layout(
+    title="Efecto de masa y amplitud sobre el movimiento (k = 8 N/m fijo)",
+    xaxis_title="t (s)",
+    yaxis_title="x (cm)",
+    template="simple_white",
+    height=400,
+    legend=dict(orientation="h", y=-0.2)
+)
+fig.show()
+```
+
+
+## Ejemplo 4 · Oscilador forzado y resonancia {#sec-osc-4}
+
+### Planteamiento
+
+Un oscilador con frecuencia natural $\omega_0 = 4\,\text{rad/s}$ y masa $m = 0.5\,\text{kg}$ es sometido a una fuerza externa impulsora $F(t) = F_0 \cos(\omega t)$ con una amplitud de fuerza $F_0 = 1\,\text{N}$. Analizaremos cómo responde el sistema según la frecuencia aplicada $\omega$.
+
+### Paso 1 — La ecuación del oscilador forzado
+
+Al aplicar la segunda ley de Newton, la ecuación diferencial del movimiento se convierte en:
+$$m\ddot{x} + kx = F_0 \cos(\omega t)$$
+
+Dividiendo entre la masa, obtenemos la forma estándar:
+$$\ddot{x} + \omega_0^2 x = \frac{F_0}{m} \cos(\omega t)$$
+
+### Paso 2 — Amplitud en estado estacionario (Sin amortiguamiento)
+
+Después de un tiempo, el sistema "olvida" sus condiciones iniciales y oscila a la frecuencia de la fuerza externa ($\omega$). La amplitud de esta oscilación estacionaria viene dada por [@Giancoli2008, sec. 14-7]:
+
+$$
+A(\omega) = \frac{F_0/m}{\left|\omega_0^2 - \omega^2\right|}
+$$
+
+Sustituyendo nuestros valores ($F_0/m = 1/0.5 = 2$):
+$$A(\omega) = \frac{2}{|16 - \omega^2|}$$
+
+* **Caso $\omega < \omega_0$:** La fuerza y el desplazamiento están "en fase". El resorte tiene tiempo de reaccionar.
+* **Caso $\omega > \omega_0$:** La fuerza cambia tan rápido que el desplazamiento queda en "oposición de fase".
+
+### Paso 3 — El fenómeno de la resonancia
+
+¿Qué ocurre si sintonizamos la fuerza externa exactamente a la frecuencia natural ($\omega \to 4\,\text{rad/s}$)?
+El denominador $|16 - \omega^2|$ tiende a cero, lo que implica que la amplitud teórica tiende a **infinito**. 
+
+
+
+En un sistema físico real sin amortiguamiento, esto se traduce en una falla estructural o rotura, ya que la energía suministrada por la fuerza externa se acumula sin límite en el sistema.
+
+### Paso 4 — El papel del amortiguamiento ($\gamma$)
+
+En la realidad, siempre hay fricción o resistencia. Introducimos un término de amortiguamiento $\gamma$ que limita la amplitud máxima [@Kreyszig2011, sec. 2.8]:
+
+$$
+A(\omega) = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2}}
+$$
+
+**Análisis de amortiguamiento:**
+
+1. **Amortiguamiento débil ($\gamma$ pequeño):** El pico de resonancia es muy alto y estrecho. El sistema es muy sensible a la frecuencia exacta.
+2. **Amortiguamiento fuerte ($\gamma$ grande):** El pico es bajo y ancho. El sistema responde de forma más uniforme a distintas frecuencias, pero con menor amplitud total.
+
+
+
+### Conclusión para el examen
+
+La resonancia ocurre cuando la frecuencia impulsora coincide con la natural del sistema. Es el principio que permite sintonizar una radio, pero también el que puede destruir un puente si el viento genera una fuerza periódica en la frecuencia correcta [@Halliday2014, sec. 15-7].
+
+### Visualización
+
+```{python}
+#| label: fig-osc-4
+#| fig-cap: "Curvas de resonancia para distintos amortigamientos. Sin amortiguamiento la amplitud diverge en ω₀. Con amortiguamiento el pico se reduce y desplaza ligeramente hacia frecuencias menores."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+omega0 = 4.0
+F0     = 1.0
+m      = 0.5
+omega  = np.linspace(0.1, 8.0, 1000)
+
+gammas = [
+    dict(g=0.0,  label="γ = 0 (sin amort.)",   color="#2C2C2A",  dash="dash"),
+    dict(g=0.5,  label="γ = 0.5",               color="#7F77DD",  dash="solid"),
+    dict(g=1.5,  label="γ = 1.5",               color="#1D9E75",  dash="solid"),
+    dict(g=3.0,  label="γ = 3.0",               color="#D85A30",  dash="solid"),
+    dict(g=5.0,  label="γ = 5.0 (sobreamt.)",   color="#D4537E",  dash="solid"),
+]
+
+fig = make_subplots(
+    rows=1, cols=2,
+    subplot_titles=["Curva de resonancia A(ω)", "Respuesta temporal en ω = ω₀"],
+    horizontal_spacing=0.12
+)
+
+for s in gammas:
+    g = s["g"]
+    if g == 0:
+        # Evitar la singularidad en omega0
+        mask = np.abs(omega - omega0) > 0.05
+        A_vals = np.full_like(omega, np.nan)
+        A_vals[mask] = (F0/m) / np.abs(omega0**2 - omega[mask]**2)
+    else:
+        A_vals = (F0/m) / np.sqrt((omega0**2 - omega**2)**2 + g**2 * omega**2)
+
+    fig.add_trace(go.Scatter(
+        x=omega, y=A_vals,
+        mode="lines", name=s["label"],
+        line=dict(color=s["color"], width=2, dash=s["dash"])
+    ), row=1, col=1)
+
+# Marcar omega0
+fig.add_vline(x=omega0, line=dict(color="#888780", width=1.5, dash="dot"), row=1, col=1)
+fig.add_annotation(x=omega0+0.15, y=4.5, text="ω₀", showarrow=False,
+    font=dict(size=13, color="#5F5E5A"), row=1, col=1)
+
+# Panel derecho: respuesta temporal con y sin amortiguamiento en resonancia
+t = np.linspace(0, 25, 1000)
+
+# Sin amortiguamiento en resonancia: x(t) = (F0/2mω0) t sin(ω0 t) [crecimiento lineal]
+x_res = (F0 / (2*m*omega0)) * t * np.sin(omega0 * t)
+fig.add_trace(go.Scatter(x=t, y=x_res, mode="lines",
+    name="ω=ω₀, γ=0", showlegend=True,
+    line=dict(color="#2C2C2A", width=2, dash="dash")), row=1, col=2)
+
+# Envolvente
+fig.add_trace(go.Scatter(x=t, y=(F0/(2*m*omega0))*t, mode="lines",
+    name="envolvente", showlegend=True,
+    line=dict(color="#888780", width=1.5, dash="dot")), row=1, col=2)
+
+# Con amortiguamiento débil en resonancia
+for g, c, lbl in [(1.5, "#1D9E75", "ω=ω₀, γ=1.5"), (3.0, "#D85A30", "ω=ω₀, γ=3.0")]:
+    x_damp = (F0/m) / np.sqrt(g**2 * omega0**2) * np.sin(omega0*t) * np.exp(-g*t/2)
+    # Solución completa aproximada (régimen transitorio + estacionario)
+    omega_d = np.sqrt(omega0**2 - (g/2)**2)
+    x_stat  = (F0/m)/(g*omega0) * np.sin(omega0*t)
+    x_trans = -(F0/m)/(g*omega0) * np.exp(-g*t/2) * np.sin(omega_d*t)
+    fig.add_trace(go.Scatter(x=t, y=x_stat+x_trans, mode="lines",
+        name=lbl, showlegend=True,
+        line=dict(color=c, width=2)), row=1, col=2)
+
+fig.update_xaxes(title_text="ω (rad/s)", range=[0, 8],   row=1, col=1)
+fig.update_xaxes(title_text="t (s)",                      row=1, col=2)
+fig.update_yaxes(title_text="A (m)",     range=[0, 5],    row=1, col=1)
+fig.update_yaxes(title_text="x (m)",                      row=1, col=2)
+
+fig.update_layout(
+    title="Resonancia — ω₀ = 4 rad/s, F₀ = 1 N, m = 0.5 kg",
+    template="simple_white",
+    height=440,
+    legend=dict(orientation="h", y=-0.25, font=dict(size=11))
+)
+fig.show()
+```
+
+> **Conclusión:** En ausencia de amortiguamiento y con fuerza a frecuencia $\omega = \omega_0$,
+> la amplitud crece **linealmente** con el tiempo (panel derecho, línea punteada).
+> Cualquier amortiguamiento, por pequeño que sea, limita este crecimiento y lleva el sistema
+> a un régimen estacionario. Este fenómeno es relevante en estructuras civiles, circuitos
+> eléctricos y sistemas mecánicos [@Halliday2014, sec. 15-7].
+
+
+
+# Ejemplos resueltos Fourier  paso a paso {#sec-resueltos}
+
+Esta sección desarrolla cuatro funciones similares a los ejercicios de tarea,
+con cálculo completo de coeficientes y visualización interactiva de la convergencia.
+
+
+
+## Ejemplo A · $f(x) = x$, periodo $2\pi$ {#sec-ej-a}
+
+### Planteamiento
+
+Calcularemos el desarrollo en serie de Fourier de la función identidad en el intervalo fundamental $[-\pi, \pi]$ con extensión periódica $2\pi$.
+
+$$
+f(x) = x, \qquad -\pi \le x < \pi, \quad \text{periodo } 2\pi
+$$
+
+### Paso 1 — Análisis de Simetría
+
+Identificar la simetría ahorra la mitad del trabajo de integración:
+
+* $f(-x) = -x = -f(x)$.
+* La función es **impar**.
+* **Consecuencia:** El valor promedio $a_0$ es cero y no existen componentes de coseno ($a_n = 0$). Solo calcularemos los términos seno ($b_n$).
+
+### Paso 2 — Cálculo de los coeficientes $b_n$
+
+La fórmula general para los coeficientes de los senos es:
+$$b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx$$
+
+Dado que el producto de dos funciones impares ($x$ y $\sin(nx)$) es una **función par**, podemos simplificar la integral evaluando de $0$ a $\pi$ y duplicando el resultado:
+
+$$b_n = \frac{2}{\pi}\int_{0}^{\pi} x\sin(nx)\,dx$$
+
+Aplicamos **integración por partes** ($u = x$, $dv = \sin(nx)dx$):
+
+$$
+b_n = \frac{2}{\pi}\left[ \underbrace{-\frac{x\cos(nx)}{n}}_{uv} \Bigg|_0^\pi + \underbrace{\frac{1}{n}\int_0^\pi \cos(nx)\,dx}_{-\int v du} \right]
+$$
+
+Evaluando los límites:
+
+1.  En el primer término: $-\frac{\pi \cos(n\pi)}{n} - 0 = -\frac{\pi (-1)^n}{n}$.
+2.  La integral del coseno es $\sin(nx)/n^2$, que evaluada en $0$ y $\pi$ resulta en **cero**.
+
+Por lo tanto:
+$$b_n = \frac{2}{\pi} \left[ \frac{-\pi(-1)^n}{n} \right] = \frac{-2(-1)^n}{n} = \frac{2(-1)^{n+1}}{n}$$
+
+### Paso 3 — Serie de Fourier resultante
+
+La serie expandida es:
+$$
+\boxed{f(x) = 2\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\sin(nx) = 2\left(\sin x - \frac{\sin 2x}{2} + \frac{\sin 3x}{3} - \dots\right)}
+$$
+
+### Análisis de Convergencia e Intuición
+
+1.  **Aproximación por armónicos:** El primer término ($2\sin x$) marca la tendencia general de la recta. Los armónicos superiores ($n=2, 3, \dots$) van "añadiendo" las oscilaciones necesarias para aplanar la curva y darle la forma de diente de sierra.
+2.  **El fenómeno de Gibbs:** Notarás que en los puntos de discontinuidad ($x = \pm\pi$), la serie siempre presenta un pequeño "sobreimpulso" del ~9%. No importa cuántos términos agregues ($n=10, 100, 1000$), este pico no desaparece, solo se vuelve más angosto.
+3.  **Importancia física:** Esta función representa un cambio brusco de fase, similar a lo que ocurre en ciertos osciladores cuando se resetea su posición instantáneamente.
+
+### Paso 4 — Visualización de la convergencia
+
+```{python}
+#| label: fig-ej-a
+#| fig-cap: "Serie de Fourier de f(x) = x. Las sumas parciales con n = 1, 3, 6, 10 se aproximan a la función (negro). Nota el fenómeno de Gibbs cerca de las discontinuidades."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+x = np.linspace(-np.pi, np.pi, 800)
+
+def fourier_fx(x, N):
+    s = np.zeros_like(x)
+    for n in range(1, N + 1):
+        s += (2 * (-1)**(n + 1) / n) * np.sin(n * x)
+    return s
+
+# Función original (extendida periódicamente para mostrar continuidad)
+x_full = np.linspace(-3*np.pi, 3*np.pi, 2400)
+f_orig = np.where(
+    (x_full % (2*np.pi) + np.pi) % (2*np.pi) - np.pi < np.pi,
+    (x_full + np.pi) % (2*np.pi) - np.pi,
+    np.nan
+)
+
+colors  = ["#7F77DD", "#1D9E75", "#D85A30", "#D4537E"]
+ns      = [1, 3, 6, 10]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x, y=x,
+    mode="lines", name="f(x) = x",
+    line=dict(color="#2C2C2A", width=2.5)
+))
+
+for n, c in zip(ns, colors):
+    fig.add_trace(go.Scatter(
+        x=x, y=fourier_fx(x, n),
+        mode="lines", name=f"n = {n}",
+        line=dict(color=c, width=1.8, dash="dot" if n < 6 else "solid")
+    ))
+
+fig.update_layout(
+    title="Serie de Fourier de f(x) = x",
+    xaxis_title="x",
+    yaxis_title="f(x)",
+    xaxis=dict(tickvals=[-np.pi, -np.pi/2, 0, np.pi/2, np.pi],
+               ticktext=["-π", "-π/2", "0", "π/2", "π"]),
+    legend=dict(orientation="h", y=-0.2),
+    template="simple_white",
+    height=420
+)
+fig.show()
+```
+
+
+
+## Ejemplo B · Onda cuadrada de amplitud 4 {#sec-ej-b}
+
+### Planteamiento
+
+Definimos la onda cuadrada de periodo $2\pi$ en el intervalo $[-\pi, \pi]$ como:
+
+$$
+f(x) = \begin{cases} 4 & \text{si } |x| < \pi/2 \\ 0 & \text{si } \pi/2 < |x| < \pi \end{cases}
+$$
+
+### Paso 1 — Análisis de Simetría
+
+Observando la gráfica, la función es simétrica respecto al eje vertical ($f(-x) = f(x)$), por lo tanto es una **función par**.
+
+* **Consecuencia:** Todos los coeficientes de los senos son nulos ($b_n = 0$). 
+* La serie solo contendrá un término constante (nivel de DC) y una suma de cosenos.
+
+### Paso 2 — Valor promedio (Coeficiente $a_0$)
+
+El coeficiente $a_0$ representa el área bajo la curva en un periodo, dividida entre $\pi$:
+
+$$
+a_0 = \frac{1}{\pi}\int_{-\pi/2}^{\pi/2} 4\,dx = \frac{1}{\pi} \Big[ 4x \Big]_{-\pi/2}^{\pi/2} = \frac{1}{\pi} (2\pi - (-2\pi)) = 4
+$$
+
+El nivel de **offset** o componente continua de la serie es:
+$$\frac{a_0}{2} = 2$$
+
+### Paso 3 — Coeficientes de los cosenos ($a_n$)
+
+Aprovechando la simetría par, integramos en el semiperiodo:
+
+$$
+a_n = \frac{2}{\pi}\int_{0}^{\pi/2} 4\cos(nx)\,dx = \frac{8}{\pi} \left[ \frac{\sin(nx)}{n} \right]_{0}^{\pi/2} = \frac{8}{n\pi} \sin\left(\frac{n\pi}{2}\right)
+$$
+
+**Análisis de los términos:**
+
+* Si $n$ es **par** ($n=2, 4, 6\dots$), $\sin(n\pi/2) = 0$. Estos armónicos desaparecen.
+* Si $n$ es **impar**, el seno alterna entre $1$ y $-1$:
+    * Para $n=1, 5, 9\dots \implies a_n = \frac{8}{n\pi}$
+    * Para $n=3, 7, 11\dots \implies a_n = -\frac{8}{n\pi}$
+
+Podemos escribir esto de forma compacta usando $n = 2k+1$ para asegurar que solo tomamos valores impares:
+$$a_{2k+1} = \frac{8}{\pi} \frac{(-1)^k}{2k+1}$$
+
+### Paso 4 — Serie de Fourier resultante
+
+La expansión final muestra que la onda cuadrada se construye únicamente a partir de sus armónicos impares:
+
+$$
+\boxed{f(x) = 2 + \frac{8}{\pi}\left[\cos x - \frac{\cos 3x}{3} + \frac{\cos 5x}{5} - \cdots\right]}
+$$
+
+O en notación de sumatoria:
+$$f(x) = 2 + \frac{8}{\pi}\sum_{k=0}^{\infty}\frac{(-1)^k}{2k+1}\cos\bigl((2k+1)x\bigr)$$
+
+### Intuición Física y Convergencia
+
+1. **Nivel DC:** El valor "2" es el promedio de la función (pasa la mitad del tiempo en 4 y la mitad en 0).
+2. **Armónicos Impares:** Las ondas cuadradas se caracterizan por no tener armónicos pares. Si intentas reconstruir esta señal en un laboratorio, notarás que al eliminar el término de $n=3$, la "esquina" de la onda se redondea significativamente.
+3. **Puntos Críticos:** En los saltos de la función ($x = \pm \pi/2$), la serie converge al valor medio del salto, es decir, a $(4+0)/2 = 2$.
+De la figura de la tarea, la onda cuadrada de periodo $2\pi$ vale:
+
+$$
+f(x) = \begin{cases} 4 & \text{si } -\tfrac{\pi}{2} < x < \tfrac{\pi}{2} \\ 0 & \text{si } \tfrac{\pi}{2} < |x| < \pi \end{cases}
+$$
+
+
+### Paso 5 — Visualización
+
+```{python}
+#| label: fig-ej-b
+#| fig-cap: "Serie de Fourier de la onda cuadrada de amplitud 4. La convergencia es más lenta cerca de las esquinas."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+x = np.linspace(-np.pi, np.pi, 800)
+
+def f_square(x):
+    return np.where(np.abs(x) < np.pi/2, 4.0, 0.0)
+
+def fourier_square4(x, N):
+    s = 2.0 * np.ones_like(x)
+    for k in range(N):
+        n = 2*k + 1
+        s += (8 / np.pi) * ((-1)**k / n) * np.cos(n * x)
+    return s
+
+colors = ["#7F77DD", "#1D9E75", "#D85A30", "#D4537E"]
+ns     = [1, 3, 6, 10]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x, y=f_square(x),
+    mode="lines", name="f(x) original",
+    line=dict(color="#2C2C2A", width=2.5)
+))
+
+for n, c in zip(ns, colors):
+    fig.add_trace(go.Scatter(
+        x=x, y=fourier_square4(x, n),
+        mode="lines", name=f"n = {n}",
+        line=dict(color=c, width=1.8)
+    ))
+
+fig.update_layout(
+    title="Serie de Fourier — Onda cuadrada (amplitud 4)",
+    xaxis_title="x",
+    yaxis_title="f(x)",
+    xaxis=dict(tickvals=[-np.pi, -np.pi/2, 0, np.pi/2, np.pi],
+               ticktext=["-π", "-π/2", "0", "π/2", "π"]),
+    legend=dict(orientation="h", y=-0.2),
+    template="simple_white",
+    height=420
+)
+fig.show()
+```
+
+
+
+## Ejemplo C · Onda cuadrada semi-rectificada {#sec-ej-c}
+
+### Planteamiento
+
+Analizamos la onda semi-rectificada descrita por una función tiene un periodo de $2\pi$ y se define como:
+
+$$
+f(t) = \begin{cases} 1 & \text{si } 0 < t < \pi \\ 0 & \text{si } -\pi < t < 0 \end{cases}
+$$
+
+### Paso 1 — Análisis de Simetría
+
+A diferencia de los ejemplos anteriores, esta función **no es par ni impar**
+
+* No tiene simetría especular respecto al eje vertical (no es par).
+* No tiene simetría de rotación respecto al origen (no es impar).
+* **Consecuencia:** Debemos calcular tanto los coeficientes de los cosenos ($a_n$) como los de los senos ($b_n$), además del valor promedio.
+
+### Paso 2 — Valor promedio (Coeficiente $a_0$)
+
+El coeficiente $a_0$ representa el **valor promedio** o el **nivel central** de la función a lo largo de un ciclo completo. Matemáticamente, integramos la función en su periodo completo de $2\pi$ para encontrar el área neta:
+
+$$
+a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(t) \, dt = \frac{1}{\pi} \left[ \underbrace{\int_{-\pi}^{0} 0 \, dt}_{\text{Intervalo en 0}} + \underbrace{\int_{0}^{\pi} 1 \, dt}_{\text{Intervalo en 1}} \right]
+$$
+
+Como la integral de la primera parte es cero, el cálculo se simplifica a:
+
+$$
+a_0 = \frac{1}{\pi} \int_{0}^{\pi} 1 \, dt = \frac{1}{\pi} \Big[ t \Big]_0^{\pi} = \frac{1}{\pi} (\pi - 0) = 1
+$$
+
+El término constante de la serie, que define el eje sobre el cual oscilará nuestra señal, es:
+$$\frac{a_0}{2} = \frac{1}{2}$$
+
+**Explicación intuitiva:**
+Imagina que la función representa el nivel de agua en un contenedor. Si durante la mitad del tiempo el nivel es $1$ y la otra mitad es $0$, al "agitar" el contenedor para que el agua se asiente, el nivel final sería exactamente $0.5$. [cite_start]Este valor es la **línea base** o el valor medio sobre el cual se sumarán las ondas de seno para reconstruir la señal original de la tarea[cite: 10, 13].
+
+### Paso 3 — Coeficientes de los cosenos ($a_n$)
+
+$$
+a_n = \frac{1}{\pi}\int_0^{\pi} (1)\cos(nt)\,dt = \frac{1}{\pi} \left[ \frac{\sin(nt)}{n} \right]_0^{\pi}
+$$
+
+Como $\sin(n\pi) = 0$ y $\sin(0) = 0$ para cualquier entero $n \ge 1$, tenemos que **$a_n = 0$** para todos los armónicos[cite: 10]. Aunque la función no es impar, sus componentes de coseno desaparecen en este intervalo específico.
+
+### Paso 4 — Coeficientes de los senos ($b_n$)
+
+$$
+b_n = \frac{1}{\pi}\int_0^{\pi} (1)\sin(nt)\,dt = \frac{1}{\pi} \left[ -\frac{\cos(nt)}{n} \right]_0^{\pi} = \frac{1}{n\pi} [-\cos(n\pi) + \cos(0)]
+$$
+
+Sustituyendo $\cos(n\pi) = (-1)^n$:
+$$b_n = \frac{1 - (-1)^n}{n\pi}$$
+
+* Si $n$ es **par** ($n=2, 4, \dots$): $b_n = \frac{1 - 1}{n\pi} = 0$.
+* Si $n$ es **impar** ($n=1, 3, \dots$): $b_n = \frac{1 - (-1)}{n\pi} = \frac{2}{n\pi}$.
+
+### Paso 5 — Serie de Fourier resultante
+
+La serie final se compone del valor promedio y la suma de armónicos senoidales impares[cite: 10]:
+
+$$
+\boxed{f(t) = \frac{1}{2} + \frac{2}{\pi} \left( \frac{\sin t}{1} + \frac{\sin 3t}{3} + \frac{\sin 5t}{5} + \dots \right)}
+$$
+
+En notación compacta:
+$$f(t) = \frac{1}{2} + \frac{2}{\pi} \sum_{k=0}^{\infty} \frac{\sin((2k+1)t)}{2k+1}$$
+
+### Comentarios para el examen
+
+1.  **Relación con la onda cuadrada:** Nota que esta serie es casi idéntica a la de una onda cuadrada simétrica (Ejemplo B), pero desplazada verticalmente y con una amplitud reducida a la mitad.
+2.  **Importancia del intervalo:** Si hubiéramos definido la función entre $-\pi/2$ y $\pi/2$, los coeficientes habrían cambiado drásticamente debido a la simetría, aunque la forma de la onda fuera la misma.
+3.  **Visualización:** Al sumar los términos, los alumnos verán cómo el nivel $1/2$ eleva la suma de senos para que oscile entre $0$ y $1$ en lugar de $-1$ y $1$.
+
+### Paso 6 — Visualización
+
+```{python}
+#| label: fig-ej-c
+#| fig-cap: "Serie de Fourier de la onda semi-rectificada. El término constante a₀/2 = 1/2 eleva la serie sobre el eje."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+x = np.linspace(-np.pi, np.pi, 800)
+
+def f_semi(x):
+    return np.where(x > 0, 1.0, 0.0)
+
+def fourier_semi(x, N):
+    s = 0.5 * np.ones_like(x)
+    for k in range(N):
+        n = 2*k + 1
+        s += (2 / (n * np.pi)) * np.sin(n * x)
+    return s
+
+colors = ["#7F77DD", "#1D9E75", "#D85A30", "#D4537E"]
+ns     = [1, 3, 6, 10]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x, y=f_semi(x),
+    mode="lines", name="f(t) original",
+    line=dict(color="#2C2C2A", width=2.5)
+))
+
+for n, c in zip(ns, colors):
+    fig.add_trace(go.Scatter(
+        x=x, y=fourier_semi(x, n),
+        mode="lines", name=f"n = {n}",
+        line=dict(color=c, width=1.8)
+    ))
+
+fig.update_layout(
+    title="Serie de Fourier — Onda semi-rectificada",
+    xaxis_title="t",
+    yaxis_title="f(t)",
+    xaxis=dict(tickvals=[-np.pi, 0, np.pi],
+               ticktext=["-π", "0", "π"]),
+    legend=dict(orientation="h", y=-0.2),
+    template="simple_white",
+    height=420
+)
+fig.show()
+```
+
+
+
+## Ejemplo D · $f(x) = x^2$ y sumas de series numéricas {#sec-ej-d}
+
+### Planteamiento
+
+Desarrollaremos la serie de Fourier para la función cuadrática en el intervalo $[-\pi, \pi]$ y utilizaremos el resultado para resolver problemas clásicos de sumatorias infinitas.
+
+$$
+f(x) = x^2, \qquad -\pi \le x \le \pi, \quad \text{periodo } 2\pi
+$$
+
+### Paso 1 — Análisis de Simetría
+
+* $f(-x) = (-x)^2 = x^2 = f(x)$.
+* La función es **par**.
+* **Consecuencia:** Todos los coeficientes $b_n = 0$. Solo calcularemos $a_0$ y $a_n$.
+
+### Paso 2 — Valor promedio (Coeficiente $a_0$)
+
+Aplicamos la integral en el intervalo simétrico:
+
+$$
+a_0 = \frac{1}{\pi}\int_{-\pi}^{\pi} x^2\,dx = \frac{2}{\pi}\int_0^{\pi} x^2\,dx = \frac{2}{\pi} \left[ \frac{x^3}{3} \right]_0^{\pi} = \frac{2\pi^2}{3}
+$$
+
+El término constante de la serie es:
+$$\frac{a_0}{2} = \frac{\pi^2}{3}$$
+
+### Paso 3 — Coeficientes de los cosenos ($a_n$)
+
+Para calcular $a_n = \frac{2}{\pi}\int_0^{\pi} x^2\cos(nx)\,dx$, integramos por partes dos veces:
+
+1.  **Primera parte:** $u = x^2, dv = \cos(nx)dx \implies du = 2xdx, v = \frac{\sin(nx)}{n}$
+2.  **Segunda parte:** Requiere integrar $x\sin(nx)$, lo que nos devuelve un término en $\cos(nx)$.
+
+Tras evaluar en los límites $0$ y $\pi$ (donde todos los términos con $\sin(n\pi)$ se anulan):
+
+$$
+a_n = \frac{2}{\pi} \left[ \frac{2\pi\cos(n\pi)}{n^2} \right] = \frac{4(-1)^n}{n^2}
+$$
+
+### Paso 4 — Serie de Fourier resultante
+
+$$
+\boxed{f(x) = \frac{\pi^2}{3} + 4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)}
+$$
+
+---
+
+## Ejemplo D · $f(x) = x^2$ y sumas de series numéricas {#sec-ej-d}
+
+### Planteamiento
+
+Desarrollaremos la serie de Fourier para la función cuadrática en el intervalo $[-\pi, \pi]$ y utilizaremos el resultado para resolver problemas clásicos de sumatorias infinitas.
+
+$$
+f(x) = x^2, \qquad -\pi \le x \le \pi, \quad \text{periodo } 2\pi
+$$
+
+### Paso 1 — Análisis de Simetría
+
+* $f(-x) = (-x)^2 = x^2 = f(x)$.
+* La función es **par**.
+* **Consecuencia:** Todos los coeficientes $b_n = 0$. Solo calcularemos $a_0$ y $a_n$.
+
+### Paso 2 — Valor promedio (Coeficiente $a_0$)
+
+Aplicamos la integral en el intervalo simétrico:
+
+$$
+a_0 = \frac{1}{\pi}\int_{-\pi}^{\pi} x^2\,dx = \frac{2}{\pi}\int_0^{\pi} x^2\,dx = \frac{2}{\pi} \left[ \frac{x^3}{3} \right]_0^{\pi} = \frac{2\pi^2}{3}
+$$
+
+El término constante de la serie es:
+$$\frac{a_0}{2} = \frac{\pi^2}{3}$$
+
+### Paso 3 — Coeficientes de los cosenos ($a_n$)
+
+Para calcular $a_n = \frac{2}{\pi}\int_0^{\pi} x^2\cos(nx)\,dx$, integramos por partes dos veces. Tras evaluar en los límites (donde los términos con $\sin(n\pi)$ se anulan):
+
+$$
+a_n = \frac{2}{\pi} \left[ \frac{2\pi\cos(n\pi)}{n^2} \right] = \frac{4(-1)^n}{n^2}
+$$
+
+### Paso 4 — Serie de Fourier resultante
+
+$$
+\boxed{f(x) = \frac{\pi^2}{3} + 4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)}
+$$
+
+---
+
+### Paso 5 — Aplicación: El Problema de Basilea
+
+Podemos usar esta serie para hallar la suma de los inversos de los cuadrados. Aplicamos el **Teorema de Dirichlet**: como la función es continua en $x = \pi$, la serie converge exactamente al valor $f(\pi) = \pi^2$:
+
+$$
+\pi^2 = \frac{\pi^2}{3} + 4\sum_{n=1}^{\infty}\frac{(-1)^n \cos(n\pi)}{n^2}
+$$
+
+Como $\cos(n\pi) = (-1)^n$ y el producto $(-1)^n \cdot (-1)^n = 1$:
+
+$$
+\pi^2 - \frac{\pi^2}{3} = 4\sum_{n=1}^{\infty}\frac{1}{n^2} \implies \frac{2\pi^2}{3} = 4\sum_{n=1}^{\infty}\frac{1}{n^2}
+$$
+
+Despejando, obtenemos el famoso resultado de Euler:
+$$
+\boxed{\sum_{n=1}^{\infty}\frac{1}{n^2} = \frac{\pi^2}{6}}
+$$
+
+---
+
+### Paso 6 — Aplicación: Identidad de Parseval para $\sum 1/n^4$
+
+La identidad de Parseval relaciona el promedio del cuadrado de la función con la suma de los cuadrados de sus coeficientes:
+$$
+\frac{1}{2\pi}\int_{-\pi}^{\pi} |f(x)|^2\,dx = \frac{a_0^2}{4} + \frac{1}{2}\sum_{n=1}^{\infty} a_n^2
+$$
+
+1. **Lado izquierdo (Integral):** $\frac{1}{2\pi}\int_{-\pi}^{\pi} x^4\,dx = \frac{\pi^4}{5}$.
+2. **Lado derecho (Serie):** $\frac{\pi^4}{9} + 8\sum_{n=1}^{\infty} \frac{1}{n^4}$.
+
+Igualando ambos lados y despejando:
+$$
+\frac{\pi^4}{5} - \frac{\pi^4}{9} = 8\sum_{n=1}^{\infty} \frac{1}{n^4} \implies \frac{4\pi^4}{45} = 8\sum_{n=1}^{\infty} \frac{1}{n^4}
+$$
+
+Finalmente:
+$$
+\boxed{\sum_{n=1}^{\infty}\frac{1}{n^4} = \frac{\pi^4}{90}}
+$$
+
+---
+
+### Paso 7 — Justificación Formal de la Convergencia
+
+Para validar los resultados desde el rigor del cálculo de series, analizamos la serie numérica $\sum 1/n^4$:
+
+**1. Criterio de la serie p-armónica:**
+Es una serie de la forma $\sum 1/n^p$ con $p=4$. Como $p > 1$, la serie **converge absolutamente**.
+
+**2. Criterio de la integral:**
+Comparando con la función continua $1/x^4$:
+$$\int_{1}^{\infty} \frac{1}{x^4} dx = \left[ -\frac{1}{3x^3} \right]_1^{\infty} = \frac{1}{3}$$
+
+
+
+Dado que la integral es finita, el criterio garantiza que la serie numérica converge. Mientras que el cálculo nos dice *si* converge, la serie de Fourier nos permite encontrar el valor exacto de dicha convergencia.
+
+### Paso 7 — Visualización
+
+```{python}
+#| label: fig-ej-d
+#| fig-cap: "Serie de Fourier de f(x) = x². Al ser función par y continua, la convergencia es notablemente más suave que en las ondas cuadradas."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+x = np.linspace(-np.pi, np.pi, 800)
+
+def fourier_x2(x, N):
+    s = (np.pi**2 / 3) * np.ones_like(x)
+    for n in range(1, N + 1):
+        s += (4 * (-1)**n / n**2) * np.cos(n * x)
+    return s
+
+colors = ["#7F77DD", "#1D9E75", "#D85A30", "#D4537E"]
+ns     = [1, 3, 6, 10]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x, y=x**2,
+    mode="lines", name="f(x) = x²",
+    line=dict(color="#2C2C2A", width=2.5)
+))
+
+for n, c in zip(ns, colors):
+    fig.add_trace(go.Scatter(
+        x=x, y=fourier_x2(x, n),
+        mode="lines", name=f"n = {n}",
+        line=dict(color=c, width=1.8)
+    ))
+
+fig.update_layout(
+    title="Serie de Fourier de f(x) = x²",
+    xaxis_title="x",
+    yaxis_title="f(x)",
+    xaxis=dict(tickvals=[-np.pi, -np.pi/2, 0, np.pi/2, np.pi],
+               ticktext=["-π", "-π/2", "0", "π/2", "π"]),
+    legend=dict(orientation="h", y=-0.2),
+    template="simple_white",
+    height=420
+)
+fig.show()
+```
+
+### Paso 8 — Comparación de velocidad de convergencia
+
+```{python}
+#| label: fig-convergencia
+#| fig-cap: "Error cuadrático medio de cada serie al agregar más términos. Las funciones continuas (x²) convergen mucho más rápido que las discontinuas (onda cuadrada, f(x)=x)."
+#| code-fold: true
+
+import numpy as np
+import plotly.graph_objects as go
+
+x  = np.linspace(-np.pi, np.pi, 2000)
+ns = np.arange(1, 31)
+
+def rmse(f_approx, f_exact):
+    return np.sqrt(np.mean((f_approx - f_exact)**2))
+
+err_x   = []
+err_sq  = []
+err_x2  = []
+err_semi = []
+
+for n in ns:
+    # f(x) = x
+    s = sum((2*(-1)**(k+1)/k)*np.sin(k*x) for k in range(1, n+1))
+    err_x.append(rmse(s, x))
+
+    # onda cuadrada amplitud 4
+    s = 2 + sum((8/np.pi)*((-1)**k/(2*k+1))*np.cos((2*k+1)*x) for k in range(n))
+    f_sq = np.where(np.abs(x) < np.pi/2, 4.0, 0.0)
+    err_sq.append(rmse(s, f_sq))
+
+    # f(x) = x²
+    s = (np.pi**2/3)*np.ones_like(x) + sum((4*(-1)**k/k**2)*np.cos(k*x) for k in range(1, n+1))
+    err_x2.append(rmse(s, x**2))
+
+    # semi-rectificada
+    s = 0.5 + sum((2/(np.pi*(2*k+1)))*np.sin((2*k+1)*x) for k in range(n))
+    f_semi = np.where(x > 0, 1.0, 0.0)
+    err_semi.append(rmse(s, f_semi))
+
+fig = go.Figure()
+specs = [
+    (err_x,    "#7F77DD", "f(x) = x"),
+    (err_sq,   "#1D9E75", "Onda cuadrada"),
+    (err_x2,   "#D85A30", "f(x) = x²"),
+    (err_semi, "#D4537E", "Semi-rectificada"),
+]
+for err, c, name in specs:
+    fig.add_trace(go.Scatter(
+        x=list(ns), y=err,
+        mode="lines+markers", name=name,
+        line=dict(color=c, width=2),
+        marker=dict(size=4)
+    ))
+
+fig.update_layout(
+    title="Velocidad de convergencia — Error cuadrático medio vs número de términos",
+    xaxis_title="Número de términos N",
+    yaxis_title="RMSE",
+    yaxis_type="log",
+    legend=dict(orientation="h", y=-0.25),
+    template="simple_white",
+    height=420
+)
+fig.show()
+```
+
+> **Observación:** La gráfica logarítmica muestra que $f(x)=x^2$ (función continua y diferenciable)
+> converge mucho más rápido que las funciones discontinuas. Esto refleja un resultado general:
+> la velocidad de convergencia de la serie de Fourier depende de la regularidad de la función
+> [@Arfken2013, sec. 14.2].
+
+
+
+# Referencias {.unnumbered}
+
+::: {#refs}
+:::
