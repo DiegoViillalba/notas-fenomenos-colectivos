@@ -8,7 +8,7 @@
 
 <meta name="author" content="Diego Villalba">
 
-<title>Oscilador armónico y series de Fourier – fenomenos-colectivos</title>
+<title>Oscilador armónico y series de Fourier – Fenómenos Colectivos 2026-2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -193,7 +193,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">fenomenos-colectivos</a> 
+      <a href="../">Fenómenos Colectivos 2026-2</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -425,7 +425,7 @@ window.Quarto = {
 
 <section id="sec-oscilador" class="level1">
 <h1>Oscilador armónico simple</h1>
-<p>El <strong>oscilador armónico simple</strong> (OAS) describe el movimiento de cualquier sistema que, al desplazarse de su posición de equilibrio, experimenta una fuerza restauradora proporcional al desplazamiento <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, cap. 15</a>)</span>:</p>
+<p>El <strong>oscilador armónico simple</strong> (OAS) describe el movimiento de cualquier sistema que, al desplazarse de su posición de equilibrio, experimenta una fuerza restauradora proporcional al desplazamiento <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, cap. 15</a>)</span>:</p>
 <p><span class="math display">\[
 F = -kx
 \]</span></p>
@@ -545,7 +545,7 @@ if (outputEl) {{
 </ul>
 <section id="solución-general" class="level3">
 <h3 class="anchored" data-anchor-id="solución-general">Solución general</h3>
-<p>La solución general es una combinación de seno y coseno <span class="citation" data-cites="Giancoli2008">(<a href="#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, cap. 14</a>)</span>:</p>
+<p>La solución general es una combinación de seno y coseno <span class="citation" data-cites="Giancoli2008">(<a href="oscilador_fourier.html#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, cap. 14</a>)</span>:</p>
 <p><span class="math display">\[
 x(t) = A\cos(\omega_0 t + \varphi)
 \]</span></p>
@@ -589,7 +589,7 @@ x(t) = A\cos(\omega_0 t + \varphi)
 </section>
 <section id="energía-del-oscilador" class="level3">
 <h3 class="anchored" data-anchor-id="energía-del-oscilador">Energía del oscilador</h3>
-<p>La energía mecánica total se <strong>conserva</strong> a lo largo del movimiento <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
+<p>La energía mecánica total se <strong>conserva</strong> a lo largo del movimiento <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
 <p><span class="math display">\[
 E = \underbrace{\frac{1}{2}mv^2}_{E_\text{cinética}} +
     \underbrace{\frac{1}{2}kx^2}_{E_\text{potencial}} =
@@ -708,14 +708,14 @@ x(t) = 3\cos\!\left(\frac{2\pi}{0.8}\,t\right)\,\text{cm}
 <h1>Series de Fourier</h1>
 <section id="motivación-física" class="level2">
 <h2 class="anchored" data-anchor-id="motivación-física">Motivación física</h2>
-<p>Muchas señales en física — sonido, luz, señales eléctricas, fuerzas periódicas — no son sinusoidales puras, pero <strong>sí son periódicas</strong>. Jean-Baptiste Joseph Fourier demostró que toda función periódica “razonablemente bien portada” puede escribirse como suma (posiblemente infinita) de senos y cosenos <span class="citation" data-cites="Kreyszig2011">(<a href="#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, cap. 11</a>)</span>.</p>
+<p>Muchas señales en física — sonido, luz, señales eléctricas, fuerzas periódicas — no son sinusoidales puras, pero <strong>sí son periódicas</strong>. Jean-Baptiste Joseph Fourier demostró que toda función periódica “razonablemente bien portada” puede escribirse como suma (posiblemente infinita) de senos y cosenos <span class="citation" data-cites="Kreyszig2011">(<a href="oscilador_fourier.html#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, cap. 11</a>)</span>.</p>
 <blockquote class="blockquote">
 <p><em>“Toda función periódica es una superposición de osciladores armónicos.”</em></p>
 </blockquote>
 </section>
 <section id="definición-de-la-serie" class="level2">
 <h2 class="anchored" data-anchor-id="definición-de-la-serie">Definición de la serie</h2>
-<p>Sea <span class="math inline">\(f(x)\)</span> una función de periodo <span class="math inline">\(2\pi\)</span>. Su <strong>desarrollo en serie de Fourier</strong> es <span class="citation" data-cites="Arfken2013">(<a href="#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.1</a>)</span>:</p>
+<p>Sea <span class="math inline">\(f(x)\)</span> una función de periodo <span class="math inline">\(2\pi\)</span>. Su <strong>desarrollo en serie de Fourier</strong> es <span class="citation" data-cites="Arfken2013">(<a href="oscilador_fourier.html#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.1</a>)</span>:</p>
 <p><span class="math display">\[
 f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}\bigl[a_n\cos(nx) + b_n\sin(nx)\bigr]
 \]</span></p>
@@ -739,7 +739,7 @@ b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx, \qquad n = 1,2,3,\ldots
 </section>
 <section id="convergencia-teorema-de-dirichlet" class="level2">
 <h2 class="anchored" data-anchor-id="convergencia-teorema-de-dirichlet">Convergencia: teorema de Dirichlet</h2>
-<p>Si <span class="math inline">\(f(x)\)</span> es periódica, acotada y tiene un número finito de discontinuidades y extremos en un periodo, la serie de Fourier converge <span class="citation" data-cites="Kreyszig2011">(<a href="#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, sec. 11.1</a>)</span>:</p>
+<p>Si <span class="math inline">\(f(x)\)</span> es periódica, acotada y tiene un número finito de discontinuidades y extremos en un periodo, la serie de Fourier converge <span class="citation" data-cites="Kreyszig2011">(<a href="oscilador_fourier.html#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, sec. 11.1</a>)</span>:</p>
 <ul>
 <li>A <span class="math inline">\(f(x)\)</span> en los puntos de continuidad.</li>
 <li>Al <strong>promedio</strong> <span class="math inline">\(\tfrac{1}{2}[f(x^+) + f(x^-)]\)</span> en los puntos de discontinuidad.</li>
@@ -862,14 +862,14 @@ f(x) = \frac{4}{\pi}\left[\sin(x) + \frac{\sin(3x)}{3} + \frac{\sin(5x)}{5} + \c
 <p><span class="math display">\[
 m\ddot{x} + kx = F(t)
 \]</span></p>
-<p>Si <span class="math inline">\(F(t)\)</span> no es sinusoidal (por ejemplo, una onda cuadrada), el truco es <strong>descomponerla en serie de Fourier</strong> <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>:</p>
+<p>Si <span class="math inline">\(F(t)\)</span> no es sinusoidal (por ejemplo, una onda cuadrada), el truco es <strong>descomponerla en serie de Fourier</strong> <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>:</p>
 <p><span class="math display">\[
 F(t) = \sum_{n} F_n \sin(n\omega t)
 \]</span></p>
 <p>Por la <strong>linealidad</strong> de la ecuación diferencial, podemos resolver por separado para cada componente <span class="math inline">\(F_n\)</span> y sumar las respuestas. Esto convierte un problema difícil en muchos problemas fáciles.</p>
 <section id="resonancia" class="level3">
 <h3 class="anchored" data-anchor-id="resonancia">Resonancia</h3>
-<p>Cuando la frecuencia de algún armónico de la fuerza coincide con <span class="math inline">\(\omega_0\)</span>, el sistema entra en <strong>resonancia</strong>: la amplitud crece drásticamente <span class="citation" data-cites="Giancoli2008">(<a href="#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, sec. 14–7</a>)</span>. Este fenómeno explica desde la ruptura de puentes hasta el diseño de instrumentos musicales.</p>
+<p>Cuando la frecuencia de algún armónico de la fuerza coincide con <span class="math inline">\(\omega_0\)</span>, el sistema entra en <strong>resonancia</strong>: la amplitud crece drásticamente <span class="citation" data-cites="Giancoli2008">(<a href="oscilador_fourier.html#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, sec. 14–7</a>)</span>. Este fenómeno explica desde la ruptura de puentes hasta el diseño de instrumentos musicales.</p>
 </section>
 </section>
 <section id="ejercicios-bloque-3-conexión" class="level2">
@@ -908,7 +908,7 @@ F(t) = \sum_{n} F_n \sin(n\omega t)
 <blockquote class="blockquote">
 <p><strong>Nivel:</strong> ⬤⬤⬤ avanzado</p>
 </blockquote>
-<p>La <strong>identidad de Parseval</strong> establece que la “energía” de una señal se distribuye entre sus armónicos <span class="citation" data-cites="Arfken2013">(<a href="#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.5</a>)</span>:</p>
+<p>La <strong>identidad de Parseval</strong> establece que la “energía” de una señal se distribuye entre sus armónicos <span class="citation" data-cites="Arfken2013">(<a href="oscilador_fourier.html#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.5</a>)</span>:</p>
 <p><span class="math display">\[
 \frac{1}{\pi}\int_{-\pi}^{\pi} [f(x)]^2\,dx =
 \frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)
@@ -1074,7 +1074,7 @@ Figura&nbsp;6.1: Posición, velocidad y aceleración del oscilador libre. Nota e
 </section>
 <section id="paso-1-energía-total-del-sistema" class="level3">
 <h3 class="anchored" data-anchor-id="paso-1-energía-total-del-sistema">Paso 1 — Energía total del sistema</h3>
-<p>La energía mecánica total <span class="math inline">\(E\)</span> es constante en un oscilador ideal y depende únicamente de la rigidez del resorte y de qué tanto lo estiramos inicialmente <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
+<p>La energía mecánica total <span class="math inline">\(E\)</span> es constante en un oscilador ideal y depende únicamente de la rigidez del resorte y de qué tanto lo estiramos inicialmente <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
 <p><span class="math display">\[
 E = \frac{1}{2}kA^2 = \frac{1}{2}(8)(0.1)^2 = 0.04\,\text{J} = 40\,\text{mJ}
 \]</span></p>
@@ -1093,7 +1093,7 @@ E = \frac{1}{2}kA^2 = \frac{1}{2}(8)(0.1)^2 = 0.04\,\text{J} = 40\,\text{mJ}
 </section>
 <section id="paso-3-verificación-de-la-conservación" class="level3">
 <h3 class="anchored" data-anchor-id="paso-3-verificación-de-la-conservación">Paso 3 — Verificación de la Conservación</h3>
-<p>La suma de ambas energías en cualquier instante debe ser igual a la energía total inicial <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
+<p>La suma de ambas energías en cualquier instante debe ser igual a la energía total inicial <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–4</a>)</span>:</p>
 <p><span class="math display">\[
 E_p + E_k = E\cos^2(\omega_0 t) + E\sin^2(\omega_0 t) = E\bigl[\cos^2(\omega_0 t) + \sin^2(\omega_0 t)\bigr] = E \quad \checkmark
 \]</span></p>
@@ -1277,7 +1277,7 @@ Figura&nbsp;6.2: Energía cinética y potencial a lo largo del tiempo (arriba) y
 <h4 class="anchored" data-anchor-id="b.-el-efecto-de-la-amplitud-sistema-1-vs.-sistema-3">B. El efecto de la amplitud (Sistema 1 vs.&nbsp;Sistema 3)</h4>
 <p>Al duplicar la amplitud sin cambiar la masa, el periodo y la frecuencia <strong>permanecen idénticos</strong>.</p>
 <ul>
-<li><strong>Explicación física:</strong> Esta es la propiedad de <strong>isocronismo</strong>. Aunque la masa en el Sistema 3 debe recorrer una distancia mayor (20 cm vs 10 cm), la fuerza restauradora (<span class="math inline">\(F = -kx\)</span>) también es proporcionalmente mayor en los extremos. Esta mayor fuerza compensa exactamente la mayor distancia, logrando que el tiempo total del ciclo no cambie <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–2</a>)</span>.</li>
+<li><strong>Explicación física:</strong> Esta es la propiedad de <strong>isocronismo</strong>. Aunque la masa en el Sistema 3 debe recorrer una distancia mayor (20 cm vs 10 cm), la fuerza restauradora (<span class="math inline">\(F = -kx\)</span>) también es proporcionalmente mayor en los extremos. Esta mayor fuerza compensa exactamente la mayor distancia, logrando que el tiempo total del ciclo no cambie <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–2</a>)</span>.</li>
 <li><strong>Consecuencia en la velocidad:</strong> Para recorrer el doble de distancia en el mismo tiempo, el Sistema 3 debe moverse mucho más rápido. Su velocidad máxima es el doble que la del Sistema 1 (<span class="math inline">\(v_{\text{máx}} = A\omega_0\)</span>).</li>
 </ul>
 </section>
@@ -1382,7 +1382,7 @@ Figura&nbsp;6.3: Comparación de tres osciladores. Sistema 1 y 3 tienen el mismo
 </section>
 <section id="paso-2-amplitud-en-estado-estacionario-sin-amortiguamiento" class="level3">
 <h3 class="anchored" data-anchor-id="paso-2-amplitud-en-estado-estacionario-sin-amortiguamiento">Paso 2 — Amplitud en estado estacionario (Sin amortiguamiento)</h3>
-<p>Después de un tiempo, el sistema “olvida” sus condiciones iniciales y oscila a la frecuencia de la fuerza externa (<span class="math inline">\(\omega\)</span>). La amplitud de esta oscilación estacionaria viene dada por <span class="citation" data-cites="Giancoli2008">(<a href="#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, sec. 14–7</a>)</span>:</p>
+<p>Después de un tiempo, el sistema “olvida” sus condiciones iniciales y oscila a la frecuencia de la fuerza externa (<span class="math inline">\(\omega\)</span>). La amplitud de esta oscilación estacionaria viene dada por <span class="citation" data-cites="Giancoli2008">(<a href="oscilador_fourier.html#ref-Giancoli2008" role="doc-biblioref">Giancoli 2008, sec. 14–7</a>)</span>:</p>
 <p><span class="math display">\[
 A(\omega) = \frac{F_0/m}{\left|\omega_0^2 - \omega^2\right|}
 \]</span></p>
@@ -1399,7 +1399,7 @@ A(\omega) = \frac{F_0/m}{\left|\omega_0^2 - \omega^2\right|}
 </section>
 <section id="paso-4-el-papel-del-amortiguamiento-gamma" class="level3">
 <h3 class="anchored" data-anchor-id="paso-4-el-papel-del-amortiguamiento-gamma">Paso 4 — El papel del amortiguamiento (<span class="math inline">\(\gamma\)</span>)</h3>
-<p>En la realidad, siempre hay fricción o resistencia. Introducimos un término de amortiguamiento <span class="math inline">\(\gamma\)</span> que limita la amplitud máxima <span class="citation" data-cites="Kreyszig2011">(<a href="#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, sec. 2.8</a>)</span>:</p>
+<p>En la realidad, siempre hay fricción o resistencia. Introducimos un término de amortiguamiento <span class="math inline">\(\gamma\)</span> que limita la amplitud máxima <span class="citation" data-cites="Kreyszig2011">(<a href="oscilador_fourier.html#ref-Kreyszig2011" role="doc-biblioref">Kreyszig 2011, sec. 2.8</a>)</span>:</p>
 <p><span class="math display">\[
 A(\omega) = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2}}
 \]</span></p>
@@ -1411,7 +1411,7 @@ A(\omega) = \frac{F_0/m}{\sqrt{(\omega_0^2 - \omega^2)^2 + \gamma^2\omega^2}}
 </section>
 <section id="conclusión-para-el-examen" class="level3">
 <h3 class="anchored" data-anchor-id="conclusión-para-el-examen">Conclusión para el examen</h3>
-<p>La resonancia ocurre cuando la frecuencia impulsora coincide con la natural del sistema. Es el principio que permite sintonizar una radio, pero también el que puede destruir un puente si el viento genera una fuerza periódica en la frecuencia correcta <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>.</p>
+<p>La resonancia ocurre cuando la frecuencia impulsora coincide con la natural del sistema. Es el principio que permite sintonizar una radio, pero también el que puede destruir un puente si el viento genera una fuerza periódica en la frecuencia correcta <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>.</p>
 </section>
 <section id="visualización-3" class="level3">
 <h3 class="anchored" data-anchor-id="visualización-3">Visualización</h3>
@@ -1537,7 +1537,7 @@ Figura&nbsp;6.4: Curvas de resonancia para distintos amortigamientos. Sin amorti
 </div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Conclusión:</strong> En ausencia de amortiguamiento y con fuerza a frecuencia <span class="math inline">\(\omega = \omega_0\)</span>, la amplitud crece <strong>linealmente</strong> con el tiempo (panel derecho, línea punteada). Cualquier amortiguamiento, por pequeño que sea, limita este crecimiento y lleva el sistema a un régimen estacionario. Este fenómeno es relevante en estructuras civiles, circuitos eléctricos y sistemas mecánicos <span class="citation" data-cites="Halliday2014">(<a href="#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>.</p>
+<p><strong>Conclusión:</strong> En ausencia de amortiguamiento y con fuerza a frecuencia <span class="math inline">\(\omega = \omega_0\)</span>, la amplitud crece <strong>linealmente</strong> con el tiempo (panel derecho, línea punteada). Cualquier amortiguamiento, por pequeño que sea, limita este crecimiento y lleva el sistema a un régimen estacionario. Este fenómeno es relevante en estructuras civiles, circuitos eléctricos y sistemas mecánicos <span class="citation" data-cites="Halliday2014">(<a href="oscilador_fourier.html#ref-Halliday2014" role="doc-biblioref">Halliday, Resnick, y Walker 2014, sec. 15–7</a>)</span>.</p>
 </blockquote>
 </section>
 </section>
@@ -2294,7 +2294,7 @@ Figura&nbsp;7.5: Error cuadrático medio de cada serie al agregar más términos
 </div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Observación:</strong> La gráfica logarítmica muestra que <span class="math inline">\(f(x)=x^2\)</span> (función continua y diferenciable) converge mucho más rápido que las funciones discontinuas. Esto refleja un resultado general: la velocidad de convergencia de la serie de Fourier depende de la regularidad de la función <span class="citation" data-cites="Arfken2013">(<a href="#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.2</a>)</span>.</p>
+<p><strong>Observación:</strong> La gráfica logarítmica muestra que <span class="math inline">\(f(x)=x^2\)</span> (función continua y diferenciable) converge mucho más rápido que las funciones discontinuas. Esto refleja un resultado general: la velocidad de convergencia de la serie de Fourier depende de la regularidad de la función <span class="citation" data-cites="Arfken2013">(<a href="oscilador_fourier.html#ref-Arfken2013" role="doc-biblioref">Arfken, Weber, y Harris 2013, sec. 14.2</a>)</span>.</p>
 </blockquote>
 </section>
 </section>
@@ -2303,16 +2303,21 @@ Figura&nbsp;7.5: Error cuadrático medio de cada serie al agregar más términos
 <h1 class="unnumbered">Referencias</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Arfken2013" class="csl-entry" role="listitem">
-Arfken, George B., Hans J. Weber, y Frank E. Harris. 2013. <em>Mathematical Methods for Physicists</em>. 7.ª ed. Waltham, MA: Academic Press.
+Arfken, George B., Hans J. Weber, and Frank E. Harris. 2013.
+<em>Mathematical Methods for Physicists</em>. 7th ed. Waltham, MA:
+Academic Press.
 </div>
 <div id="ref-Giancoli2008" class="csl-entry" role="listitem">
-Giancoli, Douglas C. 2008. <em>Física para Ciencias e Ingeniería</em>. 4.ª ed. México: Pearson Educación.
+Giancoli, Douglas C. 2008. <em>Física Para Ciencias e Ingeniería</em>.
+4th ed. México: Pearson Educación.
 </div>
 <div id="ref-Halliday2014" class="csl-entry" role="listitem">
-Halliday, David, Robert Resnick, y Jearl Walker. 2014. <em>Fundamentos de Física</em>. 10.ª ed. Nueva York: Wiley.
+Halliday, David, Robert Resnick, and Jearl Walker. 2014. <em>Fundamentos
+de Física</em>. 10th ed. Nueva York: Wiley.
 </div>
 <div id="ref-Kreyszig2011" class="csl-entry" role="listitem">
-Kreyszig, Erwin. 2011. <em>Matemáticas Avanzadas para Ingeniería</em>. 10.ª ed. Nueva York: Wiley.
+Kreyszig, Erwin. 2011. <em>Matemáticas Avanzadas Para Ingeniería</em>.
+10th ed. Nueva York: Wiley.
 </div>
 </div>
 

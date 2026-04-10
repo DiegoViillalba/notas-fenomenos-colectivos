@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "fenomenos-colectivos"
+  title: "Fenómenos Colectivos 2026-2"
   author: "Diego Villalba"
   date: today
   language: es
