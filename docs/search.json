@@ -206,5 +206,137 @@
       "Ondas",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Oscilador armónico y series de Fourier</span>"
     ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "",
+    "text": "Introducción\nEl estudio de las ondas mecánicas permite conectar una descripción física intuitiva —la propagación de una perturbación en un medio— con una formulación matemática precisa basada en ecuaciones diferenciales parciales. En una cuerda, en el sonido o en una perturbación radial en un medio tridimensional, la información no se transporta mediante el desplazamiento neto de materia a grandes distancias, sino mediante la transmisión local de energía y momento a través del medio.\nEste capítulo desarrolla los conceptos centrales asociados con la ecuación de onda, las ondas viajeras, las ondas esféricas y las ondas estacionarias. El punto de partida son ejercicios típicos de un examen parcial sobre ondas, donde se pide verificar soluciones, identificar rapidez de propagación, localizar nodos y antinodos, y analizar la superposición de ondas que viajan en sentidos opuestos. A partir de esas ideas, construiremos una exposición más completa, con definiciones formales, interpretación física y ejemplos computacionales en Python.\nEl objetivo no es únicamente resolver expresiones particulares, sino mostrar cómo se reconocen patrones generales. Una función de la forma \\(f(x-vt)\\) describe una perturbación que se desplaza hacia la derecha con rapidez \\(v\\), mientras que una función \\(f(x+vt)\\) describe una perturbación que se desplaza hacia la izquierda. Cuando dos ondas de igual frecuencia, amplitud y longitud de onda viajan en sentidos opuestos, su interferencia produce una onda estacionaria, caracterizada por nodos fijos y antinodos de máxima oscilación (feynman1964?; kleppner2014?).",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#introducción",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#introducción",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Introducción",
+    "text": "Introducción\nEl estudio de las ondas mecánicas permite conectar una descripción física intuitiva —la propagación de una perturbación en un medio— con una formulación matemática precisa basada en ecuaciones diferenciales parciales. En una cuerda, en el sonido o en una perturbación radial en un medio tridimensional, la información no se transporta mediante el desplazamiento neto de materia a grandes distancias, sino mediante la transmisión local de energía y momento a través del medio.\nEste capítulo desarrolla los conceptos centrales asociados con la ecuación de onda, las ondas viajeras, las ondas esféricas y las ondas estacionarias. El punto de partida son ejercicios típicos de un examen parcial sobre ondas, donde se pide verificar soluciones, identificar rapidez de propagación, localizar nodos y antinodos, y analizar la superposición de ondas que viajan en sentidos opuestos. A partir de esas ideas, construiremos una exposición más completa, con definiciones formales, interpretación física y ejemplos computacionales en Python.\nEl objetivo no es únicamente resolver expresiones particulares, sino mostrar cómo se reconocen patrones generales. Una función de la forma \\(f(x-vt)\\) describe una perturbación que se desplaza hacia la derecha con rapidez \\(v\\), mientras que una función \\(f(x+vt)\\) describe una perturbación que se desplaza hacia la izquierda. Cuando dos ondas de igual frecuencia, amplitud y longitud de onda viajan en sentidos opuestos, su interferencia produce una onda estacionaria, caracterizada por nodos fijos y antinodos de máxima oscilación (feynman1964?; kleppner2014?).",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#la-ecuación-de-onda-unidimensional",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#la-ecuación-de-onda-unidimensional",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "La ecuación de onda unidimensional",
+    "text": "La ecuación de onda unidimensional\nLa ecuación de onda unidimensional modela la evolución de una perturbación transversal \\(y(x,t)\\) que se propaga a lo largo de una dirección espacial \\(x\\). En una cuerda ideal bajo tensión constante, esta ecuación puede deducirse aplicando la segunda ley de Newton a un elemento diferencial de cuerda y suponiendo pequeñas pendientes, de modo que la tensión actúa aproximadamente con magnitud constante (marion2013?; french1971?).\n\n\n\n\n\n\nDefinición. La ecuación de onda unidimensional para una perturbación \\(y(x,t)\\) con rapidez de propagación \\(v\\) es \\[\n\\frac{\\partial^2 y}{\\partial t^2}=v^2\\frac{\\partial^2 y}{\\partial x^2}.\n\\tag{3.1}\\]\n\n\n\nUna característica fundamental de esta ecuación es que admite soluciones viajeras de forma arbitraria. Si \\(f\\) es una función suficientemente diferenciable, entonces \\[\ny(x,t)=f(x-vt)\n\\] es una onda que se desplaza hacia valores crecientes de \\(x\\), mientras que \\[\ny(x,t)=g(x+vt)\n\\] es una onda que se desplaza hacia valores decrecientes de \\(x\\). La solución general en una dimensión puede escribirse como la suma de ambas contribuciones: \\[\ny(x,t)=f(x-vt)+g(x+vt),\n\\] resultado conocido como solución de d’Alembert (courant1962?).\n\nVerificación directa\nPara verificar que \\(y(x,t)=f(x-vt)\\) satisface la ecuación de onda, definimos \\(u=x-vt\\). Por regla de la cadena, \\[\n\\frac{\\partial y}{\\partial t}=-v f'(u), \\qquad\n\\frac{\\partial^2 y}{\\partial t^2}=v^2 f''(u),\n\\] y \\[\n\\frac{\\partial y}{\\partial x}=f'(u), \\qquad\n\\frac{\\partial^2 y}{\\partial x^2}=f''(u).\n\\] Por tanto, \\[\n\\frac{\\partial^2 y}{\\partial t^2}=v^2 f''(u)=v^2\\frac{\\partial^2 y}{\\partial x^2}.\n\\] El mismo argumento aplica para \\(g(x+vt)\\).",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#ondas-esféricas",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#ondas-esféricas",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Ondas esféricas",
+    "text": "Ondas esféricas\nEn tres dimensiones, una onda que se propaga radialmente desde una fuente puntual no conserva amplitud constante. A medida que el frente de onda se expande, la energía se distribuye sobre superficies esféricas de área \\(4\\pi r^2\\). Por ello, la amplitud de una onda esférica ideal suele decaer como \\(1/r\\) en ausencia de absorción.\nEn problemas con simetría radial, la ecuación de onda tridimensional puede reducirse a una ecuación efectiva para la cantidad \\(r\\xi(r,t)\\). Esto permite estudiar la propagación radial usando una ecuación formalmente similar a la ecuación de onda unidimensional.\n\n\n\n\n\n\nDefinición. Una onda esférica radial \\(\\xi(r,t)\\) satisface la ecuación reducida \\[\n\\frac{\\partial^2}{\\partial t^2}\\bigl(r\\xi\\bigr)=v^2\\frac{\\partial^2}{\\partial r^2}\\bigl(r\\xi\\bigr).\n\\tag{3.2}\\]\n\n\n\nSi se propone \\[\n\\xi(r,t)=\\frac{1}{r}f(r+vt),\n\\] entonces \\[\nr\\xi(r,t)=f(r+vt).\n\\] Definiendo \\(u=r+vt\\), se tiene \\[\n\\frac{\\partial}{\\partial t}(r\\xi)=v f'(u), \\qquad\n\\frac{\\partial^2}{\\partial t^2}(r\\xi)=v^2 f''(u),\n\\] y \\[\n\\frac{\\partial}{\\partial r}(r\\xi)=f'(u), \\qquad\n\\frac{\\partial^2}{\\partial r^2}(r\\xi)=f''(u).\n\\] Por lo tanto, \\[\n\\frac{\\partial^2}{\\partial t^2}(r\\xi)=v^2 f''(u)=v^2\\frac{\\partial^2}{\\partial r^2}(r\\xi),\n\\] lo cual verifica que \\(\\xi=(1/r)f(r+vt)\\) es solución de la ecuación radial.\nLa presencia de \\(r+vt\\) indica que la forma de onda se desplaza hacia valores decrecientes de \\(r\\), es decir, corresponde a una onda esférica convergente. En cambio, una dependencia \\(f(r-vt)/r\\) representaría una onda esférica saliente.",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#identificación-de-rapidez-de-propagación",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#identificación-de-rapidez-de-propagación",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Identificación de rapidez de propagación",
+    "text": "Identificación de rapidez de propagación\nUna onda sinusoidal viajera suele escribirse como \\[\ny(x,t)=A\\sin(kx-\\omega t+\\phi),\n\\] donde \\(A\\) es la amplitud, \\(k\\) el número de onda, \\(\\omega\\) la frecuencia angular y \\(\\phi\\) una fase inicial. La rapidez de fase se obtiene imponiendo que la fase permanezca constante: \\[\nkx-\\omega t+\\phi=\\text{constante}.\n\\] Al derivar respecto al tiempo, \\[\nk\\frac{dx}{dt}-\\omega=0,\n\\] por lo que \\[\nv=\\frac{dx}{dt}=\\frac{\\omega}{k}.\n\\]\n\n\n\n\n\n\nDefinición. Para una onda armónica de fase \\(kx-\\omega t+\\phi\\), la rapidez de fase es \\[\nv=\\frac{\\omega}{k}=\\lambda f,\n\\tag{3.3}\\]\n\n\n\ndonde \\(\\lambda=2\\pi/k\\) es la longitud de onda y \\(f=\\omega/(2\\pi)\\) es la frecuencia ordinaria.\n\nEjemplo: rapidez a partir de una expresión de onda\nConsidérese una onda del tipo \\[\ny(x,t)=A\\sin(kx-\\omega t),\n\\] con \\[\nA=2.00\\,\\text{mm}, \\qquad k=20\\,\\text{m}^{-1}, \\qquad \\omega=4.0\\,\\text{s}^{-1}.\n\\] La rapidez de propagación es \\[\nv=\\frac{\\omega}{k}=\\frac{4.0\\,\\text{s}^{-1}}{20\\,\\text{m}^{-1}}=0.20\\,\\text{m/s}.\n\\] La amplitud no afecta la rapidez; únicamente determina el desplazamiento máximo respecto a la posición de equilibrio.\n\nimport numpy as np\n\nk = 20.0        # 1/m\nomega = 4.0    # 1/s\nv = omega / k\nlambda_ = 2*np.pi / k\nfrequency = omega / (2*np.pi)\n\nprint(f\"Rapidez de fase: {v:.3f} m/s\")\nprint(f\"Longitud de onda: {lambda_:.3f} m\")\nprint(f\"Frecuencia: {frequency:.3f} Hz\")\n\nRapidez de fase: 0.200 m/s\nLongitud de onda: 0.314 m\nFrecuencia: 0.637 Hz",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#superposición-y-ondas-estacionarias",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#superposición-y-ondas-estacionarias",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Superposición y ondas estacionarias",
+    "text": "Superposición y ondas estacionarias\nLa ecuación de onda es lineal. Esto significa que si \\(y_1(x,t)\\) y \\(y_2(x,t)\\) son soluciones, entonces cualquier combinación lineal \\[\ny(x,t)=c_1y_1(x,t)+c_2y_2(x,t)\n\\] también es solución. Esta propiedad permite explicar la interferencia, las ondas estacionarias y los modos normales de vibración (french1971?; feynman1964?).\nUna onda estacionaria aparece cuando dos ondas armónicas de la misma amplitud, frecuencia y número de onda viajan en sentidos opuestos. Por ejemplo, \\[\ny_1(x,t)=A\\sin(kx-\\omega t), \\qquad\ny_2(x,t)=A\\sin(kx+\\omega t).\n\\] Usando la identidad trigonométrica \\[\n\\sin(a-b)+\\sin(a+b)=2\\sin(a)\\cos(b),\n\\] se obtiene \\[\ny(x,t)=y_1+y_2=2A\\sin(kx)\\cos(\\omega t).\n\\]\n\n\n\n\n\n\nDefinición. Una onda estacionaria unidimensional puede escribirse como \\[\ny(x,t)=A_s\\sin(kx)\\cos(\\omega t),\n\\tag{3.4}\\]\n\n\n\ndonde \\(A_s\\) es la amplitud máxima espacial de la onda estacionaria. Los puntos donde \\(\\sin(kx)=0\\) son nodos, y los puntos donde \\(|\\sin(kx)|=1\\) son antinodos.\n\nNodos y antinodos\nLos nodos son puntos que permanecen en reposo para todo tiempo. En la forma \\[\ny(x,t)=A_s\\sin(kx)\\cos(\\omega t),\n\\] los nodos satisfacen \\[\n\\sin(kx)=0.\n\\] Por tanto, \\[\nkx=n\\pi, \\qquad n=0,1,2,\\dots\n\\] y \\[\nx_n=\\frac{n\\pi}{k}.\n\\]\nLos antinodos satisfacen \\[\n|\\sin(kx)|=1,\n\\] es decir, \\[\nkx=\\frac{(2n+1)\\pi}{2}, \\qquad n=0,1,2,\\dots\n\\] y \\[\nx_n^{(a)}=\\frac{(2n+1)\\pi}{2k}.\n\\]",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#ejemplo-práctico-análisis-de-una-onda-estacionaria",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#ejemplo-práctico-análisis-de-una-onda-estacionaria",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Ejemplo práctico: análisis de una onda estacionaria",
+    "text": "Ejemplo práctico: análisis de una onda estacionaria\nConsideremos el patrón \\[\ny(x,t)=0.040\\sin(5\\pi x)\\cos(40\\pi t),\n\\] con \\(x\\) y \\(y\\) en metros y \\(t\\) en segundos.\nComparando con la forma estándar \\[\ny(x,t)=A_s\\sin(kx)\\cos(\\omega t),\n\\] identificamos \\[\nA_s=0.040\\,\\text{m}, \\qquad k=5\\pi\\,\\text{m}^{-1}, \\qquad \\omega=40\\pi\\,\\text{s}^{-1}.\n\\]\n\nPosición de los nodos\nLos nodos satisfacen \\[\n5\\pi x=n\\pi.\n\\] Por tanto, \\[\nx_n=\\frac{n}{5}\\,\\text{m}.\n\\] Para \\(x\\geq 0\\), las primeras posiciones son \\[\nx_0=0, \\qquad x_1=0.20\\,\\text{m}, \\qquad x_2=0.40\\,\\text{m}.\n\\] Si se excluye el nodo en el extremo \\(x=0\\) por considerarlo frontera, entonces los tres primeros nodos positivos serían \\(0.20\\,\\text{m}\\), \\(0.40\\,\\text{m}\\) y \\(0.60\\,\\text{m}\\).\n\n\nPeríodo temporal\nLa frecuencia angular es \\(\\omega=40\\pi\\,\\text{s}^{-1}\\), de modo que \\[\nT=\\frac{2\\pi}{\\omega}=\\frac{2\\pi}{40\\pi}=0.050\\,\\text{s}.\n\\] Todo punto que no sea nodo oscila con este período.\n\n\nRapidez de las ondas viajeras componentes\nLa rapidez de las dos ondas viajeras que interfieren para producir la onda estacionaria es \\[\nv=\\frac{\\omega}{k}=\\frac{40\\pi}{5\\pi}=8.0\\,\\text{m/s}.\n\\]\n\n\nAmplitud de las ondas viajeras\nLa onda estacionaria tiene amplitud espacial máxima \\(A_s=2A\\), donde \\(A\\) es la amplitud de cada onda viajera componente. Por tanto, \\[\nA=\\frac{A_s}{2}=\\frac{0.040}{2}=0.020\\,\\text{m}.\n\\] Cada onda viajera tiene amplitud \\(2.0\\,\\text{cm}\\).\n\n\nInstantes de velocidad transversal nula\nLa velocidad transversal es \\[\nv_y(x,t)=\\frac{\\partial y}{\\partial t}\n=-0.040(40\\pi)\\sin(5\\pi x)\\sin(40\\pi t).\n\\] Todos los puntos de la cuerda tienen velocidad transversal nula cuando \\[\n\\sin(40\\pi t)=0.\n\\] Así, \\[\n40\\pi t=m\\pi, \\qquad m=0,1,2,\\dots\n\\] y \\[\nt_m=\\frac{m}{40}\\,\\text{s}.\n\\] Para \\(t\\geq 0\\), los primeros instantes son \\[\nt_0=0, \\qquad t_1=0.025\\,\\text{s}, \\qquad t_2=0.050\\,\\text{s}.\n\\] Si se busca el primer instante positivo, sería \\(0.025\\,\\text{s}\\).\n\nimport numpy as np\n\nA_s = 0.040\nk = 5*np.pi\nomega = 40*np.pi\n\nnodes = [n*np.pi/k for n in range(4)]\nT = 2*np.pi/omega\nv = omega/k\nA_traveling = A_s/2\nt_zero_velocity = [m*np.pi/omega for m in range(4)]\n\nprint(\"Nodos (m):\", [round(x, 3) for x in nodes])\nprint(f\"Periodo: {T:.3f} s\")\nprint(f\"Rapidez: {v:.3f} m/s\")\nprint(f\"Amplitud de cada onda viajera: {A_traveling:.3f} m\")\nprint(\"Instantes con velocidad transversal nula (s):\", [round(t, 3) for t in t_zero_velocity])\n\nNodos (m): [0.0, 0.2, 0.4, 0.6]\nPeriodo: 0.050 s\nRapidez: 8.000 m/s\nAmplitud de cada onda viajera: 0.020 m\nInstantes con velocidad transversal nula (s): [0.0, 0.025, 0.05, 0.075]",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#visualización-con-python",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#visualización-con-python",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Visualización con Python",
+    "text": "Visualización con Python\nLa visualización ayuda a distinguir una onda viajera de una onda estacionaria. En una onda viajera, el perfil completo se desplaza. En una onda estacionaria, los nodos permanecen fijos y cada punto oscila con una amplitud que depende de su posición.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nA_s = 0.040\nk = 5*np.pi\nomega = 40*np.pi\n\nx = np.linspace(0, 1.0, 600)\ntimes = [0.0, 0.00625, 0.0125, 0.01875, 0.025]\n\nplt.figure(figsize=(8, 4.5))\nfor t in times:\n    y = A_s*np.sin(k*x)*np.cos(omega*t)\n    plt.plot(x, y, label=f\"t = {t:.5f} s\")\n\nplt.axhline(0, linewidth=0.8)\nplt.xlabel(\"x (m)\")\nplt.ylabel(\"y(x,t) (m)\")\nplt.title(\"Evolución temporal de una onda estacionaria\")\nplt.legend()\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nPara localizar nodos de forma computacional, basta usar la fórmula analítica \\(x_n=n\\pi/k\\). En un análisis numérico con datos discretos, también puede estimarse la posición de nodos buscando puntos donde la amplitud temporal sea cercana a cero.\n\nimport numpy as np\n\nk = 5*np.pi\nL = 1.0\nn_max = int(np.floor(k*L/np.pi))\nnodes = np.array([n*np.pi/k for n in range(n_max + 1)])\n\nprint(nodes)\n\n[0.  0.2 0.4 0.6 0.8 1. ]",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#ejemplo-práctico-distancia-recorrida-por-las-ondas-componentes",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#ejemplo-práctico-distancia-recorrida-por-las-ondas-componentes",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Ejemplo práctico: distancia recorrida por las ondas componentes",
+    "text": "Ejemplo práctico: distancia recorrida por las ondas componentes\nAhora consideremos dos ondas que viajan en sentidos opuestos: \\[\ny_1(x,t)=(6.00\\,\\text{mm})\\sin(4.00\\pi x-400\\pi t),\n\\] \\[\ny_2(x,t)=(6.00\\,\\text{mm})\\sin(4.00\\pi x+400\\pi t).\n\\] Su superposición es \\[\ny(x,t)=y_1+y_2=2(6.00\\,\\text{mm})\\sin(4.00\\pi x)\\cos(400\\pi t).\n\\] Por tanto, el patrón estacionario tiene amplitud máxima \\[\nA_s=12.00\\,\\text{mm}.\n\\]\nAquí \\[\nk=4\\pi\\,\\text{m}^{-1}, \\qquad \\omega=400\\pi\\,\\text{s}^{-1}.\n\\] La rapidez de cada onda viajera es \\[\nv=\\frac{\\omega}{k}=\\frac{400\\pi}{4\\pi}=100\\,\\text{m/s}.\n\\]\nUn antinodo pasa de desplazamiento máximo hacia arriba a desplazamiento máximo hacia abajo en medio período. El período de oscilación es \\[\nT=\\frac{2\\pi}{\\omega}=\\frac{2\\pi}{400\\pi}=0.005\\,\\text{s}.\n\\] Entonces el intervalo requerido es \\[\n\\Delta t=\\frac{T}{2}=0.0025\\,\\text{s}.\n\\] Durante ese tiempo, cada onda viajera recorre una distancia \\[\n\\Delta x=v\\Delta t=(100\\,\\text{m/s})(0.0025\\,\\text{s})=0.25\\,\\text{m}.\n\\]\nEste resultado también puede obtenerse usando la longitud de onda. Como \\[\n\\lambda=\\frac{2\\pi}{k}=\\frac{2\\pi}{4\\pi}=0.50\\,\\text{m},\n\\] medio período corresponde a media longitud de onda recorrida: \\[\n\\Delta x=\\frac{\\lambda}{2}=0.25\\,\\text{m}.\n\\]\n\nimport numpy as np\n\nA = 6.00e-3\nk = 4*np.pi\nomega = 400*np.pi\n\nv = omega/k\nT = 2*np.pi/omega\ndt = T/2\ndistance = v*dt\nlambda_ = 2*np.pi/k\n\nprint(f\"Rapidez: {v:.1f} m/s\")\nprint(f\"Periodo: {T:.4f} s\")\nprint(f\"Intervalo de máximo superior a máximo inferior: {dt:.4f} s\")\nprint(f\"Distancia recorrida: {distance:.3f} m\")\nprint(f\"Longitud de onda: {lambda_:.3f} m\")\n\nRapidez: 100.0 m/s\nPeriodo: 0.0050 s\nIntervalo de máximo superior a máximo inferior: 0.0025 s\nDistancia recorrida: 0.250 m\nLongitud de onda: 0.500 m",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#interpretación-física-de-los-nodos-y-la-energía",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#interpretación-física-de-los-nodos-y-la-energía",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Interpretación física de los nodos y la energía",
+    "text": "Interpretación física de los nodos y la energía\nAunque una onda estacionaria parece no propagarse globalmente, puede entenderse como la interferencia de dos ondas viajeras que transportan energía en direcciones opuestas. En un patrón ideal con amplitudes iguales, el flujo neto promedio de energía puede anularse, pero localmente la energía se transforma entre energía cinética y energía potencial elástica.\nEn los nodos, el desplazamiento transversal es siempre cero; sin embargo, la cuerda no necesariamente carece de energía cerca de ellos, pues la pendiente espacial puede ser máxima. En los antinodos ocurre lo contrario: la amplitud de desplazamiento es máxima, y el punto alterna entre máxima elongación y paso por el equilibrio con máxima rapidez transversal.\nEsta distinción es importante en sistemas físicos más generales. Los modos normales de una cuerda, una columna de aire o una cavidad electromagnética se describen mediante patrones estacionarios determinados por condiciones de frontera. La cuantización de modos en sistemas vibrantes y en campos físicos surge precisamente de imponer que sólo ciertas longitudes de onda sean compatibles con la geometría del sistema (feynman1964?; kleppner2014?).",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#resumen-de-fórmulas-útiles",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#resumen-de-fórmulas-útiles",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Resumen de fórmulas útiles",
+    "text": "Resumen de fórmulas útiles\nPara una onda viajera armónica \\[\ny(x,t)=A\\sin(kx-\\omega t+\\phi),\n\\] las cantidades principales son \\[\n\\lambda=\\frac{2\\pi}{k}, \\qquad f=\\frac{\\omega}{2\\pi}, \\qquad T=\\frac{2\\pi}{\\omega}, \\qquad v=\\frac{\\omega}{k}=\\lambda f.\n\\]\nPara una onda estacionaria \\[\ny(x,t)=A_s\\sin(kx)\\cos(\\omega t),\n\\] los nodos y antinodos se ubican en \\[\nx_n=\\frac{n\\pi}{k}, \\qquad x_n^{(a)}=\\frac{(2n+1)\\pi}{2k}.\n\\] Si la onda estacionaria resulta de la superposición de dos ondas viajeras idénticas de amplitud \\(A\\), entonces \\[\nA_s=2A.\n\\]",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/ondas_ecuacion_y_superposicion.html#conclusiones",
+    "href": "chapters/ondas_ecuacion_y_superposicion.html#conclusiones",
+    "title": "Ondas mecánicas, ecuación de onda y superposición",
+    "section": "Conclusiones",
+    "text": "Conclusiones\nLa ecuación de onda proporciona un marco matemático unificado para describir perturbaciones que se propagan en medios físicos. A partir de ella se reconocen soluciones viajeras, ondas radiales esféricas y patrones estacionarios. La forma funcional de la onda permite identificar de manera directa la rapidez de propagación, la frecuencia, la longitud de onda y el período.\nLas ondas estacionarias muestran cómo la superposición de ondas viajeras puede producir estructuras espaciales fijas. Los nodos y antinodos no son propiedades de una sola onda viajera, sino del patrón de interferencia. Esta idea es esencial para entender modos normales, resonancia, condiciones de frontera y fenómenos ondulatorios en sistemas mecánicos, acústicos y electromagnéticos.\nEl tratamiento computacional en Python complementa el análisis analítico: permite visualizar la evolución temporal, verificar fórmulas y explorar cómo cambian los patrones al modificar \\(k\\), \\(\\omega\\) o la amplitud. En un curso técnico, esta combinación entre deducción matemática, interpretación física y experimentación numérica favorece una comprensión más profunda del fenómeno ondulatorio.",
+    "crumbs": [
+      "Ondas",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Ondas mecánicas, ecuación de onda y superposición</span>"
+    ]
   }
 ]

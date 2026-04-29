@@ -15,6 +15,7 @@ book:
     - part: "Ondas"
       chapters:
         - chapters/oscilador_fourier.qmd
+        - chapters/ondas_ecuacion_y_superposicion.qmd
 
 bibliography: referencias.bib
 
