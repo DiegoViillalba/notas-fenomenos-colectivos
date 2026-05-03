@@ -283,7 +283,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">28 de abril de 2026</p>
+      <p class="date">2 de mayo de 2026</p>
     </div>
   </div>
   
@@ -299,11 +299,11 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
 <p>El estudio de las ondas mecánicas permite conectar una descripción física intuitiva —la propagación de una perturbación en un medio— con una formulación matemática precisa basada en ecuaciones diferenciales parciales. En una cuerda, en el sonido o en una perturbación radial en un medio tridimensional, la información no se transporta mediante el desplazamiento neto de materia a grandes distancias, sino mediante la transmisión local de energía y momento a través del medio.</p>
 <p>Este capítulo desarrolla los conceptos centrales asociados con la ecuación de onda, las ondas viajeras, las ondas esféricas y las ondas estacionarias. El punto de partida son ejercicios típicos de un examen parcial sobre ondas, donde se pide verificar soluciones, identificar rapidez de propagación, localizar nodos y antinodos, y analizar la superposición de ondas que viajan en sentidos opuestos. A partir de esas ideas, construiremos una exposición más completa, con definiciones formales, interpretación física y ejemplos computacionales en Python.</p>
-<p>El objetivo no es únicamente resolver expresiones particulares, sino mostrar cómo se reconocen patrones generales. Una función de la forma <span class="math inline">\(f(x-vt)\)</span> describe una perturbación que se desplaza hacia la derecha con rapidez <span class="math inline">\(v\)</span>, mientras que una función <span class="math inline">\(f(x+vt)\)</span> describe una perturbación que se desplaza hacia la izquierda. Cuando dos ondas de igual frecuencia, amplitud y longitud de onda viajan en sentidos opuestos, su interferencia produce una onda estacionaria, caracterizada por nodos fijos y antinodos de máxima oscilación <span class="citation" data-cites="feynman1964 kleppner2014">(<a href="oscilador_fourier.html#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>; <a href="oscilador_fourier.html#ref-kleppner2014" role="doc-biblioref"><strong>kleppner2014?</strong></a>)</span>.</p>
+<p>El objetivo no es únicamente resolver expresiones particulares, sino mostrar cómo se reconocen patrones generales. Una función de la forma <span class="math inline">\(f(x-vt)\)</span> describe una perturbación que se desplaza hacia la derecha con rapidez <span class="math inline">\(v\)</span>, mientras que una función <span class="math inline">\(f(x+vt)\)</span> describe una perturbación que se desplaza hacia la izquierda. Cuando dos ondas de igual frecuencia, amplitud y longitud de onda viajan en sentidos opuestos, su interferencia produce una onda estacionaria, caracterizada por nodos fijos y antinodos de máxima oscilación <span class="citation" data-cites="feynman1964 kleppner2014">(<a href="#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>; <a href="#ref-kleppner2014" role="doc-biblioref"><strong>kleppner2014?</strong></a>)</span>.</p>
 </section>
 <section id="la-ecuación-de-onda-unidimensional" class="level2">
 <h2 class="anchored" data-anchor-id="la-ecuación-de-onda-unidimensional">La ecuación de onda unidimensional</h2>
-<p>La ecuación de onda unidimensional modela la evolución de una perturbación transversal <span class="math inline">\(y(x,t)\)</span> que se propaga a lo largo de una dirección espacial <span class="math inline">\(x\)</span>. En una cuerda ideal bajo tensión constante, esta ecuación puede deducirse aplicando la segunda ley de Newton a un elemento diferencial de cuerda y suponiendo pequeñas pendientes, de modo que la tensión actúa aproximadamente con magnitud constante <span class="citation" data-cites="marion2013 french1971">(<a href="oscilador_fourier.html#ref-marion2013" role="doc-biblioref"><strong>marion2013?</strong></a>; <a href="oscilador_fourier.html#ref-french1971" role="doc-biblioref"><strong>french1971?</strong></a>)</span>.</p>
+<p>La ecuación de onda unidimensional modela la evolución de una perturbación transversal <span class="math inline">\(y(x,t)\)</span> que se propaga a lo largo de una dirección espacial <span class="math inline">\(x\)</span>. En una cuerda ideal bajo tensión constante, esta ecuación puede deducirse aplicando la segunda ley de Newton a un elemento diferencial de cuerda y suponiendo pequeñas pendientes, de modo que la tensión actúa aproximadamente con magnitud constante <span class="citation" data-cites="marion2013 french1971">(<a href="#ref-marion2013" role="doc-biblioref"><strong>marion2013?</strong></a>; <a href="#ref-french1971" role="doc-biblioref"><strong>french1971?</strong></a>)</span>.</p>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -322,7 +322,7 @@ y(x,t)=f(x-vt)
 y(x,t)=g(x+vt)
 \]</span> es una onda que se desplaza hacia valores decrecientes de <span class="math inline">\(x\)</span>. La solución general en una dimensión puede escribirse como la suma de ambas contribuciones: <span class="math display">\[
 y(x,t)=f(x-vt)+g(x+vt),
-\]</span> resultado conocido como solución de d’Alembert <span class="citation" data-cites="courant1962">(<a href="oscilador_fourier.html#ref-courant1962" role="doc-biblioref"><strong>courant1962?</strong></a>)</span>.</p>
+\]</span> resultado conocido como solución de d’Alembert <span class="citation" data-cites="courant1962">(<a href="#ref-courant1962" role="doc-biblioref"><strong>courant1962?</strong></a>)</span>.</p>
 <section id="verificación-directa" class="level3">
 <h3 class="anchored" data-anchor-id="verificación-directa">Verificación directa</h3>
 <p>Para verificar que <span class="math inline">\(y(x,t)=f(x-vt)\)</span> satisface la ecuación de onda, definimos <span class="math inline">\(u=x-vt\)</span>. Por regla de la cadena, <span class="math display">\[
@@ -396,15 +396,15 @@ v=\frac{\omega}{k}=\lambda f,
 <p>Considérese una onda del tipo <span class="math display">\[
 y(x,t)=A\sin(kx-\omega t),
 \]</span> con <span class="math display">\[
-A=2.00\,\text{mm}, \qquad k=20\,\text{m}^{-1}, \qquad \omega=4.0\,\text{s}^{-1}.
+A=3.50\,\text{mm}, \qquad k=25\,\text{m}^{-1}, \qquad \omega=7.5\,\text{s}^{-1}.
 \]</span> La rapidez de propagación es <span class="math display">\[
-v=\frac{\omega}{k}=\frac{4.0\,\text{s}^{-1}}{20\,\text{m}^{-1}}=0.20\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{7.5\,\text{s}^{-1}}{25\,\text{m}^{-1}}=0.30\,\text{m/s}.
 \]</span> La amplitud no afecta la rapidez; únicamente determina el desplazamiento máximo respecto a la posición de equilibrio.</p>
-<div id="d2a98ead" class="cell" data-execution_count="1">
+<div id="e8b07054" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">20.0</span>        <span class="co"># 1/m</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="fl">4.0</span>    <span class="co"># 1/s</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">25.0</span>        <span class="co"># 1/m</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="fl">7.5</span>     <span class="co"># 1/s</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> omega <span class="op">/</span> k</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>lambda_ <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi <span class="op">/</span> k</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>frequency <span class="op">=</span> omega <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>np.pi)</span>
@@ -413,9 +413,9 @@ v=\frac{\omega}{k}=\frac{4.0\,\text{s}^{-1}}{20\,\text{m}^{-1}}=0.20\,\text{m/s}
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Longitud de onda: </span><span class="sc">{</span>lambda_<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Frecuencia: </span><span class="sc">{</span>frequency<span class="sc">:.3f}</span><span class="ss"> Hz"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rapidez de fase: 0.200 m/s
-Longitud de onda: 0.314 m
-Frecuencia: 0.637 Hz</code></pre>
+<pre><code>Rapidez de fase: 0.300 m/s
+Longitud de onda: 0.251 m
+Frecuencia: 1.194 Hz</code></pre>
 </div>
 </div>
 </section>
@@ -424,7 +424,7 @@ Frecuencia: 0.637 Hz</code></pre>
 <h2 class="anchored" data-anchor-id="superposición-y-ondas-estacionarias">Superposición y ondas estacionarias</h2>
 <p>La ecuación de onda es lineal. Esto significa que si <span class="math inline">\(y_1(x,t)\)</span> y <span class="math inline">\(y_2(x,t)\)</span> son soluciones, entonces cualquier combinación lineal <span class="math display">\[
 y(x,t)=c_1y_1(x,t)+c_2y_2(x,t)
-\]</span> también es solución. Esta propiedad permite explicar la interferencia, las ondas estacionarias y los modos normales de vibración <span class="citation" data-cites="french1971 feynman1964">(<a href="oscilador_fourier.html#ref-french1971" role="doc-biblioref"><strong>french1971?</strong></a>; <a href="oscilador_fourier.html#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>)</span>.</p>
+\]</span> también es solución. Esta propiedad permite explicar la interferencia, las ondas estacionarias y los modos normales de vibración <span class="citation" data-cites="french1971 feynman1964">(<a href="#ref-french1971" role="doc-biblioref"><strong>french1971?</strong></a>; <a href="#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>)</span>.</p>
 <p>Una onda estacionaria aparece cuando dos ondas armónicas de la misma amplitud, frecuencia y número de onda viajan en sentidos opuestos. Por ejemplo, <span class="math display">\[
 y_1(x,t)=A\sin(kx-\omega t), \qquad
 y_2(x,t)=A\sin(kx+\omega t).
@@ -469,61 +469,61 @@ x_n^{(a)}=\frac{(2n+1)\pi}{2k}.
 <section id="ejemplo-práctico-análisis-de-una-onda-estacionaria" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplo-práctico-análisis-de-una-onda-estacionaria">Ejemplo práctico: análisis de una onda estacionaria</h2>
 <p>Consideremos el patrón <span class="math display">\[
-y(x,t)=0.040\sin(5\pi x)\cos(40\pi t),
+y(x,t)=0.060\sin(4\pi x)\cos(32\pi t),
 \]</span> con <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> en metros y <span class="math inline">\(t\)</span> en segundos.</p>
 <p>Comparando con la forma estándar <span class="math display">\[
 y(x,t)=A_s\sin(kx)\cos(\omega t),
 \]</span> identificamos <span class="math display">\[
-A_s=0.040\,\text{m}, \qquad k=5\pi\,\text{m}^{-1}, \qquad \omega=40\pi\,\text{s}^{-1}.
+A_s=0.060\,\text{m}, \qquad k=4\pi\,\text{m}^{-1}, \qquad \omega=32\pi\,\text{s}^{-1}.
 \]</span></p>
 <section id="posición-de-los-nodos" class="level3">
 <h3 class="anchored" data-anchor-id="posición-de-los-nodos">Posición de los nodos</h3>
 <p>Los nodos satisfacen <span class="math display">\[
-5\pi x=n\pi.
+4\pi x=n\pi.
 \]</span> Por tanto, <span class="math display">\[
-x_n=\frac{n}{5}\,\text{m}.
+x_n=\frac{n}{4}\,\text{m}.
 \]</span> Para <span class="math inline">\(x\geq 0\)</span>, las primeras posiciones son <span class="math display">\[
-x_0=0, \qquad x_1=0.20\,\text{m}, \qquad x_2=0.40\,\text{m}.
-\]</span> Si se excluye el nodo en el extremo <span class="math inline">\(x=0\)</span> por considerarlo frontera, entonces los tres primeros nodos positivos serían <span class="math inline">\(0.20\,\text{m}\)</span>, <span class="math inline">\(0.40\,\text{m}\)</span> y <span class="math inline">\(0.60\,\text{m}\)</span>.</p>
+x_0=0, \qquad x_1=0.25\,\text{m}, \qquad x_2=0.50\,\text{m}.
+\]</span> Si se excluye el nodo en el extremo <span class="math inline">\(x=0\)</span> por considerarlo frontera, entonces los tres primeros nodos positivos serían <span class="math inline">\(0.25\,\text{m}\)</span>, <span class="math inline">\(0.50\,\text{m}\)</span> y <span class="math inline">\(0.75\,\text{m}\)</span>.</p>
 </section>
 <section id="período-temporal" class="level3">
 <h3 class="anchored" data-anchor-id="período-temporal">Período temporal</h3>
-<p>La frecuencia angular es <span class="math inline">\(\omega=40\pi\,\text{s}^{-1}\)</span>, de modo que <span class="math display">\[
-T=\frac{2\pi}{\omega}=\frac{2\pi}{40\pi}=0.050\,\text{s}.
+<p>La frecuencia angular es <span class="math inline">\(\omega=32\pi\,\text{s}^{-1}\)</span>, de modo que <span class="math display">\[
+T=\frac{2\pi}{\omega}=\frac{2\pi}{32\pi}=0.0625\,\text{s}.
 \]</span> Todo punto que no sea nodo oscila con este período.</p>
 </section>
 <section id="rapidez-de-las-ondas-viajeras-componentes" class="level3">
 <h3 class="anchored" data-anchor-id="rapidez-de-las-ondas-viajeras-componentes">Rapidez de las ondas viajeras componentes</h3>
 <p>La rapidez de las dos ondas viajeras que interfieren para producir la onda estacionaria es <span class="math display">\[
-v=\frac{\omega}{k}=\frac{40\pi}{5\pi}=8.0\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{32\pi}{4\pi}=8.0\,\text{m/s}.
 \]</span></p>
 </section>
 <section id="amplitud-de-las-ondas-viajeras" class="level3">
 <h3 class="anchored" data-anchor-id="amplitud-de-las-ondas-viajeras">Amplitud de las ondas viajeras</h3>
 <p>La onda estacionaria tiene amplitud espacial máxima <span class="math inline">\(A_s=2A\)</span>, donde <span class="math inline">\(A\)</span> es la amplitud de cada onda viajera componente. Por tanto, <span class="math display">\[
-A=\frac{A_s}{2}=\frac{0.040}{2}=0.020\,\text{m}.
-\]</span> Cada onda viajera tiene amplitud <span class="math inline">\(2.0\,\text{cm}\)</span>.</p>
+A=\frac{A_s}{2}=\frac{0.060}{2}=0.030\,\text{m}.
+\]</span> Cada onda viajera tiene amplitud <span class="math inline">\(3.0\,\text{cm}\)</span>.</p>
 </section>
 <section id="instantes-de-velocidad-transversal-nula" class="level3">
 <h3 class="anchored" data-anchor-id="instantes-de-velocidad-transversal-nula">Instantes de velocidad transversal nula</h3>
 <p>La velocidad transversal es <span class="math display">\[
 v_y(x,t)=\frac{\partial y}{\partial t}
-=-0.040(40\pi)\sin(5\pi x)\sin(40\pi t).
+=-0.060(32\pi)\sin(4\pi x)\sin(32\pi t).
 \]</span> Todos los puntos de la cuerda tienen velocidad transversal nula cuando <span class="math display">\[
-\sin(40\pi t)=0.
+\sin(32\pi t)=0.
 \]</span> Así, <span class="math display">\[
-40\pi t=m\pi, \qquad m=0,1,2,\dots
+32\pi t=m\pi, \qquad m=0,1,2,\dots
 \]</span> y <span class="math display">\[
-t_m=\frac{m}{40}\,\text{s}.
+t_m=\frac{m}{32}\,\text{s}.
 \]</span> Para <span class="math inline">\(t\geq 0\)</span>, los primeros instantes son <span class="math display">\[
-t_0=0, \qquad t_1=0.025\,\text{s}, \qquad t_2=0.050\,\text{s}.
-\]</span> Si se busca el primer instante positivo, sería <span class="math inline">\(0.025\,\text{s}\)</span>.</p>
-<div id="97d1b81c" class="cell" data-execution_count="2">
+t_0=0, \qquad t_1=0.03125\,\text{s}, \qquad t_2=0.0625\,\text{s}.
+\]</span> Si se busca el primer instante positivo, sería <span class="math inline">\(0.03125\,\text{s}\)</span>.</p>
+<div id="7abc6cb0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>A_s <span class="op">=</span> <span class="fl">0.040</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span><span class="op">*</span>np.pi</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">40</span><span class="op">*</span>np.pi</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>A_s <span class="op">=</span> <span class="fl">0.060</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>np.pi</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">32</span><span class="op">*</span>np.pi</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> [n<span class="op">*</span>np.pi<span class="op">/</span>k <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)]</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">/</span>omega</span>
@@ -537,11 +537,11 @@ t_0=0, \qquad t_1=0.025\,\text{s}, \qquad t_2=0.050\,\text{s}.
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Amplitud de cada onda viajera: </span><span class="sc">{</span>A_traveling<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Instantes con velocidad transversal nula (s):"</span>, [<span class="bu">round</span>(t, <span class="dv">3</span>) <span class="cf">for</span> t <span class="kw">in</span> t_zero_velocity])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Nodos (m): [0.0, 0.2, 0.4, 0.6]
-Periodo: 0.050 s
+<pre><code>Nodos (m): [0.0, 0.25, 0.5, 0.75]
+Periodo: 0.062 s
 Rapidez: 8.000 m/s
-Amplitud de cada onda viajera: 0.020 m
-Instantes con velocidad transversal nula (s): [0.0, 0.025, 0.05, 0.075]</code></pre>
+Amplitud de cada onda viajera: 0.030 m
+Instantes con velocidad transversal nula (s): [0.0, 0.031, 0.062, 0.094]</code></pre>
 </div>
 </div>
 </section>
@@ -549,16 +549,16 @@ Instantes con velocidad transversal nula (s): [0.0, 0.025, 0.05, 0.075]</code></
 <section id="visualización-con-python" class="level2">
 <h2 class="anchored" data-anchor-id="visualización-con-python">Visualización con Python</h2>
 <p>La visualización ayuda a distinguir una onda viajera de una onda estacionaria. En una onda viajera, el perfil completo se desplaza. En una onda estacionaria, los nodos permanecen fijos y cada punto oscila con una amplitud que depende de su posición.</p>
-<div id="0a035d7a" class="cell" data-execution_count="3">
+<div id="8a20a42b" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>A_s <span class="op">=</span> <span class="fl">0.040</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span><span class="op">*</span>np.pi</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">40</span><span class="op">*</span>np.pi</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>A_s <span class="op">=</span> <span class="fl">0.060</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>np.pi</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">32</span><span class="op">*</span>np.pi</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="dv">600</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.00625</span>, <span class="fl">0.0125</span>, <span class="fl">0.01875</span>, <span class="fl">0.025</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.0078125</span>, <span class="fl">0.015625</span>, <span class="fl">0.0234375</span>, <span class="fl">0.03125</span>]</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">4.5</span>))</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> times:</span>
@@ -581,54 +581,54 @@ Instantes con velocidad transversal nula (s): [0.0, 0.025, 0.05, 0.075]</code></
 </div>
 </div>
 <p>Para localizar nodos de forma computacional, basta usar la fórmula analítica <span class="math inline">\(x_n=n\pi/k\)</span>. En un análisis numérico con datos discretos, también puede estimarse la posición de nodos buscando puntos donde la amplitud temporal sea cercana a cero.</p>
-<div id="e3469d2d" class="cell" data-execution_count="4">
+<div id="651e73bf" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">5</span><span class="op">*</span>np.pi</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>np.pi</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>n_max <span class="op">=</span> <span class="bu">int</span>(np.floor(k<span class="op">*</span>L<span class="op">/</span>np.pi))</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> np.array([n<span class="op">*</span>np.pi<span class="op">/</span>k <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(n_max <span class="op">+</span> <span class="dv">1</span>)])</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nodes)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[0.  0.2 0.4 0.6 0.8 1. ]</code></pre>
+<pre><code>[0.   0.25 0.5  0.75 1.  ]</code></pre>
 </div>
 </div>
 </section>
 <section id="ejemplo-práctico-distancia-recorrida-por-las-ondas-componentes" class="level2">
 <h2 class="anchored" data-anchor-id="ejemplo-práctico-distancia-recorrida-por-las-ondas-componentes">Ejemplo práctico: distancia recorrida por las ondas componentes</h2>
 <p>Ahora consideremos dos ondas que viajan en sentidos opuestos: <span class="math display">\[
-y_1(x,t)=(6.00\,\text{mm})\sin(4.00\pi x-400\pi t),
+y_1(x,t)=(5.00\,\text{mm})\sin(6.00\pi x-300\pi t),
 \]</span> <span class="math display">\[
-y_2(x,t)=(6.00\,\text{mm})\sin(4.00\pi x+400\pi t).
+y_2(x,t)=(5.00\,\text{mm})\sin(6.00\pi x+300\pi t).
 \]</span> Su superposición es <span class="math display">\[
-y(x,t)=y_1+y_2=2(6.00\,\text{mm})\sin(4.00\pi x)\cos(400\pi t).
+y(x,t)=y_1+y_2=2(5.00\,\text{mm})\sin(6.00\pi x)\cos(300\pi t).
 \]</span> Por tanto, el patrón estacionario tiene amplitud máxima <span class="math display">\[
-A_s=12.00\,\text{mm}.
+A_s=10.00\,\text{mm}.
 \]</span></p>
 <p>Aquí <span class="math display">\[
-k=4\pi\,\text{m}^{-1}, \qquad \omega=400\pi\,\text{s}^{-1}.
+k=6\pi\,\text{m}^{-1}, \qquad \omega=300\pi\,\text{s}^{-1}.
 \]</span> La rapidez de cada onda viajera es <span class="math display">\[
-v=\frac{\omega}{k}=\frac{400\pi}{4\pi}=100\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{300\pi}{6\pi}=50\,\text{m/s}.
 \]</span></p>
 <p>Un antinodo pasa de desplazamiento máximo hacia arriba a desplazamiento máximo hacia abajo en medio período. El período de oscilación es <span class="math display">\[
-T=\frac{2\pi}{\omega}=\frac{2\pi}{400\pi}=0.005\,\text{s}.
+T=\frac{2\pi}{\omega}=\frac{2\pi}{300\pi}=0.00667\,\text{s}.
 \]</span> Entonces el intervalo requerido es <span class="math display">\[
-\Delta t=\frac{T}{2}=0.0025\,\text{s}.
+\Delta t=\frac{T}{2}=0.00333\,\text{s}.
 \]</span> Durante ese tiempo, cada onda viajera recorre una distancia <span class="math display">\[
-\Delta x=v\Delta t=(100\,\text{m/s})(0.0025\,\text{s})=0.25\,\text{m}.
+\Delta x=v\Delta t=(50\,\text{m/s})(0.00333\,\text{s})\approx 0.167\,\text{m}.
 \]</span></p>
 <p>Este resultado también puede obtenerse usando la longitud de onda. Como <span class="math display">\[
-\lambda=\frac{2\pi}{k}=\frac{2\pi}{4\pi}=0.50\,\text{m},
+\lambda=\frac{2\pi}{k}=\frac{2\pi}{6\pi}=\frac{1}{3}\,\text{m},
 \]</span> medio período corresponde a media longitud de onda recorrida: <span class="math display">\[
-\Delta x=\frac{\lambda}{2}=0.25\,\text{m}.
+\Delta x=\frac{\lambda}{2}=\frac{1}{6}\,\text{m}\approx 0.167\,\text{m}.
 \]</span></p>
-<div id="3a71c763" class="cell" data-execution_count="5">
+<div id="7b3c72ff" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fl">6.00e-3</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">4</span><span class="op">*</span>np.pi</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">400</span><span class="op">*</span>np.pi</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fl">5.00e-3</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">6</span><span class="op">*</span>np.pi</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>omega <span class="op">=</span> <span class="dv">300</span><span class="op">*</span>np.pi</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> omega<span class="op">/</span>k</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">/</span>omega</span>
@@ -642,11 +642,11 @@ T=\frac{2\pi}{\omega}=\frac{2\pi}{400\pi}=0.005\,\text{s}.
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Distancia recorrida: </span><span class="sc">{</span>distance<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Longitud de onda: </span><span class="sc">{</span>lambda_<span class="sc">:.3f}</span><span class="ss"> m"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rapidez: 100.0 m/s
-Periodo: 0.0050 s
-Intervalo de máximo superior a máximo inferior: 0.0025 s
-Distancia recorrida: 0.250 m
-Longitud de onda: 0.500 m</code></pre>
+<pre><code>Rapidez: 50.0 m/s
+Periodo: 0.0067 s
+Intervalo de máximo superior a máximo inferior: 0.0033 s
+Distancia recorrida: 0.167 m
+Longitud de onda: 0.333 m</code></pre>
 </div>
 </div>
 </section>
@@ -654,7 +654,7 @@ Longitud de onda: 0.500 m</code></pre>
 <h2 class="anchored" data-anchor-id="interpretación-física-de-los-nodos-y-la-energía">Interpretación física de los nodos y la energía</h2>
 <p>Aunque una onda estacionaria parece no propagarse globalmente, puede entenderse como la interferencia de dos ondas viajeras que transportan energía en direcciones opuestas. En un patrón ideal con amplitudes iguales, el flujo neto promedio de energía puede anularse, pero localmente la energía se transforma entre energía cinética y energía potencial elástica.</p>
 <p>En los nodos, el desplazamiento transversal es siempre cero; sin embargo, la cuerda no necesariamente carece de energía cerca de ellos, pues la pendiente espacial puede ser máxima. En los antinodos ocurre lo contrario: la amplitud de desplazamiento es máxima, y el punto alterna entre máxima elongación y paso por el equilibrio con máxima rapidez transversal.</p>
-<p>Esta distinción es importante en sistemas físicos más generales. Los modos normales de una cuerda, una columna de aire o una cavidad electromagnética se describen mediante patrones estacionarios determinados por condiciones de frontera. La cuantización de modos en sistemas vibrantes y en campos físicos surge precisamente de imponer que sólo ciertas longitudes de onda sean compatibles con la geometría del sistema <span class="citation" data-cites="feynman1964 kleppner2014">(<a href="oscilador_fourier.html#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>; <a href="oscilador_fourier.html#ref-kleppner2014" role="doc-biblioref"><strong>kleppner2014?</strong></a>)</span>.</p>
+<p>Esta distinción es importante en sistemas físicos más generales. Los modos normales de una cuerda, una columna de aire o una cavidad electromagnética se describen mediante patrones estacionarios determinados por condiciones de frontera. La cuantización de modos en sistemas vibrantes y en campos físicos surge precisamente de imponer que sólo ciertas longitudes de onda sean compatibles con la geometría del sistema <span class="citation" data-cites="feynman1964 kleppner2014">(<a href="#ref-feynman1964" role="doc-biblioref"><strong>feynman1964?</strong></a>; <a href="#ref-kleppner2014" role="doc-biblioref"><strong>kleppner2014?</strong></a>)</span>.</p>
 </section>
 <section id="resumen-de-fórmulas-útiles" class="level2">
 <h2 class="anchored" data-anchor-id="resumen-de-fórmulas-útiles">Resumen de fórmulas útiles</h2>

@@ -135,19 +135,19 @@ y(x,t)=A\sin(kx-\omega t),
 $$
 con
 $$
-A=3.50\,\text{mm}, \qquad k=25\,\text{m}^{-1}, \qquad \omega=7.5\,\text{s}^{-1}.
+A=2.00\,\text{mm}, \qquad k=20\,\text{m}^{-1}, \qquad \omega=4.0\,\text{s}^{-1}.
 $$
 La rapidez de propagación es
 $$
-v=\frac{\omega}{k}=\frac{7.5\,\text{s}^{-1}}{25\,\text{m}^{-1}}=0.30\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{4.0\,\text{s}^{-1}}{20\,\text{m}^{-1}}=0.20\,\text{m/s}.
 $$
 La amplitud no afecta la rapidez; únicamente determina el desplazamiento máximo respecto a la posición de equilibrio.
 
 ```{python}
 import numpy as np
 
-k = 25.0        # 1/m
-omega = 7.5     # 1/s
+k = 20.0        # 1/m
+omega = 4.0    # 1/s
 v = omega / k
 lambda_ = 2*np.pi / k
 frequency = omega / (2*np.pi)
@@ -224,7 +224,7 @@ $$
 
 Consideremos el patrón
 $$
-y(x,t)=0.060\sin(4\pi x)\cos(32\pi t),
+y(x,t)=0.040\sin(5\pi x)\cos(40\pi t),
 $$
 con $x$ y $y$ en metros y $t$ en segundos.
 
@@ -234,30 +234,30 @@ y(x,t)=A_s\sin(kx)\cos(\omega t),
 $$
 identificamos
 $$
-A_s=0.060\,\text{m}, \qquad k=4\pi\,\text{m}^{-1}, \qquad \omega=32\pi\,\text{s}^{-1}.
+A_s=0.040\,\text{m}, \qquad k=5\pi\,\text{m}^{-1}, \qquad \omega=40\pi\,\text{s}^{-1}.
 $$
 
 ### Posición de los nodos
 
 Los nodos satisfacen
 $$
-4\pi x=n\pi.
+5\pi x=n\pi.
 $$
 Por tanto,
 $$
-x_n=\frac{n}{4}\,\text{m}.
+x_n=\frac{n}{5}\,\text{m}.
 $$
 Para $x\geq 0$, las primeras posiciones son
 $$
-x_0=0, \qquad x_1=0.25\,\text{m}, \qquad x_2=0.50\,\text{m}.
+x_0=0, \qquad x_1=0.20\,\text{m}, \qquad x_2=0.40\,\text{m}.
 $$
-Si se excluye el nodo en el extremo $x=0$ por considerarlo frontera, entonces los tres primeros nodos positivos serían $0.25\,\text{m}$, $0.50\,\text{m}$ y $0.75\,\text{m}$.
+Si se excluye el nodo en el extremo $x=0$ por considerarlo frontera, entonces los tres primeros nodos positivos serían $0.20\,\text{m}$, $0.40\,\text{m}$ y $0.60\,\text{m}$.
 
 ### Período temporal
 
-La frecuencia angular es $\omega=32\pi\,\text{s}^{-1}$, de modo que
+La frecuencia angular es $\omega=40\pi\,\text{s}^{-1}$, de modo que
 $$
-T=\frac{2\pi}{\omega}=\frac{2\pi}{32\pi}=0.0625\,\text{s}.
+T=\frac{2\pi}{\omega}=\frac{2\pi}{40\pi}=0.050\,\text{s}.
 $$
 Todo punto que no sea nodo oscila con este período.
 
@@ -265,48 +265,48 @@ Todo punto que no sea nodo oscila con este período.
 
 La rapidez de las dos ondas viajeras que interfieren para producir la onda estacionaria es
 $$
-v=\frac{\omega}{k}=\frac{32\pi}{4\pi}=8.0\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{40\pi}{5\pi}=8.0\,\text{m/s}.
 $$
 
 ### Amplitud de las ondas viajeras
 
 La onda estacionaria tiene amplitud espacial máxima $A_s=2A$, donde $A$ es la amplitud de cada onda viajera componente. Por tanto,
 $$
-A=\frac{A_s}{2}=\frac{0.060}{2}=0.030\,\text{m}.
+A=\frac{A_s}{2}=\frac{0.040}{2}=0.020\,\text{m}.
 $$
-Cada onda viajera tiene amplitud $3.0\,\text{cm}$.
+Cada onda viajera tiene amplitud $2.0\,\text{cm}$.
 
 ### Instantes de velocidad transversal nula
 
 La velocidad transversal es
 $$
 v_y(x,t)=\frac{\partial y}{\partial t}
-=-0.060(32\pi)\sin(4\pi x)\sin(32\pi t).
+=-0.040(40\pi)\sin(5\pi x)\sin(40\pi t).
 $$
 Todos los puntos de la cuerda tienen velocidad transversal nula cuando
 $$
-\sin(32\pi t)=0.
+\sin(40\pi t)=0.
 $$
 Así,
 $$
-32\pi t=m\pi, \qquad m=0,1,2,\dots
+40\pi t=m\pi, \qquad m=0,1,2,\dots
 $$
 y
 $$
-t_m=\frac{m}{32}\,\text{s}.
+t_m=\frac{m}{40}\,\text{s}.
 $$
 Para $t\geq 0$, los primeros instantes son
 $$
-t_0=0, \qquad t_1=0.03125\,\text{s}, \qquad t_2=0.0625\,\text{s}.
+t_0=0, \qquad t_1=0.025\,\text{s}, \qquad t_2=0.050\,\text{s}.
 $$
-Si se busca el primer instante positivo, sería $0.03125\,\text{s}$.
+Si se busca el primer instante positivo, sería $0.025\,\text{s}$.
 
 ```{python}
 import numpy as np
 
-A_s = 0.060
-k = 4*np.pi
-omega = 32*np.pi
+A_s = 0.040
+k = 5*np.pi
+omega = 40*np.pi
 
 nodes = [n*np.pi/k for n in range(4)]
 T = 2*np.pi/omega
@@ -329,12 +329,12 @@ La visualización ayuda a distinguir una onda viajera de una onda estacionaria. 
 import numpy as np
 import matplotlib.pyplot as plt
 
-A_s = 0.060
-k = 4*np.pi
-omega = 32*np.pi
+A_s = 0.040
+k = 5*np.pi
+omega = 40*np.pi
 
 x = np.linspace(0, 1.0, 600)
-times = [0.0, 0.0078125, 0.015625, 0.0234375, 0.03125]
+times = [0.0, 0.00625, 0.0125, 0.01875, 0.025]
 
 plt.figure(figsize=(8, 4.5))
 for t in times:
@@ -355,7 +355,7 @@ Para localizar nodos de forma computacional, basta usar la fórmula analítica $
 ```{python}
 import numpy as np
 
-k = 4*np.pi
+k = 5*np.pi
 L = 1.0
 n_max = int(np.floor(k*L/np.pi))
 nodes = np.array([n*np.pi/k for n in range(n_max + 1)])
@@ -367,57 +367,57 @@ print(nodes)
 
 Ahora consideremos dos ondas que viajan en sentidos opuestos:
 $$
-y_1(x,t)=(5.00\,\text{mm})\sin(6.00\pi x-300\pi t),
+y_1(x,t)=(6.00\,\text{mm})\sin(4.00\pi x-400\pi t),
 $$
 $$
-y_2(x,t)=(5.00\,\text{mm})\sin(6.00\pi x+300\pi t).
+y_2(x,t)=(6.00\,\text{mm})\sin(4.00\pi x+400\pi t).
 $$
 Su superposición es
 $$
-y(x,t)=y_1+y_2=2(5.00\,\text{mm})\sin(6.00\pi x)\cos(300\pi t).
+y(x,t)=y_1+y_2=2(6.00\,\text{mm})\sin(4.00\pi x)\cos(400\pi t).
 $$
 Por tanto, el patrón estacionario tiene amplitud máxima
 $$
-A_s=10.00\,\text{mm}.
+A_s=12.00\,\text{mm}.
 $$
 
 Aquí
 $$
-k=6\pi\,\text{m}^{-1}, \qquad \omega=300\pi\,\text{s}^{-1}.
+k=4\pi\,\text{m}^{-1}, \qquad \omega=400\pi\,\text{s}^{-1}.
 $$
 La rapidez de cada onda viajera es
 $$
-v=\frac{\omega}{k}=\frac{300\pi}{6\pi}=50\,\text{m/s}.
+v=\frac{\omega}{k}=\frac{400\pi}{4\pi}=100\,\text{m/s}.
 $$
 
 Un antinodo pasa de desplazamiento máximo hacia arriba a desplazamiento máximo hacia abajo en medio período. El período de oscilación es
 $$
-T=\frac{2\pi}{\omega}=\frac{2\pi}{300\pi}=0.00667\,\text{s}.
+T=\frac{2\pi}{\omega}=\frac{2\pi}{400\pi}=0.005\,\text{s}.
 $$
 Entonces el intervalo requerido es
 $$
-\Delta t=\frac{T}{2}=0.00333\,\text{s}.
+\Delta t=\frac{T}{2}=0.0025\,\text{s}.
 $$
 Durante ese tiempo, cada onda viajera recorre una distancia
 $$
-\Delta x=v\Delta t=(50\,\text{m/s})(0.00333\,\text{s})\approx 0.167\,\text{m}.
+\Delta x=v\Delta t=(100\,\text{m/s})(0.0025\,\text{s})=0.25\,\text{m}.
 $$
 
 Este resultado también puede obtenerse usando la longitud de onda. Como
 $$
-\lambda=\frac{2\pi}{k}=\frac{2\pi}{6\pi}=\frac{1}{3}\,\text{m},
+\lambda=\frac{2\pi}{k}=\frac{2\pi}{4\pi}=0.50\,\text{m},
 $$
 medio período corresponde a media longitud de onda recorrida:
 $$
-\Delta x=\frac{\lambda}{2}=\frac{1}{6}\,\text{m}\approx 0.167\,\text{m}.
+\Delta x=\frac{\lambda}{2}=0.25\,\text{m}.
 $$
 
 ```{python}
 import numpy as np
 
-A = 5.00e-3
-k = 6*np.pi
-omega = 300*np.pi
+A = 6.00e-3
+k = 4*np.pi
+omega = 400*np.pi
 
 v = omega/k
 T = 2*np.pi/omega
